@@ -1,0 +1,37 @@
+services:
+
+  dev:
+    image: 16nsk/devcontainers:php-8.2
+    command: sleep infinity
+    volumes:
+      - ..:/workspace
+      - nvm:/home/developer/.nvm/versions
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+      - "${FRONTEND_PORT:-3000}:3000"
+
+  db:
+    image: mariadb:10.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=getmeadrink
+      - MYSQL_USER=getmeadrink
+      - MYSQL_PASSWORD=getmeadrink
+    volumes:
+      - mariadb:/var/lib/mysql
+    ports:
+      - "${FORWARD_DB_PORT:-3306}:3306"
+
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - "${FORWARD_MAILPIT_PORT:-8025}:8025"
+
+  adminer:
+    image: adminer
+    ports:
+      - "${FORWARD_ADMINER_PORT:-8080}:8080"
+
+volumes:
+  nvm:
+  mariadb:
