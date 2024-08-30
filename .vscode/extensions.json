@@ -4,6 +4,6 @@
         "DEVSENSE.composer-php-vscode",
         "xdebug.php-debug",
         "bmewburn.vscode-intelephense-client",
-        "fill-labs.dependi"
+        "bajdzis.vscode-twig-pack"
     ]
 }
