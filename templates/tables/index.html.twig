@@ -5,7 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    {% for table in tables %}
-        {{ dump(table) }}
-    {% endfor %}
+    <div class="d-flex flex-wrap justify-content-center">
+        {% for table in tables %}
+        <form class="" action="/order" method="get">
+         <button type="submit" class="btn btn-light shadow-sm m-3" style="width: 10rem; height: 10rem;">Tisch {{table.id}}
+            <br/>
+            <small>Drinks, Zwischensumme, ETC</small>
+         </button> 
+        <form> 
+        {% endfor %}
+    <div>
 {% endblock %}
