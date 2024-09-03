@@ -11,18 +11,13 @@ use Symfony\Component\Routing\Attribute\Route;
 class OrderController extends AbstractController
 {
     public function __construct(
-        //private readonly TableRepository $tableRepository,
+        //private readonly OrderRepository $orderRepository,
     ) {
     }
 
-    #[Route(path: '/order', name: 'order', methods: ['GET'])]
-    public function order(Request $request): Response
+    #[Route(path: '/order/{id}', name: 'order', methods: ['GET'])]
+    public function order(): Response
     {
-        dd($request);
-        //$tables = $this->tableRepository->findAll();
-
-        return $this->render('tables/index.html.twig', [
-            //'order' => $orders,
-        ]);
+        return $this->render('order/index.html.twig');
     }
 }
