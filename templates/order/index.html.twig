@@ -4,3 +4,14 @@
 {{ parent() }} - Order
 {% endblock %}
 
+{% block body %}
+    {% for product in products %}
+    <form action="/product/select" method="POST">
+        <button type="submit" class="btn btn-light shadow-sm m-3" style="width: 10rem; height: 10rem;"> {{product.name}}
+            <br/>
+            <small>Drinks, Zwischensumme, ETC</small>
+        </button>
+        <input type="hidden" name="product_id" value="{{ product.id }}" />
+    </form>
+    {% endfor %}
+{% endblock %}
