@@ -9,7 +9,7 @@ in {
 
   languages.php = {
     enable = true;
-    version = lib.mkDefault "8.3";
+    version = lib.mkDefault "8.2";
     extensions = [ "pcov" "xdebug" ];
 
     ini = ''
@@ -76,14 +76,14 @@ in {
     settings = {
       mysqld = {
         log_bin_trust_function_creators = 1;
-        port = lib.mkDefault 3310;
+        port = lib.mkDefault 3309;
       };
     };
   };
 
   services.redis = {
     enable = true;
-    port = lib.mkDefault 5689;
+    port = lib.mkDefault 5687;
   };
 
 
