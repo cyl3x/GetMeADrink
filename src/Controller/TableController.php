@@ -21,14 +21,14 @@ class TableController extends AbstractController
         $tables = $this->tableRepository->findAll();
 
         return $this->render('tables/index.html.twig', [
-            'tables' => $tables,
+            'entries' => $tables,
         ]);
     }
 
     #[Route(path: '/table/select', name: 'table.select', methods: ['POST'])]
     public function selectTable(Request $request): Response
     {
-        $tableId = $request->request->get('table_id');
+        $tableId = $request->request->get('entry_id');
 
         return $this->redirectToRoute('order', ['id' => (string) $tableId]);
     }
