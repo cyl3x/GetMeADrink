@@ -21,7 +21,7 @@ class OrderStatusEntity
     private string $name;
 
     /**
-     * @var Collection<OrderEntity>
+     * @var Collection<int, OrderEntity>
      */
     #[ORM\OneToMany(targetEntity: OrderEntity::class, mappedBy: 'table')]
     private Collection $orders;
@@ -31,7 +31,7 @@ class OrderStatusEntity
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -47,7 +47,7 @@ class OrderStatusEntity
     }
 
     /**
-     * @return Collection<OrderEntity>
+     * @return Collection<int, OrderEntity>
      */
     public function getOrders(): Collection
     {

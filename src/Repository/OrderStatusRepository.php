@@ -7,7 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<OrderEntity>
+ * @extends ServiceEntityRepository<OrderStatusEntity>
  */
 class OrderStatusRepository extends ServiceEntityRepository
 {

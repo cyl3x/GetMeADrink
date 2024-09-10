@@ -35,7 +35,7 @@ class OrderEntity
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }

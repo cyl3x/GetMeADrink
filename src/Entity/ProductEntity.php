@@ -36,8 +36,48 @@ class ProductEntity
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    public function getVariant(): ProductVariantEntity
+    {
+        return $this->variant;
+    }
+
+    public function setVariant(ProductVariantEntity $variant): void
+    {
+        $this->variant = $variant;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): void
+    {
+        $this->price = $price;
+    }
+
+    public function getVat(): float
+    {
+        return $this->vat;
+    }
+
+    public function setVat(float $vat): void
+    {
+        $this->vat = $vat;
     }
 }
