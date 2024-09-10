@@ -10,10 +10,6 @@ parameters:
         - config/
         - public/
         - src/
-        - tests/
-
-    bootstrapFiles:
-        - tests/bootstrap.php
 
     symfony:
         constantHassers: false

@@ -21,7 +21,7 @@ class ProductVariantEntity
     private string $name;
 
     /**
-     * @var Collection<ProductEntity>
+     * @var Collection<int, ProductEntity>
      */
     #[ORM\OneToMany(targetEntity: ProductEntity::class, mappedBy: 'variant')]
     private Collection $products;
@@ -31,7 +31,7 @@ class ProductVariantEntity
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -47,7 +47,7 @@ class ProductVariantEntity
     }
 
     /**
-     * @return Collection<ProductEntity>
+     * @return Collection<int, ProductEntity>
      */
     public function getProducts(): Collection
     {
