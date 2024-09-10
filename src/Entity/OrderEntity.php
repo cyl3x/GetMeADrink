@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use App\Entity\Contract\EntityDateTrait;
-use App\Repository\TableRepository;
+use App\Repository\OrderRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TableRepository::class)]
+#[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 #[ORM\HasLifecycleCallbacks]
 class OrderEntity
@@ -23,7 +23,7 @@ class OrderEntity
     #[ORM\JoinColumn(onDelete: 'restrict')]
     private TableEntity $table;
 
-    #[ORM\ManyToOne(targetEntity: OrderStatusEntity::class)]
+    #[ORM\ManyToOne(targetEntity: OrderStatusEntity::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(onDelete: 'restrict')]
     private OrderStatusEntity $status;
 

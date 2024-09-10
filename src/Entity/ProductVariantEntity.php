@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\OrderStatusRepository;
+use App\Repository\ProductVariantRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: OrderStatusRepository::class)]
-#[ORM\Table(name: '`order_status`')]
+#[ORM\Entity(repositoryClass: ProductVariantRepository::class)]
+#[ORM\Table(name: '`product_variant`')]
 #[ORM\HasLifecycleCallbacks]
-class OrderStatusEntity
+class ProductVariantEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue()]
@@ -21,10 +21,10 @@ class OrderStatusEntity
     private string $name;
 
     /**
-     * @var Collection<OrderEntity>
+     * @var Collection<ProductEntity>
      */
-    #[ORM\OneToMany(targetEntity: OrderEntity::class, mappedBy: 'table')]
-    private Collection $orders;
+    #[ORM\OneToMany(targetEntity: ProductEntity::class, mappedBy: 'variant')]
+    private Collection $products;
 
     public function getId(): int
     {
@@ -47,10 +47,10 @@ class OrderStatusEntity
     }
 
     /**
-     * @return Collection<OrderEntity>
+     * @return Collection<ProductEntity>
      */
-    public function getOrders(): Collection
+    public function getProducts(): Collection
     {
-        return $this->orders;
+        return $this->products;
     }
 }
