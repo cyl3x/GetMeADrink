@@ -50,9 +50,11 @@ class OrderProductEntity
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(int $id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
     public function getName(): string
@@ -60,9 +62,11 @@ class OrderProductEntity
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     public function getVariantName(): string
@@ -70,9 +74,11 @@ class OrderProductEntity
         return $this->variantName;
     }
 
-    public function setVariantName(string $variantName): void
+    public function setVariantName(string $variantName): self
     {
         $this->variantName = $variantName;
+
+        return $this;
     }
 
     public function getPrice(): float
@@ -80,9 +86,11 @@ class OrderProductEntity
         return $this->price;
     }
 
-    public function setPrice(float $price): void
+    public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
     }
 
     public function getVat(): float
@@ -90,9 +98,11 @@ class OrderProductEntity
         return $this->vat;
     }
 
-    public function setVat(float $vat): void
+    public function setVat(float $vat): self
     {
         $this->vat = $vat;
+
+        return $this;
     }
 
     public function getCount(): int
@@ -100,9 +110,11 @@ class OrderProductEntity
         return $this->count;
     }
 
-    public function setCount(int $count): void
+    public function setCount(int $count): self
     {
         $this->count = $count;
+
+        return $this;
     }
 
     public function getProduct(): ?ProductEntity
@@ -110,9 +122,11 @@ class OrderProductEntity
         return $this->product;
     }
 
-    public function setProduct(?ProductEntity $product): void
+    public function setProduct(?ProductEntity $product): self
     {
         $this->product = $product;
+
+        return $this;
     }
 
     public function getStatus(): OrderProductStatusEntity
@@ -120,8 +134,10 @@ class OrderProductEntity
         return $this->status;
     }
 
-    public function setStatus(OrderProductStatusEntity $status): void
+    public function setStatus(OrderProductStatusEntity $status): self
     {
         $this->status = $status;
+
+        return $this;
     }
 }

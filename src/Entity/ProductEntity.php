@@ -39,9 +39,11 @@ class ProductEntity
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(int $id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
     public function getVariant(): ProductVariantEntity
@@ -49,9 +51,11 @@ class ProductEntity
         return $this->variant;
     }
 
-    public function setVariant(ProductVariantEntity $variant): void
+    public function setVariant(ProductVariantEntity $variant): self
     {
         $this->variant = $variant;
+
+        return $this;
     }
 
     public function getName(): string
@@ -59,9 +63,11 @@ class ProductEntity
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     public function getPrice(): float
@@ -69,9 +75,11 @@ class ProductEntity
         return $this->price;
     }
 
-    public function setPrice(float $price): void
+    public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
     }
 
     public function getVat(): float
@@ -79,9 +87,11 @@ class ProductEntity
         return $this->vat;
     }
 
-    public function setVat(float $vat): void
+    public function setVat(float $vat): self
     {
         $this->vat = $vat;
+
+        return $this;
     }
 
     public function getImage(): mixed
@@ -89,10 +99,12 @@ class ProductEntity
         return $this->image;
     }
 
-    public function setImage(mixed $image): void
+    public function setImage(mixed $image): self
     {
         $this->image = mb_check_encoding($image, 'UTF-8')
             ? $image
             : mb_convert_encoding($image, 'UTF-8');
+
+        return $this;
     }
 }
