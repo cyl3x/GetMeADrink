@@ -4,11 +4,14 @@
 {{ parent() }} - Tables
 {% endblock %}
 
-
-
 {% block body %}
-    {% include '_partials/matrix.html.twig' with {
-        'entries' : entries,
-        'matrix_type' : 'table'
-    } %}
+    {% for table in tables %}
+    <form action="/table/select" method="POST">
+        <button type="submit" class="btn btn-light shadow-sm m-3" style="width: 10rem; height: 10rem;">Tisch {{table.id}}
+            <br/>
+            <small>Drinks, Zwischensumme, ETC</small>
+        </button>
+        <input type="hidden" name="table_id" value="{{ table.id }}" />
+    </form>
+    {% endfor %}
 {% endblock %}
