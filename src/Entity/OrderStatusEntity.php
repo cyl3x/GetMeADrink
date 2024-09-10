@@ -4,27 +4,21 @@ namespace App\Entity;
 
 use App\Entity\Contract\EntityDateTrait;
 use App\Repository\TableRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TableRepository::class)]
-#[ORM\Table(name: '`table`')]
+#[ORM\Table(name: '`order_status`')]
 #[ORM\HasLifecycleCallbacks]
-class TableEntity
+class OrderStatusEntity
 {
-    use EntityDateTrait;
-
     #[ORM\Id]
     #[ORM\GeneratedValue()]
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    /**
-     * @var Collection<OrderEntity>
-     */
-    #[ORM\OneToMany(targetEntity: OrderEntity::class, mappedBy: 'table')]
-    private Collection $orders;
+    #[ORM\Column(type: Types::STRING)]
+    private string $name;
 
     public function getId(): int
     {
@@ -36,19 +30,13 @@ class TableEntity
         $this->id = $id;
     }
 
-    /**
-     * @return Collection<OrderEntity>
-     */
-    public function getOrders(): Collection
+    public function getName(): string
     {
-        return $this->orders;
+        return $this->name;
     }
 
-    /**
-     * @param Collection<OrderEntity> $orders
-     */
-    public function setOrders(Collection $orders): void
+    public function setName(string $name): void
     {
-        $this->orders = $orders;
+        $this->name = $name;
     }
 }
