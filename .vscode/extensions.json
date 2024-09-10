@@ -1,10 +1,10 @@
 {
   "recommendations": [
-    "ms-vscode-remote.remote-containers",
     "DEVSENSE.composer-php-vscode",
     "xdebug.php-debug",
     "bmewburn.vscode-intelephense-client",
     "bajdzis.vscode-twig-pack",
     "EditorConfig.EditorConfig",
+    "mkhl.direnv"
   ]
 }
