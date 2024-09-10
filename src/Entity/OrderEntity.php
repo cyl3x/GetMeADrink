@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Contract\EntityDateTrait;
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +30,12 @@ class OrderEntity
 
     #[ORM\Column(type: Types::FLOAT)]
     private float $totalPrice;
+
+    /**
+     * @var Collection<int, OrderProductEntity>
+     */
+    #[ORM\OneToMany(targetEntity: OrderProductEntity::class, mappedBy: 'order')]
+    private Collection $orderProducts;
 
     public function getId(): int
     {
@@ -68,5 +75,21 @@ class OrderEntity
     public function setTotalPrice(float $totalPrice): void
     {
         $this->totalPrice = $totalPrice;
+    }
+
+    /**
+     * @return Collection<int, OrderProductEntity>
+     */
+    public function getOrderProducts(): Collection
+    {
+        return $this->orderProducts;
+    }
+
+    /**
+     * @param Collection<int, OrderProductEntity> $orderProducts
+     */
+    public function setOrderProducts(Collection $orderProducts): void
+    {
+        $this->orderProducts = $orderProducts;
     }
 }

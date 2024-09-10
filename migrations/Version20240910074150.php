@@ -26,7 +26,7 @@ final class Version20240910074150 extends AbstractMigration
         $this->addSql('ALTER TABLE `order` ADD CONSTRAINT FK_F52993986BF700BD FOREIGN KEY (status_id) REFERENCES `order_status` (id) ON DELETE RESTRICT');
         $this->addSql('ALTER TABLE `table` ADD created_at DATETIME NOT NULL, ADD updated_at DATETIME DEFAULT NULL');
 
-        $this->addSql('INSERT INTO `order_status` (name) VALUES ("pending"), ("completed"), ("canceled")');
+        $this->addSql('INSERT INTO `order_status` (id, name) VALUES (1, "pending"), (2, "completed"), (3, "canceled")');
     }
 
     public function down(Schema $schema): void

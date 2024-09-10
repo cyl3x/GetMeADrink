@@ -31,6 +31,9 @@ class ProductEntity
     #[ORM\Column(type: Types::FLOAT)]
     private float $vat;
 
+    #[ORM\Column(type: Types::BLOB)]
+    private mixed $image;
+
     public function getId(): int
     {
         return $this->id;
@@ -79,5 +82,17 @@ class ProductEntity
     public function setVat(float $vat): void
     {
         $this->vat = $vat;
+    }
+
+    public function getImage(): mixed
+    {
+        return $this->image;
+    }
+
+    public function setImage(mixed $image): void
+    {
+        $this->image = mb_check_encoding($image, 'UTF-8')
+            ? $image
+            : mb_convert_encoding($image, 'UTF-8');
     }
 }
