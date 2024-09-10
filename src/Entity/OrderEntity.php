@@ -42,9 +42,11 @@ class OrderEntity
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(int $id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
     public function getTable(): TableEntity
@@ -52,9 +54,11 @@ class OrderEntity
         return $this->table;
     }
 
-    public function setTable(TableEntity $table): void
+    public function setTable(TableEntity $table): self
     {
         $this->table = $table;
+
+        return $this;
     }
 
     public function getStatus(): OrderStatusEntity
@@ -62,9 +66,11 @@ class OrderEntity
         return $this->status;
     }
 
-    public function setStatus(OrderStatusEntity $status): void
+    public function setStatus(OrderStatusEntity $status): self
     {
         $this->status = $status;
+
+        return $this;
     }
 
     public function getTotalPrice(): float
@@ -72,9 +78,11 @@ class OrderEntity
         return $this->totalPrice;
     }
 
-    public function setTotalPrice(float $totalPrice): void
+    public function setTotalPrice(float $totalPrice): self
     {
         $this->totalPrice = $totalPrice;
+
+        return $this;
     }
 
     /**
@@ -88,8 +96,17 @@ class OrderEntity
     /**
      * @param Collection<int, OrderProductEntity> $orderProducts
      */
-    public function setOrderProducts(Collection $orderProducts): void
+    public function setOrderProducts(Collection $orderProducts): self
     {
         $this->orderProducts = $orderProducts;
+
+        return $this;
+    }
+
+    public function addOrderProduct(OrderProductEntity $orderProduct): self
+    {
+        $this->orderProducts->add($orderProduct);
+
+        return $this;
     }
 }
