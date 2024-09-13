@@ -5,14 +5,27 @@
 {% endblock %}
 
 {% block body %}
-<div class="d-flex flex-wrap justify-content-center">
-    {% for product in products %}
-    <form action="/order/{{ order.id }}/select/{{ product.id }}" method="POST">
-        <button type="submit" class="btn btn-light shadow-sm m-3" style="width: 10rem; height: 10rem;"> {{product.name}}
-            <br/>
-            <small>Drinks, Zwischensumme, ETC</small>
-        </button>
-    </form>
-    {% endfor %}
+<div class="container-fluid">
+    <div class="row">
+        {% if order is not null %}
+        <div id="order_details" class="card bg-light col-3 rounded-0 border-0 shadow-sm position-sticky vh-100" style="top: 0;">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Order Details</h5>
+            </div>
+        </div>
+        {% endif %}
+        <div class="col overflow-auto" style="max-height: 100vh;">
+            <div class="d-flex flex-wrap justify-content-center">
+                {% for product in products %}
+                <form action="/order/{{ order.id }}/select/{{ product.id }}" method="POST">
+                    <button type="submit" class="btn btn-light shadow-sm m-3" style="width: 10rem; height: 10rem;"> {{product.name}}
+                        <br/>
+                        <small>Drinks, Zwischensumme, ETC</small>
+                    </button>
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
