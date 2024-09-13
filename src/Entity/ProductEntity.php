@@ -31,8 +31,8 @@ class ProductEntity
     #[ORM\Column(type: Types::FLOAT)]
     private float $vat;
 
-    #[ORM\Column(type: Types::BLOB)]
-    private mixed $image;
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private mixed $image = null;
 
     public function getId(): int
     {
