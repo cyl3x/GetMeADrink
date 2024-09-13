@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+<div class="d-flex flex-wrap justify-content-center">
     {% for product in products %}
     <form action="/product/select" method="POST">
         <button type="submit" class="btn btn-light shadow-sm m-3" style="width: 10rem; height: 10rem;"> {{product.name}}
@@ -14,4 +15,5 @@
         <input type="hidden" name="product_id" value="{{ product.id }}" />
     </form>
     {% endfor %}
+</div>
 {% endblock %}
