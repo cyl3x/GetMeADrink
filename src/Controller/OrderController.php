@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use App\Entity\OrderStatusEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +21,11 @@ class OrderController extends AbstractController
     #[Route(path: '/order/{id}', name: 'order', methods: ['GET'])]
     public function order(string $id): Response
     {
-        $openOrder = $this->orderRepository->findOneBy(['table' => $id, 'status' => 1]);
+        $order = $this->orderRepository->byTableId($id);
         $products = $this->productRepository->findAll();
 
         return $this->render('order/index.html.twig', [
+            'order' => $order,
             'products' => $products,
         ]);
     }

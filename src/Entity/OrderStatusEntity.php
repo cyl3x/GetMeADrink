@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks]
 class OrderStatusEntity
 {
+    public const PENDING = 1;
+    public const COMPLETED = 2;
+    public const CANCELED = 3;
+
     #[ORM\Id]
     #[ORM\GeneratedValue()]
     #[ORM\Column(type: Types::INTEGER)]
