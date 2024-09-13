@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\OrderEntity;
-use App\Entity\OrderStatusEntity;
 use App\Entity\TableEntity;
 use App\Repository\OrderRepository;
 use App\Repository\TableRepository;
@@ -34,19 +32,7 @@ class TableController extends AbstractController
     #[Route(path: '/table/{tableId}', name: 'table.select', methods: ['POST'])]
     public function selectTable(TableEntity $table): Response
     {
-        $order = $this->orderRepository->byTableId($table->getId());
-
-        if (!$order) {
-            $status = $this->em->getReference(OrderStatusEntity::class, OrderStatusEntity::PENDING);
-
-            $order = (new OrderEntity())
-                ->setTable($table)
-                ->setStatus($status)
-                ->setTotalPrice(0);
-
-            $this->em->persist($order);
-            $this->em->flush();
-        }
+        $order = $this->orderRepository->fromTable($table);
 
         return $this->redirectToRoute('order', ['orderId' => $order->getId()]);
     }

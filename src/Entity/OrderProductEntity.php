@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: OrderProductRepository::class)]
 #[ORM\Table(name: '`order_product`')]
 #[ORM\HasLifecycleCallbacks]
-class OrderProductEntity
+class OrderProductEntity implements \JsonSerializable
 {
     use EntityDateTrait;
 
@@ -53,6 +53,18 @@ class OrderProductEntity
     public function setId(int $id): self
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getOrder(): OrderEntity
+    {
+        return $this->order;
+    }
+
+    public function setOrder(OrderEntity $order): self
+    {
+        $this->order = $order;
 
         return $this;
     }
@@ -117,6 +129,13 @@ class OrderProductEntity
         return $this;
     }
 
+    public function addCount(int $count = 1): self
+    {
+        $this->count += $count;
+
+        return $this;
+    }
+
     public function getProduct(): ?ProductEntity
     {
         return $this->product;
@@ -125,6 +144,11 @@ class OrderProductEntity
     public function setProduct(?ProductEntity $product): self
     {
         $this->product = $product;
+
+        $this->name = $product->getName();
+        $this->variantName = $product->getVariant()->getName();
+        $this->price = $product->getPrice();
+        $this->vat = $product->getVat();
 
         return $this;
     }
@@ -139,5 +163,19 @@ class OrderProductEntity
         $this->status = $status;
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'variantName' => $this->variantName,
+            'price' => $this->price,
+            'vat' => $this->vat,
+            'count' => $this->count,
+            'product' => $this->product->getId(),
+            'status' => $this->status->getName(),
+        ];
     }
 }
