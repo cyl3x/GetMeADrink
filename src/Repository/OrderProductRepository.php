@@ -2,7 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\OrderEntity;
 use App\Entity\OrderProductEntity;
+use App\Entity\OrderProductStatusEntity;
+use App\Entity\ProductEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -15,5 +18,36 @@ class OrderProductRepository extends ServiceEntityRepository
         ManagerRegistry $registry,
     ) {
         parent::__construct($registry, OrderProductEntity::class);
+    }
+
+    public function fromProduct(OrderEntity $order, ProductEntity $product): OrderProductEntity
+    {
+        $em = $this->getEntityManager();
+
+        $existing = $this->findOneBy([
+            'product' => $product,
+            'order' => $order,
+        ]);
+
+        if ($existing) {
+            $existing->addCount();
+            $em->persist($existing);
+            $em->flush();
+
+            return $existing;
+        }
+
+        $status = $em->getReference(OrderProductStatusEntity::class, OrderProductStatusEntity::PENDING);
+
+        $orderProduct = (new OrderProductEntity())
+            ->setProduct($product)
+            ->setOrder($order)
+            ->setStatus($status)
+            ->setCount(1);
+
+        $em->persist($orderProduct);
+        $em->flush();
+
+        return $orderProduct;
     }
 }
