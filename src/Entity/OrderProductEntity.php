@@ -35,15 +35,14 @@ class OrderProductEntity implements \JsonSerializable
     private float $vat;
 
     #[ORM\Column(type: Types::INTEGER)]
-    private int $count;
+    private int $quantity = 0;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $pendingQuantity = 1;
 
     #[ORM\ManyToOne(targetEntity: ProductEntity::class)]
     #[ORM\JoinColumn(onDelete: 'cascade')]
     private ?ProductEntity $product = null;
-
-    #[ORM\ManyToOne(targetEntity: OrderProductStatusEntity::class)]
-    #[ORM\JoinColumn(onDelete: 'restrict')]
-    private OrderProductStatusEntity $status;
 
     public function getId(): int
     {
@@ -117,21 +116,40 @@ class OrderProductEntity implements \JsonSerializable
         return $this;
     }
 
-    public function getCount(): int
+    public function getQuantity(): int
     {
-        return $this->count;
+        return $this->quantity;
     }
 
-    public function setCount(int $count): self
+    public function setQuantity(int $quantity): self
     {
-        $this->count = $count;
+        $this->quantity = $quantity;
 
         return $this;
     }
 
-    public function addCount(int $count = 1): self
+    public function addQuantity(int $quantity = 1): self
     {
-        $this->count += $count;
+        $this->quantity += $quantity;
+
+        return $this;
+    }
+
+    public function getPendingQuantity(): int
+    {
+        return $this->pendingQuantity;
+    }
+
+    public function setPendingQuantity(int $pendingQuantity): self
+    {
+        $this->pendingQuantity = $pendingQuantity;
+
+        return $this;
+    }
+
+    public function addPendingQuantity(int $pendingQuantity = 1): self
+    {
+        $this->pendingQuantity += $pendingQuantity;
 
         return $this;
     }
@@ -153,18 +171,6 @@ class OrderProductEntity implements \JsonSerializable
         return $this;
     }
 
-    public function getStatus(): OrderProductStatusEntity
-    {
-        return $this->status;
-    }
-
-    public function setStatus(OrderProductStatusEntity $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function jsonSerialize(): array
     {
         return [
@@ -173,9 +179,9 @@ class OrderProductEntity implements \JsonSerializable
             'variantName' => $this->variantName,
             'price' => $this->price,
             'vat' => $this->vat,
-            'count' => $this->count,
+            'quantity' => $this->quantity,
+            'pendingQuantity' => $this->pendingQuantity,
             'product' => $this->product->getId(),
-            'status' => $this->status->getName(),
         ];
     }
 }

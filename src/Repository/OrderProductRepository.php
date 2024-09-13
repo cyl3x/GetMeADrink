@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\OrderEntity;
 use App\Entity\OrderProductEntity;
-use App\Entity\OrderProductStatusEntity;
 use App\Entity\ProductEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -30,20 +29,17 @@ class OrderProductRepository extends ServiceEntityRepository
         ]);
 
         if ($existing) {
-            $existing->addCount();
+            $existing->addPendingQuantity();
+
             $em->persist($existing);
             $em->flush();
 
             return $existing;
         }
 
-        $status = $em->getReference(OrderProductStatusEntity::class, OrderProductStatusEntity::PENDING);
-
         $orderProduct = (new OrderProductEntity())
             ->setProduct($product)
-            ->setOrder($order)
-            ->setStatus($status)
-            ->setCount(1);
+            ->setOrder($order);
 
         $em->persist($orderProduct);
         $em->flush();
