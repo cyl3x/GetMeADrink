@@ -18,20 +18,15 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderEntity::class);
     }
 
-    public function byTableId(String $pTableId): mixed
+    public function byTableId(int $pTableId): ?OrderEntity
     {
-        $sql = "
-            SELECT *
-            FROM `order`
-            WHERE table_id = :pTableId
-            AND status_id = :pStatusId;
-        ";
-
-        $em = $this->getEntityManager();
-        $stmt = $em->getConnection()->executeQuery($sql, [
-            'pTableId' => $pTableId,
-            'pStatusId' => OrderStatusEntity::PENDING,
-        ]);
-        return $stmt->fetchOne();
+        return $this
+            ->createQueryBuilder('o')
+            ->where('o.table = (:pTableId)')
+            ->andWhere('o.status = (:pStatusId)')
+            ->setParameter('pTableId', $pTableId)
+            ->setParameter('pStatusId', OrderStatusEntity::PENDING)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

@@ -2,16 +2,22 @@
 
 namespace App\Controller;
 
+use App\Entity\OrderEntity;
+use App\Entity\OrderStatusEntity;
+use App\Entity\TableEntity;
+use App\Repository\OrderRepository;
 use App\Repository\TableRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class TableController extends AbstractController
 {
     public function __construct(
+        private readonly EntityManagerInterface $em,
         private readonly TableRepository $tableRepository,
+        private readonly OrderRepository $orderRepository,
     ) {
     }
 
@@ -25,11 +31,23 @@ class TableController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/table/select', name: 'table.select', methods: ['POST'])]
-    public function selectTable(Request $request): Response
+    #[Route(path: '/table/{tableId}', name: 'table.select', methods: ['POST'])]
+    public function selectTable(TableEntity $table): Response
     {
-        $tableId = $request->request->get('table_id');
+        $order = $this->orderRepository->byTableId($table->getId());
 
-        return $this->redirectToRoute('order', ['id' => (string) $tableId]);
+        if (!$order) {
+            $status = $this->em->getReference(OrderStatusEntity::class, OrderStatusEntity::PENDING);
+
+            $order = (new OrderEntity())
+                ->setTable($table)
+                ->setStatus($status)
+                ->setTotalPrice(0);
+
+            $this->em->persist($order);
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('order', ['orderId' => $order->getId()]);
     }
 }
