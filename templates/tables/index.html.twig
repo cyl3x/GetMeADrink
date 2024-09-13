@@ -7,7 +7,7 @@
 {% block body %}
 <div class="d-flex flex-wrap justify-content-center">
     {% for table in tables %}
-    <form action="/table/select" method="POST">
+    <form action="/table/{{ table.id }}" method="POST">
         <button type="submit" class="btn btn-light shadow-sm m-3" style="width: 10rem; height: 10rem;">Tisch {{table.id}}
             <br/>
             <small>Drinks, Zwischensumme, ETC</small>

@@ -2,26 +2,22 @@
 
 namespace App\Controller;
 
-use App\Repository\OrderRepository;
+use App\Entity\OrderEntity;
 use App\Repository\ProductRepository;
-use App\Entity\OrderStatusEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class OrderController extends AbstractController
 {
     public function __construct(
-        private OrderRepository $orderRepository,
         private readonly ProductRepository $productRepository,
     ) {
     }
 
-    #[Route(path: '/order/{id}', name: 'order', methods: ['GET'])]
-    public function order(string $id): Response
+    #[Route(path: '/order/{orderId}', name: 'order', methods: ['GET'])]
+    public function order(OrderEntity $order): Response
     {
-        $order = $this->orderRepository->byTableId($id);
         $products = $this->productRepository->findAll();
 
         return $this->render('order/index.html.twig', [
@@ -30,12 +26,19 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/product/select', name: 'product.select', methods: ['POST'])]
-    public function addToOrder(Request $request)
+    #[Route(path: '/order/{orderId}/select/{productId}', name: 'order.product.select', methods: ['POST'])]
+    public function orderSelectProduct(OrderEntity $order, string $productId)
     {
-        $productId = $request->request->get('product_id');
+        if (!$order) {
+            throw $this->createNotFoundException('Order not found');
+        }
 
+        $product = $this->productRepository->find($productId);
 
+        if (!$product) {
+            throw $this->createNotFoundException('Product not found');
+        }
+
+        return $this->redirectToRoute('order', ['orderId' => $order->getId()]);
     }
-
 }
