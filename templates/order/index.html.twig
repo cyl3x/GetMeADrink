@@ -8,11 +8,7 @@
 <div class="container-fluid">
     <div class="row">
         {% if order is not null %}
-        <div id="order_details" class="card bg-light col-3 rounded-0 border-0 shadow-sm position-sticky vh-100" style="top: 0;">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Order Details</h5>
-            </div>
-        </div>
+            {% include 'order/order_details.html.twig' %}
         {% endif %}
         <div class="col overflow-auto" style="max-height: 100vh;">
             <div class="d-flex flex-wrap justify-content-center">
