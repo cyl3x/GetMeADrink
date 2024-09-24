@@ -7,7 +7,6 @@ use App\Entity\ProductEntity;
 use App\Repository\OrderProductRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -22,21 +21,8 @@ class OrderController extends AbstractController
     #[Route(path: '/order/{orderId}', name: 'order', methods: ['GET'])]
     public function order(OrderEntity $order): Response
     {
-        $products = $this->productRepository->findAll();
-
         return $this->render('order/index.html.twig', [
             'order' => $order,
-            'products' => $products,
-        ]);
-    }
-
-    #[Route(path: '/order/{orderId}/select/{productId}', name: 'order.product.select', methods: ['POST'])]
-    public function orderSelectProduct(OrderEntity $order, ProductEntity $product): Response
-    {
-        $orderProduct = $this->orderProductRepository->fromProduct($order, $product);
-
-        return new JsonResponse([
-            'orderProduct' => $orderProduct,
         ]);
     }
 }

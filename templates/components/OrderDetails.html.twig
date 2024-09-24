@@ -1,0 +1,25 @@
+<div id="order_details" class="card bg-light col-3 rounded-0 border-0 shadow-sm position-sticky vh-100" style="top: 0;" {{ attributes }}>
+    <div class="card-body d-flex flex-column">
+        <h5 class="card-title pb-2 border-bottom border-dark">Pending</h5>
+        {% for product in this.pendingProducts %}
+            <div class="d-flex flex-row">
+                <div class="pe-2"> {{ product.pendingQuantity }} </div>
+                <div class="pe-2"> x | {{ product.name }} </div>
+                <div class="pe-3"> |
+                    <button type="button" class="btn btn-outline-dark"
+                        style=" --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;
+                                --bs-btn-font-family: arial;">
+                        &#10004;  Complete
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+        <h5 class="card-title pb-2 pt-2 border-bottom border-dark">Completed</h5>
+        {% for product in this.deliveredProducts %}
+            <div class="d-flex flex-row">
+                <div class="pe-2"> {{ product.quantity }} </div>
+                <div class="pe-2"> x | {{ product.name }} </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

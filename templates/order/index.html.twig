@@ -7,21 +7,8 @@
 {% block body %}
 <div class="container-fluid">
     <div class="row">
-        {% if order is not null %}
-            {% include 'order/order_details.html.twig' %}
-        {% endif %}
-        <div class="col overflow-auto" style="max-height: 100vh;">
-            <div class="d-flex flex-wrap justify-content-center">
-                {% for product in products %}
-                <form action="/order/{{ order.id }}/select/{{ product.id }}" method="POST">
-                    <button type="submit" class="btn btn-light shadow-sm m-3" style="width: 10rem; height: 10rem;"> {{product.name}}
-                        <br/>
-                        <small>Drinks, Zwischensumme, ETC</small>
-                    </button>
-                </form>
-                {% endfor %}
-            </div>
-        </div>
+        {{ component('OrderDetails', { order: order }) }}
+        {{ component('Products', { order: order }) }}
     </div>
 </div>
 {% endblock %}

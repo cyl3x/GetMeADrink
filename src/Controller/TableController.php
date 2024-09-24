@@ -22,18 +22,6 @@ class TableController extends AbstractController
     #[Route(path: '/tables', name: 'tables', methods: ['GET'])]
     public function tables(): Response
     {
-        $tables = $this->tableRepository->findAll();
-
-        return $this->render('tables/index.html.twig', [
-            'tables' => $tables,
-        ]);
-    }
-
-    #[Route(path: '/table/{tableId}', name: 'table.select', methods: ['POST'])]
-    public function selectTable(TableEntity $table): Response
-    {
-        $order = $this->orderRepository->fromTable($table);
-
-        return $this->redirectToRoute('order', ['orderId' => $order->getId()]);
+        return $this->render('tables/index.html.twig');
     }
 }

@@ -1,0 +1,15 @@
+<div class="col overflow-auto" style="max-height: 100vh;">
+    <div class="d-flex flex-wrap justify-content-center">
+        {% for product in this.products %}
+        <button
+            class="btn btn-light shadow-sm m-3"
+            style="width: 10rem; height: 10rem;"
+            {{ live_action('addProduct', { productId: product.id }, { debounce: 150 }) }}
+        >
+            {{ product.name }}
+            <br/>
+            <small>Drinks, Zwischensumme, ETC</small>
+        </button>
+        {% endfor %}
+    </div>
+</div>
