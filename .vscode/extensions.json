@@ -5,6 +5,7 @@
     "bmewburn.vscode-intelephense-client",
     "bajdzis.vscode-twig-pack",
     "EditorConfig.EditorConfig",
-    "mkhl.direnv"
+    "mkhl.direnv",
+    "hossaini.bootstrap-intellisense"
   ]
 }
