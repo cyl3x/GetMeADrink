@@ -30,7 +30,13 @@ class OrderDetails
     #[LiveListener('product:add')]
     public function addProduct(#[LiveArg] ProductEntity $product): void
     {
-        $this->orderProductRepository->fromProduct($this->order, $product);
+        $this->orderProductRepository->addFromProduct($this->order, $product);
+    }
+
+    #[LiveListener('product:remove')]
+    public function removeProduct(#[LiveArg] ProductEntity $product): void
+    {
+        $this->orderProductRepository->removeFromProduct($this->order, $product);
     }
 
     public function getPendingProducts(): \ArrayIterator
