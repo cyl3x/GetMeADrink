@@ -19,12 +19,12 @@ class OrderProductRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderProductEntity::class);
     }
 
-    public function addFromProduct(OrderEntity $order, ProductEntity $product): OrderProductEntity
+    public function addFromProduct(OrderEntity $order, string $productId): OrderProductEntity
     {
         $em = $this->getEntityManager();
 
         $existing = $this->findOneBy([
-            'product' => $product,
+            'product' => $productId,
             'order' => $order,
         ]);
 
@@ -37,6 +37,8 @@ class OrderProductRepository extends ServiceEntityRepository
             return $existing;
         }
 
+        $product = $em->getReference(ProductEntity::class, $productId);
+
         $orderProduct = (new OrderProductEntity())
             ->setProduct($product)
             ->setOrder($order);
@@ -47,12 +49,12 @@ class OrderProductRepository extends ServiceEntityRepository
         return $orderProduct;
     }
 
-    public function removeFromProduct(OrderEntity $order, ProductEntity $product): OrderProductEntity
+    public function removeFromProduct(OrderEntity $order, string $productId): OrderProductEntity
     {
         $em = $this->getEntityManager();
 
         $existing = $this->findOneBy([
-            'product' => $product,
+            'product' => $productId,
             'order' => $order,
         ]);
 
