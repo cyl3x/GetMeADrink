@@ -3,7 +3,10 @@
     <button
         class="btn {% if table.orders|length > 0 %} btn-warning {% else %} btn-light {% endif %} shadow-sm m-3"
         style="width: 10rem; height: 10rem;"
-        {{ live_action('selectTable', { tableId: table.id }, { debounce: 150 }) }}
+
+        data-action="live#action"
+        data-live-action-param="debounce(300)|selectTable"
+        data-live-table-id-param="{{ table.id }}"
     >
         Tisch {{ table.id }}
         <br/>
