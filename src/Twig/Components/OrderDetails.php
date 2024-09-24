@@ -4,7 +4,6 @@ namespace App\Twig\Components;
 
 use App\Entity\OrderEntity;
 use App\Entity\OrderProductEntity;
-use App\Entity\ProductEntity;
 use App\Repository\OrderProductRepository;
 use App\Repository\OrderRepository;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -28,15 +27,15 @@ class OrderDetails
     }
 
     #[LiveListener('product:add')]
-    public function addProduct(#[LiveArg] ProductEntity $product): void
+    public function addProduct(#[LiveArg] string $productId): void
     {
-        $this->orderProductRepository->addFromProduct($this->order, $product);
+        $this->orderProductRepository->addFromProduct($this->order, $productId);
     }
 
     #[LiveListener('product:remove')]
-    public function removeProduct(#[LiveArg] ProductEntity $product): void
+    public function removeProduct(#[LiveArg] string $productId): void
     {
-        $this->orderProductRepository->removeFromProduct($this->order, $product);
+        $this->orderProductRepository->removeFromProduct($this->order, $productId);
     }
 
     public function getPendingProducts(): \ArrayIterator
