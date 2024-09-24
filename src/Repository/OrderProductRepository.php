@@ -57,7 +57,7 @@ class OrderProductRepository extends ServiceEntityRepository
         ]);
 
         if ($existing) {
-            $existing->setPendingQuantity(-1);
+            $existing->addPendingQuantity(-1);
 
             $em->persist($existing);
             $em->flush();
