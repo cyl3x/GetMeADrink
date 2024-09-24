@@ -125,12 +125,20 @@ class OrderProductEntity implements \JsonSerializable
     {
         $this->quantity = $quantity;
 
+        if ($this->quantity < 0) {
+            $this->quantity = 0;
+        }
+
         return $this;
     }
 
     public function addQuantity(int $quantity = 1): self
     {
         $this->quantity += $quantity;
+
+        if ($this->quantity < 0) {
+            $this->quantity = 0;
+        }
 
         return $this;
     }
@@ -143,6 +151,10 @@ class OrderProductEntity implements \JsonSerializable
     public function setPendingQuantity(int $pendingQuantity): self
     {
         $this->pendingQuantity = $pendingQuantity;
+
+        if ($this->pendingQuantity < 0) {
+            $this->pendingQuantity = 0;
+        }
 
         return $this;
     }
