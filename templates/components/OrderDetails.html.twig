@@ -1,4 +1,4 @@
-<div id="order_details" class="card bg-light col-3 rounded-0 border-0 shadow-sm position-sticky vh-100" style="top: 0; min-width: 300px;" {{ attributes }}>
+<div class="fixed-left overflow-y-scroll p-3 bg-light shadow d-flex flex-column gap-4" style="min-width: 300px;" {{ attributes }}>
     <style>
     .order-product-grid {
         display: grid;
@@ -15,35 +15,33 @@
     }
     </style>
 
-    <div class="card-body d-flex flex-column">
-        <h5 class="card-title pb-2 border-bottom border-dark">Pending</h5>
+    <div>
+        <h5 class="pb-2 border-bottom border-dark">Pending</h5>
         <div class="order-product-grid">
             {% for product in this.pendingProducts %}
             <div>{{ product.pendingQuantity }}x</div>
             <div class="order-product-name">{{ product.name }}</div>
-            <div>
-                <button
-                    type="button"
-                    class="btn btn-outline-dark"
-                    style=" --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;
-                            --bs-btn-font-family: arial;"
-
-                    data-action="live#emit"
-                    data-live-event-param="order-product:deliver"
-                    data-live-order-product-id-param="{{ product.id }}"
-                >
-                    &#10004;  Deliver
-                </button>
-            </div>
+            <button
+                class="btn btn-outline-dark w-100"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;"
+                data-action="live#emit"
+                data-live-event-param="order-product:deliver"
+                data-live-order-product-id-param="{{ product.id }}"
+            >
+                &#10004;  Deliver
+            </button>
             {% endfor %}
         </div>
-        <h5 class="card-title pb-2 pt-2 border-bottom border-dark">Delivered</h5>
-        {% for product in this.deliveredProducts %}
+    </div>
+
+    <div>
+        <h5 class="pb-2 pt-2 border-bottom border-dark">Delivered</h5>
         <div class="order-product-grid">
+            {% for product in this.deliveredProducts %}
             <div>{{ product.quantity }}x</div>
             <div class="order-product-name">{{ product.name }}</div>
-            <div>{{ product.price }}€</div>
+            <div>{{ product.price }} €</div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>

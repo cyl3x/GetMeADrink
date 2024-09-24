@@ -1,18 +1,16 @@
-<div class="col overflow-auto" style="max-height: 100vh;" {{ attributes }}>
-    <div class="d-flex flex-wrap justify-content-center">
-        {% for product in this.products %}
-        <button
-            class="btn btn-light shadow-sm m-3"
-            style="width: 10rem; height: 10rem;"
+<div class="d-flex overflow-auto flex-wrap justify-content-center" {{ attributes }}>
+    {% for product in this.products %}
+    <button
+        class="btn btn-light shadow-sm m-3"
+        style="width: 10rem; height: 10rem;"
 
-            data-action="live#emit"
-            data-live-event-param="product:add"
-            data-live-product-id-param="{{ product.id }}"
-        >
-            {{ product.name }}
-            <br/>
-            <small>Drinks, Zwischensumme, ETC</small>
-        </button>
-        {% endfor %}
-    </div>
+        data-action="live#emit"
+        data-live-event-param="product:add"
+        data-live-product-id-param="{{ product.id }}"
+    >
+        {{ product.name }}
+        <br/>
+        <small>Drinks, Zwischensumme, ETC</small>
+    </button>
+    {% endfor %}
 </div>
