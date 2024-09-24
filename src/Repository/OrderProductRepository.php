@@ -19,7 +19,7 @@ class OrderProductRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderProductEntity::class);
     }
 
-    public function fromProduct(OrderEntity $order, ProductEntity $product): OrderProductEntity
+    public function addFromProduct(OrderEntity $order, ProductEntity $product): OrderProductEntity
     {
         $em = $this->getEntityManager();
 
@@ -45,5 +45,24 @@ class OrderProductRepository extends ServiceEntityRepository
         $em->flush();
 
         return $orderProduct;
+    }
+
+    public function removeFromProduct(OrderEntity $order, ProductEntity $product): OrderProductEntity
+    {
+        $em = $this->getEntityManager();
+
+        $existing = $this->findOneBy([
+            'product' => $product,
+            'order' => $order,
+        ]);
+
+        if ($existing) {
+            $existing->setPendingQuantity(-1);
+
+            $em->persist($existing);
+            $em->flush();
+
+            return $existing;
+        }
     }
 }

@@ -151,6 +151,10 @@ class OrderProductEntity implements \JsonSerializable
     {
         $this->pendingQuantity += $pendingQuantity;
 
+        if ($this->pendingQuantity < 0) {
+            $this->pendingQuantity = 0;
+        }
+
         return $this;
     }
 
