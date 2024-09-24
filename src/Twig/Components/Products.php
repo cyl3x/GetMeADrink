@@ -6,8 +6,6 @@ use App\Entity\OrderEntity;
 use App\Repository\OrderProductRepository;
 use App\Repository\ProductRepository;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
@@ -16,7 +14,7 @@ class Products
 {
     use DefaultActionTrait;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(writable: false)]
     public OrderEntity $order;
 
     public function __construct(
@@ -28,13 +26,5 @@ class Products
     public function getProducts(): array
     {
         return $this->productRepository->findAll();
-    }
-
-    #[LiveAction]
-    public function addProduct(#[LiveArg] string $productId): void
-    {
-        $product = $this->productRepository->find($productId);
-
-        $this->orderProductRepository->fromProduct($this->order, $product);
     }
 }

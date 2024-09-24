@@ -5,6 +5,7 @@ namespace App\Resolver;
 use App\Entity\ProductEntity;
 use App\Exception\ResolveException;
 use App\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -27,7 +28,7 @@ class ProductEntityResolver implements ValueResolverInterface
             return [];
         }
 
-        $productId = $request->attributes->get('productId');
+        $productId = $this->getId($request->attributes);
 
         if (!$productId) {
             throw new ResolveException(ProductEntity::class, 'No property named "productId" found in request');
@@ -40,5 +41,26 @@ class ProductEntityResolver implements ValueResolverInterface
         }
 
         yield $product;
+    }
+
+    public function getId(ParameterBag $attributes): mixed
+    {
+        if ($attributes->has('id')) {
+            return $attributes->get('id');
+        }
+
+        if ($attributes->has('productId')) {
+            return $attributes->get('productId');
+        }
+
+        if ($attributes->has('_live_request_data')) {
+            $liveData = $attributes->get('_live_request_data');
+
+            if (\array_key_exists('args', $liveData)) {
+                return $liveData['args']['id'] ?? $liveData['args']['productId'] ?? null;
+            }
+        }
+
+        return null;
     }
 }
