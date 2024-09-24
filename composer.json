@@ -1,4 +1,23 @@
 {
+    "authors": [
+        {
+            "name": "Michel Bade",
+            "email": "cyl3x@posteo.de",
+            "homepage": "https://github.com/cyl3x/",
+            "role": "Lead Developer"
+        },
+        {
+            "name": "Michael Müller",
+            "homepage": "https://github.com/Michi-M22",
+            "role": "Developer"
+        },
+        {
+            "name": "Jonathan Leiermann",
+            "email": "dev.leiermannjonathan@gmail.com",
+            "homepage": "https://github.com/Leiermann-J",
+            "role": "Developer"
+        }
+    ],
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
