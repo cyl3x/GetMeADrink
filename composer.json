@@ -91,7 +91,12 @@
         "setup": [
             "bin/console doctrine:database:drop --force",
             "bin/console doctrine:database:create",
+            "@setup:update"
+        ],
+        "setup:update": [
+            "composer install",
             "@migrate",
+            "bin/console importmap:install",
             "bin/console asset-map:compile"
         ],
         "migrate": "bin/console doctrine:migrations:migrate -n",
