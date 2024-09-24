@@ -35,4 +35,12 @@ class Tables extends AbstractController
 
         return $this->redirectToRoute('order', ['orderId' => $order->getId()]);
     }
+
+    public function tableHasOrder(TableEntity $table): bool
+    {
+        if($this->orderRepository->hasOrder($table) !== null){
+            return true;
+        }
+        return false;
+    }
 }

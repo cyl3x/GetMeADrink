@@ -6,6 +6,7 @@ use App\Entity\OrderEntity;
 use App\Entity\OrderStatusEntity;
 use App\Entity\TableEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Schema\Table;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -55,5 +56,14 @@ class OrderRepository extends ServiceEntityRepository
         $em->flush();
 
         return $order;
+    }
+
+    public function hasOrder(TableEntity $table): ?OrderEntity
+    {
+        $existingOrder = $this->findOneBy([
+            'table' => $table,
+            'status' => OrderStatusEntity::PENDING,
+        ]);
+         return $existingOrder;
     }
 }
