@@ -8,7 +8,8 @@ use App\Entity\ProductEntity;
 use App\Repository\OrderProductRepository;
 use App\Repository\OrderRepository;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\Attribute\LiveListener;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
@@ -17,13 +18,19 @@ class OrderDetails
 {
     use DefaultActionTrait;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(writable: false)]
     public OrderEntity $order;
 
     public function __construct(
         private readonly OrderRepository $orderRepository,
         private readonly OrderProductRepository $orderProductRepository,
     ) {
+    }
+
+    #[LiveListener('product:add')]
+    public function addProduct(#[LiveArg] ProductEntity $product): void
+    {
+        $this->orderProductRepository->fromProduct($this->order, $product);
     }
 
     public function getPendingProducts(): \ArrayIterator

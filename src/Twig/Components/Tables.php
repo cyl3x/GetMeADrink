@@ -29,9 +29,8 @@ class Tables extends AbstractController
     }
 
     #[LiveAction]
-    public function selectTable(#[LiveArg] string $tableId): Response
+    public function selectTable(#[LiveArg] TableEntity $table): Response
     {
-        $table = $this->tableRepository->find($tableId);
         $order = $this->orderRepository->fromTable($table);
 
         return $this->redirectToRoute('order', ['orderId' => $order->getId()]);
