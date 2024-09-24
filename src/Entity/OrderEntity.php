@@ -34,7 +34,7 @@ class OrderEntity
     /**
      * @var Collection<int, OrderProductEntity>
      */
-    #[ORM\OneToMany(targetEntity: OrderProductEntity::class, mappedBy: 'order')]
+    #[ORM\OneToMany(targetEntity: OrderProductEntity::class, mappedBy: 'order', indexBy: 'id')]
     private Collection $orderProducts;
 
     public function getId(): int
