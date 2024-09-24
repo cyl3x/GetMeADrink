@@ -1,4 +1,23 @@
 {
+    "authors": [
+        {
+            "name": "cyl3x",
+            "email": "cyl3x@posteo.de",
+            "homepage": "https://github.com/cyl3x/",
+            "role": "Lead Developer"
+        },
+        {
+            "name": "THN_Michi",
+            "homepage": "https://github.com/Michi-M22",
+            "role": "Developer"
+        },
+        {
+            "name": "frakes",
+            "email": "dev.leiermannjonathan@gmail.com",
+            "homepage": "https://github.com/jonathanleiermann",
+            "role": "Developer"
+        }
+    ],
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
