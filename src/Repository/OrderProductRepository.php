@@ -19,7 +19,7 @@ class OrderProductRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderProductEntity::class);
     }
 
-    public function addFromProduct(OrderEntity $order, string $productId): OrderProductEntity
+    public function addFromProduct(OrderEntity $order, int $productId): OrderProductEntity
     {
         $em = $this->getEntityManager();
 
@@ -49,7 +49,7 @@ class OrderProductRepository extends ServiceEntityRepository
         return $orderProduct;
     }
 
-    public function removeFromProduct(OrderEntity $order, string $productId): OrderProductEntity
+    public function removeFromProduct(OrderEntity $order, int $productId): OrderProductEntity
     {
         $em = $this->getEntityManager();
 
@@ -66,5 +66,18 @@ class OrderProductRepository extends ServiceEntityRepository
 
             return $existing;
         }
+    }
+
+    public function deliver(OrderProductEntity $orderProduct): void
+    {
+        if ($orderProduct->getPendingQuantity() === 0) {
+            return;
+        }
+
+        $orderProduct->addPendingQuantity(-1);
+        $orderProduct->addQuantity();
+
+        $this->getEntityManager()->persist($orderProduct);
+        $this->getEntityManager()->flush();
     }
 }

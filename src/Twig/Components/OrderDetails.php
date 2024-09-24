@@ -27,15 +27,29 @@ class OrderDetails
     }
 
     #[LiveListener('product:add')]
-    public function addProduct(#[LiveArg] string $productId): void
+    public function addProduct(#[LiveArg] int $productId): void
     {
         $this->orderProductRepository->addFromProduct($this->order, $productId);
     }
 
     #[LiveListener('product:remove')]
-    public function removeProduct(#[LiveArg] string $productId): void
+    public function removeProduct(#[LiveArg] int $productId): void
     {
         $this->orderProductRepository->removeFromProduct($this->order, $productId);
+    }
+
+    #[LiveListener('order-product:deliver')]
+    public function deliverProduct(#[LiveArg] int $orderProductId): void
+    {
+        $orderProduct = $this->order->getOrderProducts()->findFirst(
+            static fn (int $key) => $key === $orderProductId
+        );
+
+        if (!$orderProduct) {
+            return;
+        }
+
+        $this->orderProductRepository->deliver($orderProduct);
     }
 
     public function getPendingProducts(): \ArrayIterator

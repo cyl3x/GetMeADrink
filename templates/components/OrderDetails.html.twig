@@ -27,13 +27,17 @@
                     class="btn btn-outline-dark"
                     style=" --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;
                             --bs-btn-font-family: arial;"
+
+                    data-action="live#emit"
+                    data-live-event-param="order-product:deliver"
+                    data-live-order-product-id-param="{{ product.id }}"
                 >
-                    &#10004;  Complete
+                    &#10004;  Deliver
                 </button>
             </div>
             {% endfor %}
         </div>
-        <h5 class="card-title pb-2 pt-2 border-bottom border-dark">Completed</h5>
+        <h5 class="card-title pb-2 pt-2 border-bottom border-dark">Delivered</h5>
         {% for product in this.deliveredProducts %}
         <div class="order-product-grid">
             <div>{{ product.quantity }}x</div>

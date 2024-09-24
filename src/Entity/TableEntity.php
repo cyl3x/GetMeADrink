@@ -23,7 +23,7 @@ class TableEntity
     /**
      * @var Collection<int, OrderEntity>
      */
-    #[ORM\OneToMany(targetEntity: OrderEntity::class, mappedBy: 'table')]
+    #[ORM\OneToMany(targetEntity: OrderEntity::class, mappedBy: 'table', indexBy: 'id')]
     private Collection $orders;
 
     public function getId(): int
