@@ -1,7 +1,7 @@
 <div class="d-flex flex-wrap justify-content-center" {{ attributes }}>
     {% for table in this.tables %}
     <button
-        class="btn btn-light shadow-sm m-3"
+        class="btn {% if table.orders|length > 0 %} btn-warning {% else %} btn-light {% endif %} shadow-sm m-3"
         style="width: 10rem; height: 10rem;"
         {{ live_action('selectTable', { tableId: table.id }, { debounce: 150 }) }}
     >
