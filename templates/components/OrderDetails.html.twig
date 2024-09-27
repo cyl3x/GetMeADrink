@@ -43,5 +43,9 @@
             <div>{{ product.price * product.quantity }} €</div>
             {% endfor %}
         </div>
+        <div class="d-flex justify-content-between border-top border-dark mt-2">
+            <h5>Total:</h5>
+            <span>{{ order.totalPrice|number_format(2) }} €</span>
+        </div>
     </div>
 </div>
