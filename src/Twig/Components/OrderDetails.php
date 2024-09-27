@@ -50,6 +50,7 @@ class OrderDetails
         }
 
         $this->orderProductRepository->deliver($orderProduct);
+        $this->orderRepository->calcTotalPrice($this->order);
     }
 
     public function getPendingProducts(): \ArrayIterator

@@ -66,4 +66,19 @@ class OrderRepository extends ServiceEntityRepository
         ]);
          return $existingOrder;
     }
+
+    public function calcTotalPrice(OrderEntity $order): float
+    {
+        $em = $this->getEntityManager();
+        $totalPrice = 0;
+
+        foreach ($order->getOrderProducts() as $orderProduct) {
+            $totalPrice += ($orderProduct->getPrice() * $orderProduct->getQuantity());
+        }
+
+        $em->persist($order->setTotalPrice($totalPrice));
+        $em->flush();
+
+        return $totalPrice;
+    }
 }
