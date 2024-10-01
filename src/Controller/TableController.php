@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Repository\ProductRepository;
+use App\Repository\TableRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -12,8 +14,17 @@ class TableController extends AbstractController
 {
     public function __construct(
         private readonly ProductRepository $productRepository,
+        private readonly TableRepository $tableRepository,
         private readonly EntityManagerInterface $entityManager
     ) {
+    }
+
+    #[Route(path: '/api/tables', name: 'api.tables', format: 'json', methods: ['GET'])]
+    public function getTables(): JsonResponse
+    {
+        $tables = $this->tableRepository->findAll();
+
+        return new JsonResponse($tables);
     }
 
     #[Route(path: '/tables', name: 'tables', methods: ['GET'])]

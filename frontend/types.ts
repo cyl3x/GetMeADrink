@@ -18,4 +18,12 @@ declare global {
             trace?: object[],
         };
     }
+
+    namespace Entity {
+        export type Table = {
+            id: number,
+            createdAt: string,
+            updatedAt: string,
+        };
+    }
 }
