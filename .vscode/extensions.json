@@ -6,6 +6,7 @@
     "bajdzis.vscode-twig-pack",
     "EditorConfig.EditorConfig",
     "mkhl.direnv",
-    "hossaini.bootstrap-intellisense"
+    "hossaini.bootstrap-intellisense",
+    "Vue.volar"
   ]
 }

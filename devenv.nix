@@ -7,6 +7,11 @@ in {
 
   dotenv.disableHint = true;
 
+  languages.javascript = {
+    enable = true;
+    npm.enable = true;
+  };
+
   languages.php = {
     enable = true;
     version = lib.mkDefault "8.2";
@@ -47,8 +52,18 @@ in {
 
     virtualHosts.":3000" = lib.mkDefault {
       extraConfig = lib.mkDefault ''
+        handle /_vite_* {
+          @websocket {
+            header Connection *Upgrade*
+            header Upgrade websocket
+          }
+
+          reverse_proxy localhost:${config.env.VITE_PORT}
+          reverse_proxy @websocket localhost:${config.env.VITE_PORT}
+        }
+
         @default {
-          not path /assets/*
+          not path /assets/* /frontend/*
         }
 
         root * public
@@ -96,4 +111,5 @@ in {
   env.APP_URL = lib.mkDefault "http://localhost:3000";
   env.DATABASE_URL = lib.mkDefault "mysql://getmeadrink:getmeadrink@127.0.0.1:${dbPort}/getmeadrink";
   env.REDIS_URL = lib.mkDefault "redis://localhost:${toString config.services.redis.port}/1";
+  env.VITE_PORT = lib.mkDefault "5154";
 }
