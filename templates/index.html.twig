@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        {% if hmr %}
+        <script type="module" rel="script" src="/_vite_/@vite/client"></script>
+        <script type="module" rel="script" src="/_vite_/frontend/main.ts"></script>
+        {% else %}
+        <link rel="stylesheet" href="/frontend/assets/main.css">
+
+        <script type="module" src="/frontend/assets/main.js"></script>
+        <script type="module" src="/frontend/assets/polyfills.js"></script>
+        {% endif %}
+    </head>
+    <body>
+        <div id="app"></div>
+    </body>
+</html>

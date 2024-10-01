@@ -9,6 +9,9 @@ framework:
     #esi: true
     #fragments: true
 
+parameters:
+    env(VITE_PORT): 5154
+
 when@test:
     framework:
         test: true
