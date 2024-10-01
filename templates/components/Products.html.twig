@@ -11,19 +11,18 @@
 
               {{product.name}} {{ product.variant.name }}
               <div class="divider-horizontal"></div>
-              {{product.price}}€
-
+              {{product.price | number_format(2)}}€
             </button>
 
             <div class="overlay">
-                <button class="side minus no-select" style="border-width: 0" data-id="{{product.name}}" data-action="live#emit"
+                <button class="side minus no-select rounded-start" style="border-width: 0" data-id="{{product.name}}" data-action="live#emit"
                 data-live-event-param="product:remove"
                 data-live-product-id-param="{{ product.id }}">-</button>
                 <div class="d-flex flex-1">
                     <div class="divider"></div>
                 </div>
                 <button
-                    class="side plus no-select"
+                    class="side plus no-select rounded-end"
                     style="border-width: 0"
                     data-action="live#emit"
                     data-live-event-param="product:add"

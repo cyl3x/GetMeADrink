@@ -19,12 +19,10 @@
         height: 100%;
         background-color: rgba(255, 255, 255, 0.8);
         display: flex;
-        justify-content: space-between;
         align-items: center;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.3s ease;
-        border-radius: 1px;
     }
 
     .button-container.active .overlay {
@@ -49,8 +47,8 @@
         flex:1;
         height: 10rem;
         width: 5rem;
-        justify-content: center;
-        align-items: center;
+        line-height: 10rem;
+        font-family: monospace;
     }
 
     .overlay .plus {
@@ -60,6 +58,8 @@
         flex:1;
         height: 10rem;
         width: 5rem;
+        line-height:10rem;
+        font-family: monospace
     }
 
     .divider {
@@ -110,7 +110,7 @@
             const timer = setTimeout(() => {
                 container.classList.remove("active");
                 timers.delete(productId);
-            }, 5000);
+            }, 2500);
 
             timers.set(productId, timer);
         }
