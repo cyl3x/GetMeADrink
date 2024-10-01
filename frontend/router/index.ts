@@ -1,10 +1,17 @@
-import Tables from '@/pages/TablesPage.vue';
+import TablesPage from '@/pages/TablesPage.vue';
+import OrderPage from '@/pages/OrderPage.vue';
 import { createWebHistory } from 'vue-router';
 
 const routes = [
     {
+        name: 'tables',
         path: '/',
-        component: Tables,
+        component: TablesPage,
+    },
+    {
+        name: 'order',
+        path: '/order/:id',
+        component: OrderPage,
     },
 ];
 

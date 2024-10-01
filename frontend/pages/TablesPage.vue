@@ -2,16 +2,17 @@
 <div
     class='d-flex flex-wrap justify-content-center'
 >
-    <button
+    <router-link
         v-for='table in tables'
         :key='table.id'
-        class='btn {% if this.tableHasOrder(table) %} btn-warning {% else %} btn-light {% endif %} shadow-sm m-3'
+        class='btn shadow-sm m-3'
         style='width: 10rem; height: 10rem;'
+        :to='{ name: "order", params: { id: table.id } }'
     >
         Tisch {{ table.id }}
         <br>
         <small>Drinks, Zwischensumme, ETC</small>
-    </button>
+    </router-link>
 </div>
 </template>
 
