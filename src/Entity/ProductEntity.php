@@ -94,16 +94,26 @@ class ProductEntity
         return $this;
     }
 
+    public function hasImage(): bool
+    {
+        return \is_resource($this->image);
+    }
+
     public function getImage(): mixed
     {
         return $this->image;
     }
 
+    public function getImageBase64(): ?string
+    {
+        return $this->hasImage()
+            ? \base64_encode(\stream_get_contents($this->getImage()))
+            : null;
+    }
+
     public function setImage(mixed $image): self
     {
-        $this->image = mb_check_encoding($image, 'UTF-8')
-            ? $image
-            : mb_convert_encoding($image, 'UTF-8');
+        $this->image = $image;
 
         return $this;
     }
