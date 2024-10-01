@@ -1,5 +1,6 @@
 import 'vite/modulepreload-polyfill';
-import bootstrap from 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 import './main.css';
 
 import { createApp } from 'vue';

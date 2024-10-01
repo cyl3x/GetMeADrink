@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TableRepository::class)]
 #[ORM\Table(name: '`table`')]
 #[ORM\HasLifecycleCallbacks]
-class TableEntity
+class TableEntity implements \JsonSerializable
 {
     use EntityDateTrait;
 
@@ -44,5 +44,14 @@ class TableEntity
     public function getOrders(): Collection
     {
         return $this->orders;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id' => $this->id,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt,
+        ];
     }
 }
