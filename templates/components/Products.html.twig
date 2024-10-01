@@ -4,14 +4,20 @@
         <div class="button-container" data-id={{product.id}}>
             <button
                 class="btn btn-light shadow-sm m-3"
-                style="width: 10rem; height: 10rem;"
+                style="width: 10rem; height: 10rem; max-width: 10rem; max-height: 10rem;"
             >
-                PICTURE
-                <br/>
+                <span class="w-100 h-100">
+                    {% if product.hasImage %}
+                    <img
+                        src="data:image/png;base64,{{ product.imageBase64|raw }}"
+                        class="w-100 h-100"
+                    >
+                    {% endif %}
+                </span>
 
-              {{product.name}} {{ product.variant.name }}
-              <div class="divider-horizontal"></div>
-              {{product.price | number_format(2)}}€
+                <span>{{product.name}} {{ product.variant.name }}</span>
+                <span class="divider-horizontal"></span>
+                <span>{{product.price | number_format(2)}} €</span>
             </button>
 
             <div class="overlay">
