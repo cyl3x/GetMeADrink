@@ -16,6 +16,10 @@
     </style>
 
     <div>
+        <a class= "d-flex btn btn-primary w-100 justify-content-center" href="{{path("tables")}}">Tischübersicht</a>
+    </div>
+
+    <div>
         <h5 class="pb-2 border-bottom border-dark">Pending</h5>
         <div class="order-product-grid">
             {% for product in this.pendingProducts %}
