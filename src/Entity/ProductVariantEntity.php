@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ProductVariantRepository::class)]
 #[ORM\Table(name: '`product_variant`')]
 #[ORM\HasLifecycleCallbacks]
-class ProductVariantEntity
+class ProductVariantEntity implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue()]
@@ -56,5 +56,16 @@ class ProductVariantEntity
     public function getProducts(): Collection
     {
         return $this->products;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
     }
 }

@@ -11,7 +11,8 @@ class FrontendController extends AbstractController
 {
     public function __construct(
         private readonly HmrService $hmrService,
-    ) {}
+    ) {
+    }
 
     #[Route(path: '/', name: 'frontend')]
     public function frontend(): Response

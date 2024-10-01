@@ -187,6 +187,9 @@ class OrderProductEntity implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -198,6 +201,9 @@ class OrderProductEntity implements \JsonSerializable
             'quantity' => $this->quantity,
             'pendingQuantity' => $this->pendingQuantity,
             'product' => $this->product->getId(),
+            'order' => $this->order->getId(),
+            'createdAt' => $this->createdAt->format(\DateTime::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTime::RFC3339),
         ];
     }
 }

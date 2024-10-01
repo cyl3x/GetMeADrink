@@ -1,5 +1,3 @@
-node_modules
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -26,7 +24,6 @@ phpstan.neon
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
-###> symfony/asset-mapper ###
-/public/assets/
-/assets/vendor/
-###< symfony/asset-mapper ###
+node_modules
+public/assets
+public/frontend

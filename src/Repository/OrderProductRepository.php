@@ -23,33 +23,26 @@ class OrderProductRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
 
-        $existing = $this->findOneBy([
+        $orderProduct = $this->findOneBy([
             'product' => $productId,
             'order' => $order,
         ]);
 
-        if ($existing) {
-            $existing->addPendingQuantity();
-
-            $em->persist($existing);
-            $em->flush();
-
-            return $existing;
+        if ($orderProduct) {
+            $orderProduct->addPendingQuantity();
+        } else {
+            $product = $em->getReference(ProductEntity::class, $productId);
+            $orderProduct = (new OrderProductEntity())
+                ->setProduct($product)
+                ->setOrder($order);
         }
 
-        $product = $em->getReference(ProductEntity::class, $productId);
-
-        $orderProduct = (new OrderProductEntity())
-            ->setProduct($product)
-            ->setOrder($order);
-
         $em->persist($orderProduct);
-        $em->flush();
 
         return $orderProduct;
     }
 
-    public function removeFromProduct(OrderEntity $order, int $productId): OrderProductEntity
+    public function removeFromProduct(OrderEntity $order, int $productId): ?OrderProductEntity
     {
         $em = $this->getEntityManager();
 
@@ -58,14 +51,15 @@ class OrderProductRepository extends ServiceEntityRepository
             'order' => $order,
         ]);
 
-        if ($existing) {
-            $existing->addPendingQuantity(-1);
-
-            $em->persist($existing);
-            $em->flush();
-
-            return $existing;
+        if (!$existing) {
+            return null;
         }
+
+        $existing->addPendingQuantity(-1);
+
+        $em->persist($existing);
+
+        return $existing;
     }
 
     public function deliver(OrderProductEntity $orderProduct): void
@@ -78,6 +72,5 @@ class OrderProductRepository extends ServiceEntityRepository
         $orderProduct->addQuantity();
 
         $this->getEntityManager()->persist($orderProduct);
-        $this->getEntityManager()->flush();
     }
 }

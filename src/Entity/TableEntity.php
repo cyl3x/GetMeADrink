@@ -46,12 +46,22 @@ class TableEntity implements \JsonSerializable
         return $this->orders;
     }
 
-    public function jsonSerialize(): mixed
+    public function getPendingOrder(): ?OrderEntity
+    {
+        return $this->orders
+            ->findFirst(static fn (int $id, OrderEntity $order) => $order->getStatus()->getId() === OrderStatusEntity::PENDING);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
-            'createdAt' => $this->createdAt,
-            'updatedAt' => $this->updatedAt,
+            'pendingOrder' => $this->getPendingOrder(),
+            'createdAt' => $this->createdAt->format(\DateTime::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTime::RFC3339),
         ];
     }
 }

@@ -11,7 +11,8 @@ class HmrService
         private ?string $environment,
         #[Autowire(env: 'int:VITE_PORT')]
         private ?int $vitePort,
-    ) {}
+    ) {
+    }
 
     public function isHmr(): bool
     {

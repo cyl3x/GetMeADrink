@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ORM\Table(name: '`product`')]
 #[ORM\HasLifecycleCallbacks]
-class ProductEntity
+class ProductEntity implements \JsonSerializable
 {
     use EntityDateTrait;
 
@@ -116,5 +116,22 @@ class ProductEntity
         $this->image = $image;
 
         return $this;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'variant' => $this->variant->jsonSerialize(),
+            'name' => $this->name,
+            'price' => $this->price,
+            'vat' => $this->vat,
+            'image' => $this->getImageBase64(),
+            'createdAt' => $this->createdAt->format(\DateTime::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTime::RFC3339),
+        ];
     }
 }

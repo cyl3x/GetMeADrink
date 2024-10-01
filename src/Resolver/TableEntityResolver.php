@@ -5,7 +5,6 @@ namespace App\Resolver;
 use App\Entity\TableEntity;
 use App\Exception\ResolveException;
 use App\Repository\TableRepository;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -28,7 +27,7 @@ class TableEntityResolver implements ValueResolverInterface
             return [];
         }
 
-        $tableId = $this->getId($request->attributes);
+        $tableId = $request->attributes->get('tableId');
 
         if (!$tableId) {
             throw new ResolveException(TableEntity::class, 'No property named "tableId" found in request');
@@ -41,26 +40,5 @@ class TableEntityResolver implements ValueResolverInterface
         }
 
         yield $table;
-    }
-
-    public function getId(ParameterBag $attributes): mixed
-    {
-        if ($attributes->has('id')) {
-            return $attributes->get('id');
-        }
-
-        if ($attributes->has('tableId')) {
-            return $attributes->get('tableId');
-        }
-
-        if ($attributes->has('_live_request_data')) {
-            $liveData = $attributes->get('_live_request_data');
-
-            if (\array_key_exists('args', $liveData)) {
-                return $liveData['args']['id'] ?? $liveData['args']['tableId'] ?? null;
-            }
-        }
-
-        return null;
     }
 }

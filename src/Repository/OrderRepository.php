@@ -6,7 +6,6 @@ use App\Entity\OrderEntity;
 use App\Entity\OrderStatusEntity;
 use App\Entity\TableEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\Schema\Table;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,18 +17,6 @@ class OrderRepository extends ServiceEntityRepository
         ManagerRegistry $registry,
     ) {
         parent::__construct($registry, OrderEntity::class);
-    }
-
-    public function byTableId(int $pTableId): ?OrderEntity
-    {
-        return $this
-            ->createQueryBuilder('o')
-            ->where('o.table = (:pTableId)')
-            ->andWhere('o.status = (:pStatusId)')
-            ->setParameter('pTableId', $pTableId)
-            ->setParameter('pStatusId', OrderStatusEntity::PENDING)
-            ->getQuery()
-            ->getOneOrNullResult();
     }
 
     public function fromTable(TableEntity $table): OrderEntity
@@ -53,21 +40,11 @@ class OrderRepository extends ServiceEntityRepository
             ->setTotalPrice(0);
 
         $em->persist($order);
-        $em->flush();
 
         return $order;
     }
 
-    public function hasOrder(TableEntity $table): ?OrderEntity
-    {
-        $existingOrder = $this->findOneBy([
-            'table' => $table,
-            'status' => OrderStatusEntity::PENDING,
-        ]);
-         return $existingOrder;
-    }
-
-    public function calcTotalPrice(OrderEntity $order): float
+    public function updateTotalPrice(OrderEntity $order): float
     {
         $em = $this->getEntityManager();
         $totalPrice = 0;
@@ -77,7 +54,6 @@ class OrderRepository extends ServiceEntityRepository
         }
 
         $em->persist($order->setTotalPrice($totalPrice));
-        $em->flush();
 
         return $totalPrice;
     }
