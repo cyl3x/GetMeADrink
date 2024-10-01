@@ -2,28 +2,58 @@
 <div
     class='d-flex flex-wrap justify-content-center'
 >
-    <router-link
+    <button
         v-for='table in tables'
         :key='table.id'
         class='btn shadow-sm m-3'
+        :class='{
+            "btn-warning": table.pendingOrder,
+            "btn-light": !table.pendingOrder,
+        }'
         style='width: 10rem; height: 10rem;'
-        :to='{ name: "order", params: { id: table.id } }'
+        :disabled='!!loadingOrder'
+        @click='ensureAndNavigateToOrder(table.id)'
     >
         Tisch {{ table.id }}
         <br>
-        <small>Drinks, Zwischensumme, ETC</small>
-    </router-link>
+
+        <span
+            v-if='loadingOrder === table.id'
+            class='spinner-border'
+            role='status'
+            aria-hidden='true'
+        />
+
+        <span v-else>{{ table.pendingOrder?.totalPrice.toFixed(2) }} €</span>
+    </button>
 </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import Api from '@/services/api';
+import { useRouter } from 'vue-router';
+import { OrderService, TableService } from '@/services';
+import { order } from '@/state';
 
+const router = useRouter();
+const orderStore = order.useStore();
 const tables = ref<Entity.Table[]>([]);
+const loadingOrder = ref<number>();
 
 async function fetchTables() {
-    tables.value = await Api.get<Entity.Table[]>('/tables');
+    tables.value = await TableService.getTables();
+}
+
+async function ensureAndNavigateToOrder(tableId: number) {
+    loadingOrder.value = tableId;
+
+    const order = await OrderService.ensureOrder(tableId);
+
+    orderStore.order = order;
+
+    loadingOrder.value = undefined;
+
+    router.push({ name: 'order', params: { id: order.id } });
 }
 
 fetchTables();

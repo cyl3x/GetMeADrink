@@ -1,6 +1,6 @@
 import TablesPage from '@/pages/TablesPage.vue';
 import OrderPage from '@/pages/OrderPage.vue';
-import { createWebHistory } from 'vue-router';
+import { createWebHashHistory } from 'vue-router';
 
 const routes = [
     {
@@ -16,6 +16,6 @@ const routes = [
 ];
 
 export default {
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes,
 };

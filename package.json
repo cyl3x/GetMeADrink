@@ -21,7 +21,9 @@
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
+    "@hotwired/stimulus": "^3.0.0",
     "@rushstack/eslint-patch": "^1.8.0",
+    "@symfony/stimulus-bridge": "^3.2.0",
     "@types/bootstrap": "^5.2.10",
     "@types/node": "^20.14.5",
     "@vitejs/plugin-legacy": "^5.4.2",

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: OrderStatusRepository::class)]
 #[ORM\Table(name: '`order_status`')]
 #[ORM\HasLifecycleCallbacks]
-class OrderStatusEntity
+class OrderStatusEntity implements \JsonSerializable
 {
     public const PENDING = 1;
     public const COMPLETED = 2;
@@ -60,5 +60,16 @@ class OrderStatusEntity
     public function getOrders(): Collection
     {
         return $this->orders;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
     }
 }

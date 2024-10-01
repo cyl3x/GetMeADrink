@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Contract\EntityDateTrait;
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
 #[ORM\HasLifecycleCallbacks]
-class OrderEntity
+class OrderEntity implements \JsonSerializable
 {
     use EntityDateTrait;
 
@@ -34,8 +35,13 @@ class OrderEntity
     /**
      * @var Collection<int, OrderProductEntity>
      */
-    #[ORM\OneToMany(targetEntity: OrderProductEntity::class, mappedBy: 'order', indexBy: 'id')]
+    #[ORM\OneToMany(targetEntity: OrderProductEntity::class, mappedBy: 'order', indexBy: 'id', fetch: 'EAGER')]
     private Collection $orderProducts;
+
+    public function __construct()
+    {
+        $this->orderProducts = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -108,5 +114,23 @@ class OrderEntity
         $this->orderProducts->add($orderProduct);
 
         return $this;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'table' => $this->table->getId(),
+            'status' => $this->status->jsonSerialize(),
+            'totalPrice' => $this->totalPrice,
+            'orderProducts' => $this->orderProducts
+                ->map(fn (OrderProductEntity $orderProduct) => $orderProduct->jsonSerialize())
+                ->getValues(),
+            'createdAt' => $this->createdAt->format(\DateTime::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTime::RFC3339),
+        ];
     }
 }
