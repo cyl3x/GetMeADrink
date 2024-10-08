@@ -19,3 +19,11 @@ export function removeProduct(orderId: number, productId: number) {
 export function deliverProduct(orderId: number, orderProductId: number) {
     return Api.post<Entity.Order>(`/order/${orderId}/deliver/${orderProductId}`);
 }
+
+export function cancelOrder(orderId: number){
+    return Api.post<Entity.Order>(`/order/cancel/${orderId}`)
+}
+
+export function completeOrder(orderId:number){
+    return Api.post<Entity.Order>(`/order/complete/${orderId}`)
+}
