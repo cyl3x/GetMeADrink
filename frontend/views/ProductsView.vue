@@ -11,21 +11,22 @@
             :class='{ "active": timers.has(product.id) }'
         >
             <button
-                class='btn btn-light shadow-sm m-3'
-                style='width: 10rem; height: 10rem; max-width: 10rem; max-height: 10rem;'
+                class='btn btn-light d-flex justify-content-center flex-column shadow-sm m-3'
+                style='width: 10rem; height: 10rem;'
                 @click='startOrResetTimer(product.id)'
             >
-                <span class='w-100 h-100'>
-                    <img
-                        v-if='product.image'
-                        :src='`data:image/png;base64,${product.image}`'
-                        class='w-100 h-100'
-                    >
-                </span>
+                <img
+                    v-if='product.image'
+                    :src='`data:image/png;base64,${product.image}`'
+                    class='object-fit-contain'
+                    style='height: 100%; width: 100%'
+                >
 
-                <span>{{ product.name }} {{ product.variant.name }}</span>
-                <span class='divider-horizontal' />
-                <span>{{ product.price.toFixed(2) }} €</span>
+                <div>
+                    <span>{{ product.name }} {{ product.variant.name }}</span>
+                    <span class='divider-horizontal' />
+                    <span>{{ product.price.toFixed(2) }} €</span>
+                </div>
             </button>
 
             <div class='overlay'>
