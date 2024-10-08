@@ -5,7 +5,7 @@
     <button
         v-for='table in tables'
         :key='table.id'
-        class='btn shadow-sm m-3'
+        class='btn shadow-sm m-3 position-relative'
         :class='{
             "btn-warning": table.pendingOrder,
             "btn-light": !table.pendingOrder,
@@ -14,6 +14,14 @@
         :disabled='!!loadingOrder'
         @click='ensureAndNavigateToOrder(table.id)'
     >
+    {{ table.pendingProducts }}
+        <span
+            v-if='table.pendingProducts'
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        >{{ table.pendingOrder?.orderProducts.filter((op) => op.pendingQuantity > 0).length }}
+        </span>
+
+
         Tisch {{ table.id }}
         <br>
 
@@ -34,6 +42,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { OrderService, TableService } from '@/services';
 import { order } from '@/state';
+import { getProducts } from '@/services/product-service';
 
 const router = useRouter();
 const orderStore = order.useStore();
