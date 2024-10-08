@@ -75,4 +75,26 @@ class OrderRepository extends ServiceEntityRepository
         // Gibt true zurück, wenn es mindestens ein offenes Produkt gibt
         return $pendingProductCount > 0;
     }
+
+    public function setStatusCanceled(OrderEntity $order): OrderEntity
+    {
+        $em = $this->getEntityManager();
+
+        $status = $em->getReference(OrderStatusEntity::class, OrderStatusEntity::CANCELED);
+
+        $em->persist($order->setStatus($status));
+
+        return $order;
+    }
+
+    public function setStatusCompleted(OrderEntity $order): OrderEntity
+    {
+        $em = $this->getEntityManager();
+
+        $status = $em->getReference(OrderStatusEntity::class, OrderStatusEntity::COMPLETED);
+
+        $em->persist($order->setStatus($status));
+
+        return $order;
+    }
 }

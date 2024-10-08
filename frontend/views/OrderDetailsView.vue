@@ -12,6 +12,10 @@
         </button>
     </div>
 
+    <div v-if="orderStore.order != null">
+        <h4 class="justify-content-center">Tisch {{orderStore.order.table}}</h4>
+    </div>
+
     <div v-if='pendingProducts.length > 0'>
         <h5 class='pb-2 border-bottom border-dark'>
             Ausstehend
@@ -38,7 +42,7 @@
 
     <div v-if='deliveredProducts.length > 0'>
         <h5 class='pb-2 pt-2 border-bottom border-dark'>
-            Geliefered
+            Bestellung
         </h5>
         <div class='order-product-grid'>
             <template
@@ -52,11 +56,14 @@
                 <div>{{ (product.price * product.quantity).toFixed(2) }} €</div>
             </template>
         </div>
-        <div class='d-flex justify-content-between border-top border-dark mt-2'>
-            <h5>Total:</h5>
-            <span>{{ orderStore.order?.totalPrice.toFixed(2) }} €</span>
-        </div>
+
     </div>
+
+    <div v-if= "orderStore.order" class="d-flex flex-column gap-3">
+        <button v-if="orderStore.order?.totalPrice!=0" class="btn btn-primary" @click='completeOrder()'>Zahlen: {{ orderStore.order.totalPrice.toFixed(2) }}€</button>
+        <button class="btn btn-secondary" @click='cancelOrder()'>Abbrechen</button>
+    </div>
+
 </div>
 </template>
 
@@ -93,6 +100,24 @@ async function deliverProduct(orderProductId: number) {
         throw new Error('No order available');
 
     orderStore.order = await OrderService.deliverProduct(orderStore.order.id, orderProductId);
+}
+
+async function completeOrder() {
+    if (!orderStore.order){
+        throw new Error('No order available');
+    }
+    await OrderService.completeOrder(orderStore.order?.id);
+    orderStore.order=null;
+    router.push({name:'tables'})
+}
+
+async function cancelOrder(){
+    if (!orderStore.order)
+        throw new Error('No order available');
+
+    await OrderService.cancelOrder(orderStore.order?.id)
+    orderStore.order= null
+    router.push({name:'tables'})
 }
 </script>
 

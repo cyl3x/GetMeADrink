@@ -69,4 +69,20 @@ class OrderController extends AbstractController
 
         return new JsonResponse($orderProduct->getOrder());
     }
+
+    #[Route(path: '/order/cancel/{orderId}', name: 'order.cancel', methods: ['POST'])]
+    public function cancelOrder(OrderEntity $order): JsonResponse
+    {
+        $this->orderRepository->setStatusCanceled($order);
+        $this->entityManager->flush();
+        return new JsonResponse($order);
+    }
+
+    #[Route(path: '/order/complete/{orderId}', name: 'order.complete', methods: ['POST'])]
+    public function compeleteOrder(OrderEntity $order): JsonResponse
+    {
+        $this->orderRepository->setStatusCompleted($order);
+        $this->entityManager->flush();
+        return new JsonResponse($order);
+    }
 }
