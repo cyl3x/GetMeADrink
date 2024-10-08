@@ -12,8 +12,10 @@
         </button>
     </div>
 
-    <div v-if="orderStore.order != null">
-        <h4 class="justify-content-center">Tisch {{orderStore.order.table}}</h4>
+    <div v-if='orderStore.order != null'>
+        <h4 class='justify-content-center'>
+            Tisch {{ orderStore.order.table }}
+        </h4>
     </div>
 
     <div v-if='pendingProducts.length > 0'>
@@ -56,14 +58,16 @@
                 <div>{{ (product.price * product.quantity).toFixed(2) }} €</div>
             </template>
         </div>
-
     </div>
 
-    <div v-if= "orderStore.order" class="d-flex flex-column gap-3">
-        <button v-if="orderStore.order?.totalPrice!=0" class="btn btn-primary" @click='completeOrder()'>Zahlen: {{ orderStore.order.totalPrice.toFixed(2) }}€</button>
-        <button class="btn btn-secondary" @click='cancelOrder()'>Abbrechen</button>
+    <div v-if='orderStore.order' class='d-flex flex-column gap-3'>
+        <button v-if='orderStore.order?.totalPrice!=0' class='btn btn-primary' @click='completeOrder()'>
+            Zahlen: {{ orderStore.order.totalPrice.toFixed(2) }}€
+        </button>
+        <button class='btn btn-secondary' @click='cancelOrder()'>
+            Abbrechen
+        </button>
     </div>
-
 </div>
 </template>
 
@@ -103,21 +107,21 @@ async function deliverProduct(orderProductId: number) {
 }
 
 async function completeOrder() {
-    if (!orderStore.order){
+    if (!orderStore.order)
         throw new Error('No order available');
-    }
+
     await OrderService.completeOrder(orderStore.order?.id);
-    orderStore.order=null;
-    router.push({name:'tables'})
+    orderStore.order = null;
+    router.push({ name:'tables' });
 }
 
 async function cancelOrder(){
     if (!orderStore.order)
         throw new Error('No order available');
 
-    await OrderService.cancelOrder(orderStore.order?.id)
-    orderStore.order= null
-    router.push({name:'tables'})
+    await OrderService.cancelOrder(orderStore.order?.id);
+    orderStore.order = null;
+    router.push({ name:'tables' });
 }
 </script>
 
