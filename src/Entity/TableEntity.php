@@ -52,6 +52,13 @@ class TableEntity implements \JsonSerializable
             ->findFirst(static fn (int $id, OrderEntity $order) => $order->getStatus()->getId() === OrderStatusEntity::PENDING);
     }
 
+    public function hasPendingProducts(): bool
+    {
+        return !$this->getPendingOrder()?->getOrderProducts()
+            ->filter(static fn (OrderProductEntity $product) => $product->getPendingQuantity() > 0)
+            ->isEmpty() ?? false;
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -60,6 +67,7 @@ class TableEntity implements \JsonSerializable
         return [
             'id' => $this->id,
             'pendingOrder' => $this->getPendingOrder(),
+            'pendingProducts' => $this->hasPendingProducts(),
             'createdAt' => $this->createdAt->format(\DateTime::RFC3339),
             'updatedAt' => $this->updatedAt?->format(\DateTime::RFC3339),
         ];

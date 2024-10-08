@@ -23,6 +23,7 @@ declare global {
         export type Table = {
             id: number,
             pendingOrder: Order | null,
+            pendingProducts: boolean,
             createdAt: string,
             updatedAt: string | null,
         };
