@@ -23,7 +23,7 @@ declare global {
         export type Table = {
             id: number,
             pendingOrder: Order | null,
-            countPendingProducts: number,
+            quantityProducts: number,
             createdAt: string,
             updatedAt: string | null,
         };
@@ -60,7 +60,6 @@ declare global {
             price: number,
             vat: number,
             quantity: number,
-            pendingQuantity: number,
             product: string,
             order: string,
             createdAt: string,

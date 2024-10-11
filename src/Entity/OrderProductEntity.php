@@ -37,9 +37,6 @@ class OrderProductEntity implements \JsonSerializable
     #[ORM\Column(type: Types::INTEGER)]
     private int $quantity = 0;
 
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $pendingQuantity = 1;
-
     #[ORM\ManyToOne(targetEntity: ProductEntity::class)]
     #[ORM\JoinColumn(onDelete: 'cascade')]
     private ?ProductEntity $product = null;
@@ -143,33 +140,6 @@ class OrderProductEntity implements \JsonSerializable
         return $this;
     }
 
-    public function getPendingQuantity(): int
-    {
-        return $this->pendingQuantity;
-    }
-
-    public function setPendingQuantity(int $pendingQuantity): self
-    {
-        $this->pendingQuantity = $pendingQuantity;
-
-        if ($this->pendingQuantity < 0) {
-            $this->pendingQuantity = 0;
-        }
-
-        return $this;
-    }
-
-    public function addPendingQuantity(int $pendingQuantity = 1): self
-    {
-        $this->pendingQuantity += $pendingQuantity;
-
-        if ($this->pendingQuantity < 0) {
-            $this->pendingQuantity = 0;
-        }
-
-        return $this;
-    }
-
     public function getProduct(): ?ProductEntity
     {
         return $this->product;
@@ -199,7 +169,6 @@ class OrderProductEntity implements \JsonSerializable
             'price' => $this->price,
             'vat' => $this->vat,
             'quantity' => $this->quantity,
-            'pendingQuantity' => $this->pendingQuantity,
             'product' => $this->product->getId(),
             'order' => $this->order->getId(),
             'createdAt' => $this->createdAt->format(\DateTime::RFC3339),

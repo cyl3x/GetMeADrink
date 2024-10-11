@@ -52,7 +52,7 @@ class TableEntity implements \JsonSerializable
             ->findFirst(static fn (int $id, OrderEntity $order) => $order->getStatus() === OrderStatus::Pending);
     }
 
-    public function countPendingProducts(): int
+    public function quantityProducts(): int
     {
         if (!$this->getPendingOrder()) {
             return 0;
@@ -61,8 +61,7 @@ class TableEntity implements \JsonSerializable
         return $this
             ->getPendingOrder()
             ->getOrderProducts()
-            ->filter(static fn (OrderProductEntity $product) => $product->getPendingQuantity() > 0)
-            ->count();
+            ->reduce(fn (int $carry, OrderProductEntity $orderProduct) => $carry + $orderProduct->getQuantity(), 0);
     }
 
     /**
@@ -73,7 +72,7 @@ class TableEntity implements \JsonSerializable
         return [
             'id' => $this->id,
             'pendingOrder' => $this->getPendingOrder(),
-            'countPendingProducts' => $this->countPendingProducts(),
+            'quantityProducts' => $this->quantityProducts(),
             'createdAt' => $this->createdAt->format(\DateTime::RFC3339),
             'updatedAt' => $this->updatedAt?->format(\DateTime::RFC3339),
         ];
