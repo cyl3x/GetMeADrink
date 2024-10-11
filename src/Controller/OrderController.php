@@ -10,6 +10,7 @@ use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/api', name: 'api.', format: 'json')]
@@ -39,10 +40,18 @@ class OrderController extends AbstractController
         return new JsonResponse($order);
     }
 
-    #[Route(path: '/order/{orderId}/add/{productId}', name: 'order.product.add', methods: ['POST'])]
-    public function addOrderProduct(OrderEntity $order, int $productId): JsonResponse
+    #[Route(path: '/order/{orderId}/add', name: 'order.products.add', methods: ['POST'])]
+    public function addOrderProducts(OrderEntity $order, Request $request): JsonResponse
     {
-        $this->orderProductRepository->addFromProduct($order, $productId);
+        $data = \json_decode($request->getContent(), true, \JSON_THROW_ON_ERROR);
+
+        if (!\is_array($data)) {
+            throw new \InvalidArgumentException('Content must be an array');
+        }
+
+        foreach ($data as $productId => $quantity) {
+            $this->orderProductRepository->addFromProduct($order, (int) $productId, (int) $quantity);
+        }
 
         $this->entityManager->flush();
 

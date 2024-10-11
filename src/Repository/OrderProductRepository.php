@@ -19,8 +19,12 @@ class OrderProductRepository extends ServiceEntityRepository
         parent::__construct($registry, OrderProductEntity::class);
     }
 
-    public function addFromProduct(OrderEntity $order, int $productId): OrderProductEntity
+    public function addFromProduct(OrderEntity $order, int $productId, int $quantity = 1): OrderProductEntity
     {
+        if ($quantity < 1) {
+            throw new \InvalidArgumentException('Quantity must be greater than 0');
+        }
+
         $em = $this->getEntityManager();
 
         $orderProduct = $this->findOneBy([
@@ -29,12 +33,13 @@ class OrderProductRepository extends ServiceEntityRepository
         ]);
 
         if ($orderProduct) {
-            $orderProduct->addPendingQuantity();
+            $orderProduct->addQuantity($quantity);
         } else {
             $product = $em->getReference(ProductEntity::class, $productId);
             $orderProduct = (new OrderProductEntity())
                 ->setProduct($product)
-                ->setOrder($order);
+                ->setOrder($order)
+                ->setQuantity($quantity);
         }
 
         $em->persist($orderProduct);
@@ -60,17 +65,5 @@ class OrderProductRepository extends ServiceEntityRepository
         $em->persist($existing);
 
         return $existing;
-    }
-
-    public function deliver(OrderProductEntity $orderProduct): void
-    {
-        if ($orderProduct->getPendingQuantity() === 0) {
-            return;
-        }
-
-        $orderProduct->addPendingQuantity(-1);
-        $orderProduct->addQuantity();
-
-        $this->getEntityManager()->persist($orderProduct);
     }
 }

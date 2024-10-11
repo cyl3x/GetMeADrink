@@ -27,14 +27,13 @@
                 v-for='product in pendingProducts'
                 :key='product.id'
             >
-                <div>{{ product.pendingQuantity }}x</div>
+                <div>{{ product.quantity }}x</div>
                 <div class='order-product-name'>
                     {{ product.name }}
                 </div>
                 <button
                     class='btn btn-outline-dark w-100'
                     style='--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;'
-                    @click='deliverProduct(product.id)'
                 >
                     &#10004;  Liefern
                 </button>
@@ -42,13 +41,13 @@
         </div>
     </div>
 
-    <div v-if='deliveredProducts.length > 0'>
+    <div v-if='products.length > 0'>
         <h5 class='pb-2 pt-2 border-bottom border-dark'>
             Bestellung
         </h5>
         <div class='order-product-grid'>
             <template
-                v-for='product in deliveredProducts'
+                v-for='product in products'
                 :key='product.id'
             >
                 <div>{{ product.quantity }}x</div>
@@ -84,10 +83,10 @@ const pendingProducts = computed(() => {
     if (!orderStore.order)
         return [];
 
-    return orderStore.order.orderProducts.filter(product => product.pendingQuantity > 0);
+    return orderStore.order.orderProducts.filter(product => product.quantity > 0);
 });
 
-const deliveredProducts = computed(() => {
+const products = computed(() => {
     if (!orderStore.order)
         return [];
 
@@ -97,13 +96,6 @@ const deliveredProducts = computed(() => {
 function navigateToTables() {
     router.push({ name: 'tables' });
     orderStore.order = null;
-}
-
-async function deliverProduct(orderProductId: number) {
-    if (!orderStore.order)
-        throw new Error('No order available');
-
-    orderStore.order = await OrderService.deliverProduct(orderStore.order.id, orderProductId);
 }
 
 async function completeOrder() {

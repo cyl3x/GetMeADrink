@@ -16,10 +16,6 @@ export function removeProduct(orderId: number, productId: number) {
     return Api.post<Entity.Order>(`/order/${orderId}/remove/${productId}`);
 }
 
-export function deliverProduct(orderId: number, orderProductId: number) {
-    return Api.post<Entity.Order>(`/order/${orderId}/deliver/${orderProductId}`);
-}
-
 export function cancelOrder(orderId: number){
     return Api.post<Entity.Order>(`/order/cancel/${orderId}`);
 }

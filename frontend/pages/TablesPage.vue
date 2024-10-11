@@ -15,10 +15,10 @@
         @click='ensureAndNavigateToOrder(table.id)'
     >
         <span
-            v-if='table.countPendingProducts > 0'
+            v-if='table.quantityProducts > 0'
             class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'
         >
-            {{ table.countPendingProducts }}
+            {{ table.quantityProducts }}
         </span>
 
         Tisch {{ table.id }}
