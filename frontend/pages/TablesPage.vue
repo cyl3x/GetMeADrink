@@ -14,12 +14,6 @@
         :disabled='!!loadingOrder'
         @click='ensureAndNavigateToOrder(table.id)'
     >
-        <span
-            v-if='table.quantityProducts > 0'
-            class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'
-        >
-            {{ table.quantityProducts }}
-        </span>
 
         Tisch {{ table.id }}
         <br>
@@ -31,7 +25,12 @@
             aria-hidden='true'
         />
 
-        <span v-else-if='table.pendingOrder'>{{ table.pendingOrder?.totalPrice.toFixed(2) }} €</span>
+        <span v-else>{{ table.pendingOrder?.totalPrice.toFixed(2) }} €</span>
+
+        <br>
+        <small>
+           Bestellte Produkte: {{ table.quantityProducts }}
+        </small>
     </button>
 </div>
 </template>
