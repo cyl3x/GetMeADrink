@@ -5,6 +5,7 @@
 >
     <div>
         <button
+            :disabled='loading'
             class='d-flex btn btn-primary w-100 justify-content-center'
             @click='navigateToTables'
         >
@@ -33,7 +34,12 @@
                 </div>
             </template>
         </div>
-        <button class='btn btn-primary w-100 mt-2' @click='addPendingToOrder()'>
+
+        <button
+            v-if='loading'
+            class='btn btn-primary w-100 mt-2'
+            @click='addPendingToOrder()'
+        >
             Bestellen
         </button>
     </div>
@@ -57,10 +63,35 @@
     </div>
 
     <div v-if='orderStore.order' class='d-flex flex-column gap-3'>
-        <button v-if='orderStore.order?.totalPrice!=0' class='btn btn-primary' @click='completeOrder()'>
-            Zahlen: {{ orderStore.order.totalPrice.toFixed(2) }}€
+        <button
+            v-if='orderStore.order?.totalPrice!=0'
+            :disabled='loading'
+            class='btn btn-primary'
+            @click='completeOrder()'
+        >
+            <span
+                v-if='loadingState.complete'
+                class='spinner-border spinner-border-sm'
+            />
+            Zahlen:
+            <span
+                v-if='loadingState.addProducts'
+                class='spinner-border spinner-border-sm'
+            />
+            <template v-else>
+                {{ orderStore.order.totalPrice.toFixed(2) }}
+            </template>
+            €
         </button>
-        <button class='btn btn-secondary' @click='cancelOrder()'>
+        <button
+            :disabled='loading'
+            class='btn btn-secondary'
+            @click='cancelOrder()'
+        >
+            <span
+                v-if='loadingState.cancel'
+                class='spinner-border spinner-border-sm'
+            />
             Abbrechen
         </button>
     </div>
@@ -70,12 +101,18 @@
 <script setup lang='ts'>
 import { OrderService } from '@/services';
 import { order, pendingProducts } from '@/state';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const orderStore = order.useStore();
 const pendingProductsStore = pendingProducts.useStore();
+const loadingState = ref({
+    addProducts: false,
+    complete: false,
+    cancel: false,
+});
+const loading = computed(() => loadingState.value.addProducts || loadingState.value.complete || loadingState.value.cancel);
 
 const products = computed(() => {
     if (!orderStore.order)
@@ -92,7 +129,9 @@ async function addPendingToOrder(){
 
     pendingProductsStore.pending.clear();
 
-    orderStore.order = await OrderService.addProducts(orderStore.order.id, pendingProducts);
+    loadingState.value.addProducts = true;
+    orderStore.order = await OrderService.addProducts(orderStore.order.id, pendingProducts)
+        .finally(() => loadingState.value.addProducts = false);
 }
 
 function navigateToTables() {
@@ -104,8 +143,13 @@ async function completeOrder() {
     if (!orderStore.order)
         throw new Error('No order available');
 
-    await OrderService.completeOrder(orderStore.order?.id);
+    loadingState.value.complete = true;
+
+    await OrderService.completeOrder(orderStore.order?.id)
+        .catch(() => loadingState.value.complete = false);
+
     orderStore.order = null;
+
     router.push({ name:'tables' });
 }
 
@@ -113,8 +157,13 @@ async function cancelOrder(){
     if (!orderStore.order)
         throw new Error('No order available');
 
-    await OrderService.cancelOrder(orderStore.order?.id);
+    loadingState.value.cancel = true;
+
+    await OrderService.cancelOrder(orderStore.order?.id)
+        .catch(() => loadingState.value.cancel = false);
+
     orderStore.order = null;
+
     router.push({ name:'tables' });
 }
 </script>
