@@ -33,7 +33,7 @@
                 <button
                     class='side minus no-select rounded-start'
                     style='border-width: 0'
-                    @click='removeProduct(product.id)'
+                    @click='removeProductFromPending(product)'
                 >
                     -
                 </button>
@@ -43,7 +43,7 @@
                 <button
                     class='side plus no-select rounded-end'
                     style='border-width: 0'
-                    @click='addProduct(product.id)'
+                    @click='addProductToPending(product)'
                 >
                     +
                 </button>
@@ -55,10 +55,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { OrderService, ProductService } from '@/services';
-import { order } from '@/state';
+import { ProductService } from '@/services';
+import { pendingProducts } from '@/state';
 
-const orderStore = order.useStore();
+const pendingProductsStore = pendingProducts.useStore();
 const products = ref<Entity.Product[]>([]);
 const timers = ref<Map<number, number>>(new Map());
 
@@ -77,26 +77,21 @@ async function fetchProducts() {
     products.value = await ProductService.getProducts();
 }
 
-async function addProduct(productId: number) {
-    if (!orderStore.order)
-        throw new Error('No order available');
+async function addProductToPending(product: Entity.Product) {
+    // if (!orderStore.order)
+    //     throw new Error('No order available');
 
-    startOrResetTimer(productId);
+    pendingProductsStore.addProduct(product);
+    startOrResetTimer(product.id);
 
-    const order = await OrderService.addProduct(orderStore.order?.id, productId);
+    // const order = await OrderService.addProduct(orderStore.order?.id, productId);
 
-    orderStore.order = order;
+    // orderStore.order = order;
 }
 
-async function removeProduct(productId: number) {
-    if (!orderStore.order)
-        throw new Error('No order available');
-
-    startOrResetTimer(productId);
-
-    const order = await OrderService.removeProduct(orderStore.order?.id, productId);
-
-    orderStore.order = order;
+async function removeProductFromPending(product: Entity.Product) {
+    pendingProductsStore.removeProduct(product);
+    startOrResetTimer(product.id);
 }
 
 fetchProducts();
