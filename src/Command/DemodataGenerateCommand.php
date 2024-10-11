@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Framework\Demodata\DemodataGeneratorInterface;
+use App\Demodata\DemodataGeneratorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

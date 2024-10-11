@@ -56,7 +56,6 @@ class OrderRepository extends ServiceEntityRepository
         return $totalPrice;
     }
 
-
     public function hasPendingProducts(TableEntity $table): bool
     {
         // Erstelle den QueryBuilder für die Abfrage
