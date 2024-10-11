@@ -56,23 +56,6 @@ class OrderRepository extends ServiceEntityRepository
         return $totalPrice;
     }
 
-    public function hasPendingProducts(TableEntity $table): bool
-    {
-        // Erstelle den QueryBuilder für die Abfrage
-        $qb = $this->createQueryBuilder('o')
-            ->select('COUNT(op.id)')
-            ->innerJoin('o.orderProducts', 'op')  // Verbinde die Order mit ihren Produkten
-            ->where('o.table = :table')  // Filtere nach der übergebenen Tabelle
-            ->andWhere('op.pendingQuantity > 0')  // Nur Produkte mit offenen Mengen
-            ->setParameter('table', $table);
-
-        // Führe die Abfrage aus und erhalte die Anzahl der offenen Produkte
-        $pendingProductCount = (int) $qb->getQuery()->getSingleScalarResult();
-
-        // Gibt true zurück, wenn es mindestens ein offenes Produkt gibt
-        return $pendingProductCount > 0;
-    }
-
     public function setStatusCanceled(OrderEntity $order): OrderEntity
     {
         $this->getEntityManager()
