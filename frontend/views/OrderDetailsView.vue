@@ -23,7 +23,7 @@
         <h5 class='pb-2 border-bottom border-dark'>
             Ausstehend
         </h5>
-        <div class='order-product-grid'>
+        <div class='pending-product-grid'>
             <template
                 v-for='{ product, quantity } in pendingProductsStore.pending.values()'
                 :key='product.id'
@@ -36,8 +36,8 @@
         </div>
 
         <button
-            v-if='loading'
-            class='btn btn-primary w-100 mt-2'
+            :disabled='loading'
+            class='btn btn-warning w-100 mt-2'
             @click='addPendingToOrder()'
         >
             Bestellen
@@ -66,7 +66,7 @@
         <button
             v-if='orderStore.order?.totalPrice!=0'
             :disabled='loading'
-            class='btn btn-primary'
+            class='btn btn-success'
             @click='completeOrder()'
         >
             <span
@@ -172,6 +172,14 @@ async function cancelOrder(){
 .order-product-grid {
     display: grid;
     grid-template-columns: 0.3fr 1fr 1fr;
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 0.25rem;
+    place-items: center end;
+}
+
+.pending-product-grid {
+    display: grid;
+    grid-template-columns: 0fr 1fr;
     grid-column-gap: 0.5rem;
     grid-row-gap: 0.25rem;
     place-items: center end;
