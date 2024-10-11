@@ -53,6 +53,8 @@ class OrderController extends AbstractController
             $this->orderProductRepository->addFromProduct($order, (int) $productId, (int) $quantity);
         }
 
+        $this->orderRepository->updateTotalPrice($order);
+
         $this->entityManager->flush();
 
         return new JsonResponse($order);

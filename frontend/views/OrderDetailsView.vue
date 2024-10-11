@@ -18,27 +18,24 @@
         </h4>
     </div>
 
-    <div v-if='pendingProducts.length > 0'>
+    <div v-if='pendingProductsStore.pending.size > 0'>
         <h5 class='pb-2 border-bottom border-dark'>
             Ausstehend
         </h5>
         <div class='order-product-grid'>
             <template
-                v-for='product in pendingProducts'
+                v-for='{ product, quantity } in pendingProductsStore.pending.values()'
                 :key='product.id'
             >
-                <div>{{ product.quantity }}x</div>
+                <div>{{ quantity }}x</div>
                 <div class='order-product-name'>
                     {{ product.name }}
                 </div>
-                <button
-                    class='btn btn-outline-dark w-100'
-                    style='--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;'
-                >
-                    &#10004;  Liefern
-                </button>
             </template>
         </div>
+        <button class='btn btn-primary w-100 mt-2' @click='addPendingToOrder()'>
+            Bestellen
+        </button>
     </div>
 
     <div v-if='products.length > 0'>
@@ -72,19 +69,13 @@
 
 <script setup lang='ts'>
 import { OrderService } from '@/services';
-import { order } from '@/state';
+import { order, pendingProducts } from '@/state';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const orderStore = order.useStore();
-
-const pendingProducts = computed(() => {
-    if (!orderStore.order)
-        return [];
-
-    return orderStore.order.orderProducts.filter(product => product.quantity > 0);
-});
+const pendingProductsStore = pendingProducts.useStore();
 
 const products = computed(() => {
     if (!orderStore.order)
@@ -92,6 +83,17 @@ const products = computed(() => {
 
     return orderStore.order.orderProducts.filter(product => product.quantity > 0);
 });
+
+async function addPendingToOrder(){
+    if (!orderStore.order)
+        throw new Error('No order available');
+
+    const pendingProducts = pendingProductsStore.getIdQuantityObject();
+
+    pendingProductsStore.pending.clear();
+
+    orderStore.order = await OrderService.addProducts(orderStore.order.id, pendingProducts);
+}
 
 function navigateToTables() {
     router.push({ name: 'tables' });
