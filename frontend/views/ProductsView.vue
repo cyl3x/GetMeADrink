@@ -22,7 +22,7 @@
                     style='height: 100%; width: 100%'
                 >
 
-                <div>
+                <div class="w-100">
                     <span>{{ product.name }} {{ product.variant.name }}</span>
                     <span class='divider-horizontal' />
                     <span>{{ product.price.toFixed(2) }} €</span>
@@ -78,15 +78,8 @@ async function fetchProducts() {
 }
 
 async function addProductToPending(product: Entity.Product) {
-    // if (!orderStore.order)
-    //     throw new Error('No order available');
-
     pendingProductsStore.addProduct(product);
     startOrResetTimer(product.id);
-
-    // const order = await OrderService.addProduct(orderStore.order?.id, productId);
-
-    // orderStore.order = order;
 }
 
 async function removeProductFromPending(product: Entity.Product) {
