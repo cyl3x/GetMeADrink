@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-enum OrderStatus: string {
+enum OrderStatus: string
+{
     case Pending = 'pending';
     case Completed = 'completed';
     case Canceled = 'canceled';

@@ -75,6 +75,7 @@ class OrderController extends AbstractController
     {
         $this->orderRepository->setStatusCanceled($order);
         $this->entityManager->flush();
+
         return new JsonResponse($order);
     }
 
@@ -83,6 +84,7 @@ class OrderController extends AbstractController
     {
         $this->orderRepository->setStatusCompleted($order);
         $this->entityManager->flush();
+
         return new JsonResponse($order);
     }
 }
