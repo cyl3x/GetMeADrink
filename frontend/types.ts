@@ -5,7 +5,7 @@ declare global {
         export type Error = ApiError;
 
         export type HttpError = {
-            // Symfony's error title fo the status code
+            // Symfony's error title for the status code
             title: string,
             detail: string,
             status: number,
