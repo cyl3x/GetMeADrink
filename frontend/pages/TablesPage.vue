@@ -31,7 +31,7 @@
             aria-hidden='true'
         />
 
-        <span v-else>{{ table.pendingOrder?.totalPrice.toFixed(2) }} €</span>
+        <span v-else-if='table.pendingOrder'>{{ table.pendingOrder?.totalPrice.toFixed(2) }} €</span>
     </button>
 </div>
 </template>
