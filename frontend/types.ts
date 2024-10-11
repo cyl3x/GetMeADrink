@@ -46,16 +46,11 @@ declare global {
         export type Order = {
             id: number,
             table: number,
-            status: OrderStatus,
+            status: 'pending' | 'completed' | 'canceled',
             totalPrice: number,
             orderProducts: OrderProduct[],
             createdAt: string,
             updatedAt: string | null,
-        };
-
-        export type OrderStatus = {
-            id: number,
-            name: string,
         };
 
         export type OrderProduct = {

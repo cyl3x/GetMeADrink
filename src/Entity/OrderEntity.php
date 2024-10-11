@@ -25,9 +25,8 @@ class OrderEntity implements \JsonSerializable
     #[ORM\JoinColumn(onDelete: 'restrict')]
     private TableEntity $table;
 
-    #[ORM\ManyToOne(targetEntity: OrderStatusEntity::class, inversedBy: 'orders')]
-    #[ORM\JoinColumn(onDelete: 'restrict')]
-    private OrderStatusEntity $status;
+    #[ORM\Column(type: Types::STRING, enumType: OrderStatus::class)]
+    private OrderStatus $status;
 
     #[ORM\Column(type: Types::FLOAT)]
     private float $totalPrice;
@@ -67,12 +66,12 @@ class OrderEntity implements \JsonSerializable
         return $this;
     }
 
-    public function getStatus(): OrderStatusEntity
+    public function getStatus(): OrderStatus
     {
         return $this->status;
     }
 
-    public function setStatus(OrderStatusEntity $status): self
+    public function setStatus(OrderStatus $status): self
     {
         $this->status = $status;
 
@@ -124,7 +123,7 @@ class OrderEntity implements \JsonSerializable
         return [
             'id' => $this->id,
             'table' => $this->table->getId(),
-            'status' => $this->status->jsonSerialize(),
+            'status' => $this->status->value,
             'totalPrice' => $this->totalPrice,
             'orderProducts' => $this->orderProducts
                 ->map(fn (OrderProductEntity $orderProduct) => $orderProduct->jsonSerialize())
