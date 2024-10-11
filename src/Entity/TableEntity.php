@@ -49,7 +49,7 @@ class TableEntity implements \JsonSerializable
     public function getPendingOrder(): ?OrderEntity
     {
         return $this->orders
-            ->findFirst(static fn (int $id, OrderEntity $order) => $order->getStatus()->getId() === OrderStatusEntity::PENDING);
+            ->findFirst(static fn (int $id, OrderEntity $order) => $order->getStatus() === OrderStatus::Pending);
     }
 
     public function hasPendingProducts(): bool

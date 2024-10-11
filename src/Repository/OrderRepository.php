@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\OrderEntity;
-use App\Entity\OrderStatusEntity;
+use App\Entity\OrderStatus;
 use App\Entity\TableEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -23,7 +23,7 @@ class OrderRepository extends ServiceEntityRepository
     {
         $existingOrder = $this->findOneBy([
             'table' => $table,
-            'status' => OrderStatusEntity::PENDING,
+            'status' => OrderStatus::Pending,
         ]);
 
         if ($existingOrder) {
@@ -32,11 +32,9 @@ class OrderRepository extends ServiceEntityRepository
 
         $em = $this->getEntityManager();
 
-        $status = $em->getReference(OrderStatusEntity::class, OrderStatusEntity::PENDING);
-
         $order = (new OrderEntity())
             ->setTable($table)
-            ->setStatus($status)
+            ->setStatus(OrderStatus::Pending)
             ->setTotalPrice(0);
 
         $em->persist($order);
@@ -78,22 +76,16 @@ class OrderRepository extends ServiceEntityRepository
 
     public function setStatusCanceled(OrderEntity $order): OrderEntity
     {
-        $em = $this->getEntityManager();
-
-        $status = $em->getReference(OrderStatusEntity::class, OrderStatusEntity::CANCELED);
-
-        $em->persist($order->setStatus($status));
+        $this->getEntityManager()
+            ->persist($order->setStatus(OrderStatus::Canceled));
 
         return $order;
     }
 
     public function setStatusCompleted(OrderEntity $order): OrderEntity
     {
-        $em = $this->getEntityManager();
-
-        $status = $em->getReference(OrderStatusEntity::class, OrderStatusEntity::COMPLETED);
-
-        $em->persist($order->setStatus($status));
+        $this->getEntityManager()
+            ->persist($order->setStatus(OrderStatus::Completed));
 
         return $order;
     }

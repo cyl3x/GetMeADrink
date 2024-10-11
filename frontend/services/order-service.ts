@@ -21,9 +21,9 @@ export function deliverProduct(orderId: number, orderProductId: number) {
 }
 
 export function cancelOrder(orderId: number){
-    return Api.post<Entity.Order>(`/order/cancel/${orderId}`)
+    return Api.post<Entity.Order>(`/order/cancel/${orderId}`);
 }
 
 export function completeOrder(orderId:number){
-    return Api.post<Entity.Order>(`/order/complete/${orderId}`)
+    return Api.post<Entity.Order>(`/order/complete/${orderId}`);
 }
