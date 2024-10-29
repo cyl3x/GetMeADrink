@@ -57,6 +57,8 @@ class OrderController extends AbstractController
 
         $this->entityManager->flush();
 
+        $this->entityManager->refresh($order);
+
         return new JsonResponse($order);
     }
 
