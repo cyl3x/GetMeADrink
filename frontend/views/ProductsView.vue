@@ -22,7 +22,7 @@
                     style='height: 100%; width: 100%'
                 >
 
-                <div class="w-100">
+                <div class='w-100'>
                     <span>{{ product.name }} {{ product.variant.name }}</span>
                     <span class='divider-horizontal' />
                     <span>{{ product.price.toFixed(2) }} €</span>
