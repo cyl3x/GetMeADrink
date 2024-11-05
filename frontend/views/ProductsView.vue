@@ -4,8 +4,20 @@
     style='max-height: 100vh;'
 >
     <div class='d-flex flex-wrap justify-content-center'>
+        <div class='button-container'>
+            <button
+                class='btn btn-secondary d-flex justify-content-center flex-column shadow-sm m-3'
+                style='width: 10rem; height: 10rem;'
+                @click='deselectCategory()'
+            >
+                <div class='w-100'>
+                    <span>Go Back</span>
+                </div>
+            </button>
+        </div>
+
         <div
-            v-for='product in products'
+            v-for='product in orderStore.selectedCategory?.products'
             :key='product.id'
             class='button-container'
             :class='{ "active": timers.has(product.id) }'
@@ -55,11 +67,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ProductService } from '@/services';
-import { pendingProducts } from '@/state';
+import { order, pendingProducts } from '@/state';
 
+const orderStore = order.useStore();
 const pendingProductsStore = pendingProducts.useStore();
-const products = ref<Entity.Product[]>([]);
 const timers = ref<Map<number, number>>(new Map());
 
 function startOrResetTimer(productId: number) {
@@ -73,10 +84,6 @@ function startOrResetTimer(productId: number) {
     timers.value.set(productId, timer);
 }
 
-async function fetchProducts() {
-    products.value = await ProductService.getProducts();
-}
-
 async function addProductToPending(product: Entity.Product) {
     pendingProductsStore.addProduct(product);
     startOrResetTimer(product.id);
@@ -87,7 +94,9 @@ async function removeProductFromPending(product: Entity.Product) {
     startOrResetTimer(product.id);
 }
 
-fetchProducts();
+async function deselectCategory() {
+    orderStore.selectedCategory = null;
+}
 </script>
 
 <style>

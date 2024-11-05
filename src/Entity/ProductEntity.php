@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Entity\Contract\EntityDateTrait;
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,6 +35,17 @@ class ProductEntity implements \JsonSerializable
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private mixed $image = null;
+
+    /**
+     * @var Collection<int, ProductCategoryEntity>
+     */
+    #[ORM\ManyToMany(targetEntity: ProductCategoryEntity::class, inversedBy: 'products', cascade: ['persist'])]
+    private Collection $categories;
+
+    public function __construct()
+    {
+        $this->categories ??= new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -119,6 +132,31 @@ class ProductEntity implements \JsonSerializable
     }
 
     /**
+     * @return Collection<int, ProductCategoryEntity>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param Collection<int, ProductCategoryEntity> $categories
+     */
+    public function setCategories(Collection $categories): self
+    {
+        $this->categories = $categories;
+
+        return $this;
+    }
+
+    public function addCategory(ProductCategoryEntity $category): self
+    {
+        $this->categories->add($category);
+
+        return $this;
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function jsonSerialize(): array
@@ -130,6 +168,9 @@ class ProductEntity implements \JsonSerializable
             'price' => $this->price,
             'vat' => $this->vat,
             'image' => $this->getImageBase64(),
+            'categories' => $this->categories
+                ->map(static fn (ProductCategoryEntity $category) => $category->getName())
+                ->toArray(),
             'createdAt' => $this->createdAt->format(\DateTime::RFC3339),
             'updatedAt' => $this->updatedAt?->format(\DateTime::RFC3339),
         ];

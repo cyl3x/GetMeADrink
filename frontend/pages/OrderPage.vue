@@ -1,7 +1,8 @@
 <template>
 <div class='d-flex vh-100'>
     <order-details-view />
-    <products-view />
+    <products-view v-show='orderStore.selectedCategory' />
+    <categories-view v-show='!orderStore.selectedCategory' />
 </div>
 </template>
 
@@ -9,6 +10,7 @@
 import { OrderService } from '@/services';
 import { order } from '@/state';
 import { useRoute } from 'vue-router';
+import CategoriesView from '@/views/CategoriesView.vue';
 import ProductsView from '@/views/ProductsView.vue';
 import OrderDetailsView from '@/views/OrderDetailsView.vue';
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ProductCategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,6 +13,7 @@ class ProductController extends AbstractController
 {
     public function __construct(
         private readonly ProductRepository $productRepository,
+        private readonly ProductCategoryRepository $productCategoryRepository,
     ) {
     }
 
@@ -21,5 +23,13 @@ class ProductController extends AbstractController
         $products = $this->productRepository->findAll();
 
         return new JsonResponse($products);
+    }
+
+    #[Route(path: '/product-categories', name: 'product-categories', methods: ['GET'])]
+    public function getProductCategories(): JsonResponse
+    {
+        $productCategories = $this->productCategoryRepository->findAll();
+
+        return new JsonResponse($productCategories);
     }
 }
