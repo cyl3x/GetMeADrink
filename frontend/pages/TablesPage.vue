@@ -15,7 +15,7 @@
         @click='ensureAndNavigateToOrder(table.id)'
     >
         Tisch {{ table.id }}
-        <br>
+        <br v-if='table.pendingOrder'>
 
         <span
             v-if='loadingOrder === table.id'
@@ -24,11 +24,11 @@
             aria-hidden='true'
         />
 
-        <span v-else>{{ table.pendingOrder?.totalPrice.toFixed(2) }} €</span>
+        <span v-else>{{ table.pendingOrder?.totalPrice.toFixed(2) }} {{ table.pendingOrder ? "€" : "" }}</span>
 
         <br>
         <small>
-            Bestellte Produkte: {{ table.quantityProducts }}
+            {{ table.pendingOrder ? "Bestellte Produkte: " + table.quantityProducts : "" }}
         </small>
     </button>
 </div>
