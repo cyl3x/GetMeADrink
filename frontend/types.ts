@@ -34,6 +34,7 @@ declare global {
             name: string,
             price: number,
             image: string,
+            categories: string[],
             createdAt: string,
             updatedAt: string | null,
         };
@@ -41,6 +42,14 @@ declare global {
         export type ProductVariant = {
             id: number,
             name: string,
+        };
+
+        export type ProductCategory = {
+            id: number,
+            name: string,
+            products: Product[],
+            createdAt: string,
+            updatedAt: string | null,
         };
 
         export type Order = {
@@ -64,6 +73,10 @@ declare global {
             order: string,
             createdAt: string,
             updatedAt: string | null,
+        };
+
+        export type D = {
+            [key: number]: number,
         };
     }
 }

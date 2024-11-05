@@ -14,7 +14,6 @@
         :disabled='!!loadingOrder'
         @click='ensureAndNavigateToOrder(table.id)'
     >
-
         Tisch {{ table.id }}
         <br>
 
@@ -29,7 +28,7 @@
 
         <br>
         <small>
-           Bestellte Produkte: {{ table.quantityProducts }}
+            Bestellte Produkte: {{ table.quantityProducts }}
         </small>
     </button>
 </div>
