@@ -64,7 +64,7 @@
 
     <div v-if='orderStore.order' class='d-flex flex-column gap-3'>
         <button
-            v-if='orderStore.order?.totalPrice!=0'
+            v-if='orderStore.order?.orderProducts.length > 0'
             :disabled='loading'
             class='btn btn-success'
             @click='completeOrder()'
