@@ -36,13 +36,16 @@ class OrderProductRepository extends ServiceEntityRepository
             $orderProduct->addQuantity($quantity);
         } else {
             $product = $em->getReference(ProductEntity::class, $productId);
+
             $orderProduct = (new OrderProductEntity())
                 ->setProduct($product)
                 ->setOrder($order)
                 ->setQuantity($quantity);
+
+            $order->addOrderProduct($orderProduct);
         }
 
-        $em->persist($orderProduct);
+        $em->persist($order);
 
         return $orderProduct;
     }

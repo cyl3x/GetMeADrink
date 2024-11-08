@@ -34,7 +34,7 @@ class OrderEntity implements \JsonSerializable
     /**
      * @var Collection<int, OrderProductEntity>
      */
-    #[ORM\OneToMany(targetEntity: OrderProductEntity::class, mappedBy: 'order', indexBy: 'id', fetch: 'EAGER')]
+    #[ORM\OneToMany(targetEntity: OrderProductEntity::class, mappedBy: 'order', indexBy: 'id', fetch: 'EAGER', cascade: ['persist', 'remove'])]
     private Collection $orderProducts;
 
     public function __construct()
