@@ -110,7 +110,7 @@ class RealisticGenerator implements DemodataGeneratorInterface
                 ['Negroni', $variants[3], $categories[2], 8.50, "Negroni_transparent.png"],
                 ['Whiskey Sour', $variants[3], $categories[2], 7.50, "Whiskey-Sour_transparent.png"],
                 ['Rum Cola', $variants[4], $categories[2], 6.50, "rum-cola_transparent.png"],
-                ['Campari Soda', $variants[3], $categories[2], 6.00, "campari-Soda_transparent.png"],
+                ['Campari Soda', $variants[3], $categories[2], 6.00, "Campari-Soda_transparent.png"],
                 ['Bellini', $variants[2], $categories[2], 7.00, "Bellini_transparent.png"]
             ],
         );
