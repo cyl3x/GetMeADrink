@@ -5,12 +5,12 @@
 
 <div
     v-else
-    class='d-flex flex-wrap justify-content-center'
+    class='card-grid'
 >
     <button
         v-for='table in tables'
         :key='table.id'
-        class='btn shadow-sm m-3 position-relative'
+        class='card-grid-item btn shadow-sm'
         :class='{
             "btn-warning": table.pendingOrder,
             "btn-light": !table.pendingOrder,

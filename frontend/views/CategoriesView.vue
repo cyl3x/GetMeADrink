@@ -3,27 +3,16 @@
     Lade Produkte...
 </page-loader-view>
 
-<div
-    v-else
-    class='col overflow-auto'
-    style='max-height: 100vh;'
->
-    <div class='d-flex flex-wrap justify-content-center'>
-        <div
+<div v-else class='card-grid-container'>
+    <div class='card-grid'>
+        <button
             v-for='category in categories'
             :key='category.id'
-            class='button-container'
+            class='card-grid-item card-grid-item__content btn btn-light shadow-sm'
+            @click='selectCategory(category)'
         >
-            <button
-                class='btn btn-light d-flex justify-content-center flex-column shadow-sm m-3'
-                style='width: 10rem; height: 10rem;'
-                @click='selectCategory(category)'
-            >
-                <div class='w-100'>
-                    <h4>{{ category.name }}</h4>
-                </div>
-            </button>
-        </div>
+            <h4>{{ category.name }}</h4>
+        </button>
     </div>
 </div>
 </template>
@@ -47,10 +36,3 @@ function selectCategory(category: Entity.ProductCategory) {
 
 fetchCategories();
 </script>
-
-<style>
-.button-container {
-    position: relative;
-    display: inline-block;
-}
-</style>
