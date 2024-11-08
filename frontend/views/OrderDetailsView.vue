@@ -42,7 +42,7 @@
                     <div class='order-product-name text-truncate'>
                         {{ product.name }} | {{ product.variantName }}
                     </div>
-                    <div>{{ (product.price * product.quantity).toFixed(2) }} €</div>
+                    <div class='ps-1'>{{ (product.price * product.quantity).toFixed(2) }} €</div>
                 </template>
             </div>
         </div>
@@ -153,7 +153,7 @@ async function cancelOrder(){
 <style>
 .order-product-grid {
     display: grid;
-    grid-template-columns: 0.3fr 1fr auto;
+    grid-template-columns: auto 1fr auto;
     grid-column-gap: 0.5rem;
     grid-row-gap: 0.25rem;
     place-items: center end;
@@ -161,14 +161,13 @@ async function cancelOrder(){
 
 .pending-product-grid {
     display: grid;
-    grid-template-columns: 0fr 1fr;
+    grid-template-columns: auto 1fr;
     grid-column-gap: 0.5rem;
     grid-row-gap: 0.25rem;
     place-items: center end;
 }
 
 .order-product-name {
-    padding-left: 0.5rem;
     place-self: center start;
     text-overflow: ellipsis;
     white-space: nowrap;
