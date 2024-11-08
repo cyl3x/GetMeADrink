@@ -15,7 +15,7 @@
                 >
                     <div>{{ quantity }}x</div>
                     <div class='order-product-name'>
-                        {{ product.name }}
+                        {{ product.name }} | {{ product.variant.name }}
                     </div>
                 </template>
             </div>
@@ -40,7 +40,7 @@
                 >
                     <div>{{ product.quantity }}x</div>
                     <div class='order-product-name'>
-                        {{ product.name }}
+                        {{ product.name }} | {{ product.variantName }}
                     </div>
                     <div>{{ (product.price * product.quantity).toFixed(2) }} €</div>
                 </template>
