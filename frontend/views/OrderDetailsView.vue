@@ -1,9 +1,9 @@
 <template>
 <div
     class='fixed-left bg-light shadow d-flex flex-column'
-    style='min-width: 300px;'
+    style='min-width: 18rem; max-width: 25rem;'
 >
-    <div class='overflow-y-scroll flex-grow-1 p-3'>
+    <div class='overflow-scroll flex-grow-1 p-3'>
         <div v-if='orderStore.pending.size > 0 && !loadingState.addProducts'>
             <h5 class='pb-2 border-bottom border-dark'>
                 Ausstehend
@@ -13,16 +13,16 @@
                     v-for='{ product, quantity } in orderStore.pending.values()'
                     :key='product.id'
                 >
-                    <div>{{ quantity }}x</div>
-                    <div class='order-product-name'>
+                    <span>{{ quantity }}x</span>
+                    <span class='order-product-name text-truncate'>
                         {{ product.name }} | {{ product.variant.name }}
-                    </div>
+                    </span>
                 </template>
             </div>
 
             <button
                 :disabled='loading'
-                class='btn btn-warning w-100 mt-2'
+                class='btn btn-warning w-100 mt-2 mb-4'
                 @click='addPendingToOrder()'
             >
                 Bestellen
@@ -39,7 +39,7 @@
                     :key='product.id'
                 >
                     <div>{{ product.quantity }}x</div>
-                    <div class='order-product-name'>
+                    <div class='order-product-name text-truncate'>
                         {{ product.name }} | {{ product.variantName }}
                     </div>
                     <div>{{ (product.price * product.quantity).toFixed(2) }} €</div>
@@ -153,7 +153,7 @@ async function cancelOrder(){
 <style>
 .order-product-grid {
     display: grid;
-    grid-template-columns: 0.3fr 1fr 1fr;
+    grid-template-columns: 0.3fr 1fr auto;
     grid-column-gap: 0.5rem;
     grid-row-gap: 0.25rem;
     place-items: center end;
@@ -168,6 +168,7 @@ async function cancelOrder(){
 }
 
 .order-product-name {
+    padding-left: 0.5rem;
     place-self: center start;
     text-overflow: ellipsis;
     white-space: nowrap;
