@@ -1,9 +1,9 @@
 <template>
 <div
-    class='fixed-left bg-light shadow d-flex flex-column'
-    style='min-width: 18rem; max-width: 25rem;'
+    class='bg-light shadow d-flex flex-column h-100 flex-shrink-0'
+    style='width: 22rem;'
 >
-    <div class='overflow-scroll flex-grow-1 p-3'>
+    <div class='overflow-scroll flex-grow-1 p-3 text-truncate'>
         <div v-if='orderStore.pending.size > 0 && !loadingState.addProducts'>
             <h5 class='pb-2 border-bottom border-dark'>
                 Ausstehend
@@ -14,7 +14,7 @@
                     :key='product.id'
                 >
                     <span>{{ quantity }}x</span>
-                    <span class='order-product-name text-truncate'>
+                    <span class='order-product-name'>
                         {{ product.name }} | {{ product.variant.name }}
                     </span>
                 </template>
@@ -38,11 +38,11 @@
                     v-for='product in products'
                     :key='product.id'
                 >
-                    <div>{{ product.quantity }}x</div>
-                    <div class='order-product-name text-truncate'>
+                    <span>{{ product.quantity }}x</span>
+                    <span class='order-product-name'>
                         {{ product.name }} | {{ product.variantName }}
-                    </div>
-                    <div class='ps-1'>{{ (product.price * product.quantity).toFixed(2) }} €</div>
+                    </span>
+                    <span class='ps-1'>{{ (product.price * product.quantity).toFixed(2) }} €</span>
                 </template>
             </div>
         </div>
@@ -171,5 +171,7 @@ async function cancelOrder(){
     place-self: center start;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
 }
 </style>

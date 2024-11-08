@@ -1,5 +1,5 @@
 <template>
-<div class='d-flex h-100'>
+<div class='d-flex h-100 overflow-hidden'>
     <order-details-view />
     <products-view v-show='orderStore.selectedCategory' />
     <categories-view v-show='!orderStore.selectedCategory' />
