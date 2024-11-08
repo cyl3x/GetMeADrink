@@ -1,3 +1,5 @@
+import { notification } from '@/state';
+
 /**
  * API client
  * Will throw the original fetch response if the status is not ok
@@ -55,8 +57,11 @@ export class Api {
 
         const response = await fetch(url, { ...options });
 
-        if (!response.ok)
-            throw await ApiError.createFrom(response);
+        if (!response.ok) {
+            const error = await ApiError.createFrom(response);
+            notification.useStore().fromApiError(error);
+            throw error;
+        }
 
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json'))
