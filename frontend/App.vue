@@ -1,10 +1,10 @@
 <template>
-<navbar-view />
+<navbar-component />
 <router-view />
-<notification-view />
+<notification-component />
 </template>
 
 <script setup lang="ts">
-import NavbarView from '@/views/NavbarView.vue';
-import NotificationView from '@/views/NotificationView.vue';
+import NavbarComponent from '@/components/NavbarComponent.vue';
+import NotificationComponent from '@/components/NotificationComponent.vue';
 </script>
