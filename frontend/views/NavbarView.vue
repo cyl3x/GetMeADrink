@@ -1,5 +1,5 @@
 <template>
-<nav class='bg-light shadow-sm p-2'>
+<nav class='bg-light shadow-sm p-2 z-1 fs-5'>
     <ol class='breadcrumb m-0'>
         <li
             class='breadcrumb-item'
