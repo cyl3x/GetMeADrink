@@ -16,7 +16,6 @@
             >
                 <div class='w-100'>
                     <h4>{{ category.name }}</h4>
-                    <span>{{ category.products.length }} verfügbar</span>
                 </div>
             </button>
         </div>
