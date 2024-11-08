@@ -1,5 +1,10 @@
 <template>
+<page-loader-view v-if='categories === undefined'>
+    Lade Produkte...
+</page-loader-view>
+
 <div
+    v-else
     class='col overflow-auto'
     style='max-height: 100vh;'
 >
@@ -27,9 +32,10 @@
 import { ref } from 'vue';
 import { ProductService } from '@/services';
 import { order } from '@/state';
+import PageLoaderView from './PageLoaderView.vue';
 
 const orderStore = order.useStore();
-const categories = ref<Entity.ProductCategory[]>([]);
+const categories = ref<Entity.ProductCategory[]>();
 
 async function fetchCategories() {
     categories.value = await ProductService.getCategories();
