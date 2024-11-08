@@ -1,72 +1,59 @@
 <template>
 <div
-    class='fixed-left overflow-y-scroll p-3 bg-light shadow d-flex flex-column gap-4'
+    class='fixed-left bg-light shadow d-flex flex-column'
     style='min-width: 300px;'
 >
-    <div>
-        <button
-            :disabled='loading'
-            class='d-flex btn btn-primary w-100 justify-content-center'
-            @click='navigateToTables'
-        >
-            Tischübersicht
-        </button>
-    </div>
+    <div class='overflow-y-scroll flex-grow-1 p-3'>
+        <div v-if='pendingProductsStore.pending.size > 0'>
+            <h5 class='pb-2 border-bottom border-dark'>
+                Ausstehend
+            </h5>
+            <div class='pending-product-grid'>
+                <template
+                    v-for='{ product, quantity } in pendingProductsStore.pending.values()'
+                    :key='product.id'
+                >
+                    <div>{{ quantity }}x</div>
+                    <div class='order-product-name'>
+                        {{ product.name }}
+                    </div>
+                </template>
+            </div>
 
-    <div v-if='orderStore.order != null'>
-        <h4 class='justify-content-center'>
-            Tisch {{ orderStore.order.table }}
-        </h4>
-    </div>
-
-    <div v-if='pendingProductsStore.pending.size > 0'>
-        <h5 class='pb-2 border-bottom border-dark'>
-            Ausstehend
-        </h5>
-        <div class='pending-product-grid'>
-            <template
-                v-for='{ product, quantity } in pendingProductsStore.pending.values()'
-                :key='product.id'
+            <button
+                :disabled='loading'
+                class='btn btn-warning w-100 mt-2'
+                @click='addPendingToOrder()'
             >
-                <div>{{ quantity }}x</div>
-                <div class='order-product-name'>
-                    {{ product.name }}
-                </div>
-            </template>
+                Bestellen
+            </button>
         </div>
 
-        <button
-            :disabled='loading'
-            class='btn btn-warning w-100 mt-2'
-            @click='addPendingToOrder()'
-        >
-            Bestellen
-        </button>
-    </div>
-
-    <div v-if='products.length > 0'>
-        <h5 class='pb-2 pt-2 border-bottom border-dark'>
-            Bestellung
-        </h5>
-        <div class='order-product-grid'>
-            <template
-                v-for='product in products'
-                :key='product.id'
-            >
-                <div>{{ product.quantity }}x</div>
-                <div class='order-product-name'>
-                    {{ product.name }}
-                </div>
-                <div>{{ (product.price * product.quantity).toFixed(2) }} €</div>
-            </template>
+        <div v-if='products.length > 0'>
+            <h5 class='pb-2 pt-2 border-bottom border-dark'>
+                Bestellung
+            </h5>
+            <div class='order-product-grid'>
+                <template
+                    v-for='product in products'
+                    :key='product.id'
+                >
+                    <div>{{ product.quantity }}x</div>
+                    <div class='order-product-name'>
+                        {{ product.name }}
+                    </div>
+                    <div>{{ (product.price * product.quantity).toFixed(2) }} €</div>
+                </template>
+            </div>
         </div>
     </div>
 
-    <div v-if='orderStore.order' class='d-flex flex-column gap-3'>
+    <div class='border-top border-1 border-secondary' />
+
+    <div class='p-3'>
         <button
-            v-if='orderStore.order?.orderProducts.length > 0'
-            :disabled='loading'
-            class='btn btn-success'
+            :disabled='loading || !orderStore.order || orderStore.order.orderProducts.length === 0'
+            class='btn btn-success w-100'
             @click='completeOrder()'
         >
             <span
@@ -79,13 +66,14 @@
                 class='spinner-border spinner-border-sm'
             />
             <template v-else>
-                {{ orderStore.order.totalPrice.toFixed(2) }}
+                {{ (orderStore.order?.totalPrice ?? 0).toFixed(2) }}
             </template>
             €
         </button>
+
         <button
-            :disabled='loading'
-            class='btn btn-secondary'
+            :disabled='loading || !orderStore.order'
+            class='btn btn-secondary w-100 mt-3'
             @click='cancelOrder()'
         >
             <span
@@ -132,11 +120,6 @@ async function addPendingToOrder(){
     loadingState.value.addProducts = true;
     orderStore.order = await OrderService.addProducts(orderStore.order.id, pendingProducts)
         .finally(() => loadingState.value.addProducts = false);
-}
-
-function navigateToTables() {
-    router.push({ name: 'tables' });
-    orderStore.order = null;
 }
 
 async function completeOrder() {

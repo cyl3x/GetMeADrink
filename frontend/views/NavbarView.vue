@@ -6,7 +6,10 @@
             :class='{ active: !orderStore.order, pointer: orderStore.order }'
             @click='backToTables'
         >
-            GetMeADrink!
+            <template v-if='orderStore.order'>
+                &#8592;
+            </template>
+            GetMeADrink
         </li>
         <li
             v-if='orderStore.order'
