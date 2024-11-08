@@ -4,13 +4,13 @@
     style='min-width: 300px;'
 >
     <div class='overflow-y-scroll flex-grow-1 p-3'>
-        <div v-if='pendingProductsStore.pending.size > 0'>
+        <div v-if='orderStore.pending.size > 0 && !loadingState.addProducts'>
             <h5 class='pb-2 border-bottom border-dark'>
                 Ausstehend
             </h5>
             <div class='pending-product-grid'>
                 <template
-                    v-for='{ product, quantity } in pendingProductsStore.pending.values()'
+                    v-for='{ product, quantity } in orderStore.pending.values()'
                     :key='product.id'
                 >
                     <div>{{ quantity }}x</div>
@@ -88,13 +88,12 @@
 
 <script setup lang='ts'>
 import { OrderService } from '@/services';
-import { order, pendingProducts } from '@/state';
+import { order } from '@/state';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const orderStore = order.useStore();
-const pendingProductsStore = pendingProducts.useStore();
 const loadingState = ref({
     addProducts: false,
     complete: false,
@@ -113,13 +112,13 @@ async function addPendingToOrder(){
     if (!orderStore.order)
         throw new Error('No order available');
 
-    const pendingProducts = pendingProductsStore.getIdQuantityObject();
-
-    pendingProductsStore.pending.clear();
+    const pendingProducts = orderStore.getIdQuantityObject();
 
     loadingState.value.addProducts = true;
     orderStore.order = await OrderService.addProducts(orderStore.order.id, pendingProducts)
         .finally(() => loadingState.value.addProducts = false);
+
+    orderStore.pending.clear();
 }
 
 async function completeOrder() {

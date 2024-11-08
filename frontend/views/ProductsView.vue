@@ -67,10 +67,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { order, pendingProducts } from '@/state';
+import { order } from '@/state';
 
 const orderStore = order.useStore();
-const pendingProductsStore = pendingProducts.useStore();
 const timers = ref<Map<number, number>>(new Map());
 
 function startOrResetTimer(productId: number) {
@@ -85,12 +84,12 @@ function startOrResetTimer(productId: number) {
 }
 
 async function addProductToPending(product: Entity.Product) {
-    pendingProductsStore.addProduct(product);
+    orderStore.addProduct(product);
     startOrResetTimer(product.id);
 }
 
 async function removeProductFromPending(product: Entity.Product) {
-    pendingProductsStore.removeProduct(product);
+    orderStore.removeProduct(product);
     startOrResetTimer(product.id);
 }
 
