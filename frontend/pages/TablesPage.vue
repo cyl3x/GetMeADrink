@@ -1,5 +1,10 @@
 <template>
+<page-loader-view v-if='tables === undefined'>
+    Lade Tische...
+</page-loader-view>
+
 <div
+    v-else
     class='d-flex flex-wrap justify-content-center'
 >
     <button
@@ -39,10 +44,11 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { OrderService, TableService } from '@/services';
 import { order } from '@/state';
+import PageLoaderView from '@/views/PageLoaderView.vue';
 
 const router = useRouter();
 const orderStore = order.useStore();
-const tables = ref<Entity.Table[]>([]);
+const tables = ref<Entity.Table[]>();
 const loadingOrder = ref<number>();
 
 async function fetchTables() {
