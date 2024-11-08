@@ -1,7 +1,7 @@
 <template>
-<page-loader-view v-if='tables === undefined'>
+<page-loader-component v-if='tables === undefined'>
     Lade Tische...
-</page-loader-view>
+</page-loader-component>
 
 <div
     v-else
@@ -44,7 +44,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { OrderService, TableService } from '@/services';
 import { order } from '@/state';
-import PageLoaderView from '@/views/PageLoaderView.vue';
+import PageLoaderComponent from '@/components/PageLoaderComponent.vue';
 
 const router = useRouter();
 const orderStore = order.useStore();

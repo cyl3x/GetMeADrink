@@ -32,7 +32,7 @@
 import { ref } from 'vue';
 import { ProductService } from '@/services';
 import { order } from '@/state';
-import PageLoaderView from './PageLoaderView.vue';
+import PageLoaderView from '../components/PageLoaderComponent.vue';
 
 const orderStore = order.useStore();
 const categories = ref<Entity.ProductCategory[]>();
