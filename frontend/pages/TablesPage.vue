@@ -19,22 +19,22 @@
         :disabled='!!loadingOrder'
         @click='ensureAndNavigateToOrder(table.id)'
     >
-        Tisch {{ table.id }}
-        <br v-if='table.pendingOrder'>
-
+        <div v-if='!loadingOrder'>
+            Tisch {{ table.id }}
+            <br v-if='table.pendingOrder'>
+        </div>
         <span
             v-if='loadingOrder === table.id'
             class='spinner-border'
             role='status'
             aria-hidden='true'
         />
-
         <span v-else>{{ table.pendingOrder?.totalPrice.toFixed(2) }} {{ table.pendingOrder ? "€" : "" }}</span>
-
-        <br>
-        <small>
-            {{ table.pendingOrder ? "Bestellte Produkte: " + table.quantityProducts : "" }}
-        </small>
+        <div v-if='!loadingOrder'>
+            <small>
+                {{ table.pendingOrder ? "Bestellte Produkte: " + table.quantityProducts : "" }}
+            </small>
+        </div>
     </button>
 </div>
 </template>
