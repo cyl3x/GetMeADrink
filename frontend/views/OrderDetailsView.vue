@@ -131,7 +131,6 @@ async function completeOrder() {
         .catch(() => loadingState.value.complete = false);
 
     orderStore.order = null;
-    orderStore.selectedCategory = null;
 
     router.push({ name:'tables' });
 }
@@ -146,7 +145,6 @@ async function cancelOrder(){
         .catch(() => loadingState.value.cancel = false);
 
     orderStore.order = null;
-    orderStore.selectedCategory = null;
 
     router.push({ name:'tables' });
 }
