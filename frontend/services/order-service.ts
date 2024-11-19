@@ -1,5 +1,9 @@
 import Api from './api';
 
+export function getOrtders() {
+    return Api.get<Entity.Order[]>(`/orders`);
+}
+
 export function getOrder(orderId: number) {
     return Api.get<Entity.Order>(`/order/${orderId}`);
 }

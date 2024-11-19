@@ -23,6 +23,14 @@ class OrderController extends AbstractController
     ) {
     }
 
+    #[Route(path: '/orders', name: 'orders', methods: ['GET'])]
+    public function orders(): JsonResponse
+    {
+        $orders = $this->orderRepository->findAll();
+
+        return new JsonResponse($orders);
+    }
+
     #[Route(path: '/order/ensure/{tableId}', name: 'order.ensure', methods: ['POST'])]
     public function ensureOrder(TableEntity $table): JsonResponse
     {
