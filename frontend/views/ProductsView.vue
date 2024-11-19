@@ -20,7 +20,7 @@
             <div class='card-grid-item__content'>
                 <img
                     v-if='product.image'
-                    :src='`data:image/png;base64,${product.image}`'
+                    :src='product.image'
                     class='card-grid-item__image mb-2'
                 >
 
