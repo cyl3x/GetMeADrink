@@ -1,6 +1,6 @@
 <template>
-<nav class='bg-light shadow-sm p-2 z-1 fs-5'>
-    <ol class='breadcrumb m-0'>
+<nav class='bg-light shadow-sm p-2 z-1 d-flex justify-content-between align-items-center'>
+    <ol class='breadcrumb m-0 fs-5'>
         <li
             class='breadcrumb-item'
             :class='{ active: isTables, pointer: !isTables }'
@@ -10,6 +10,12 @@
                 &#8592;
             </template>
             GetMeADrink
+        </li>
+        <li
+            v-if='isOrderListing'
+            class='breadcrumb-item active'
+        >
+            Liste aller Bestellungen
         </li>
         <li
             v-if='isOrder'
@@ -26,6 +32,10 @@
             {{ categoriesStore.getCategory($route)?.name }}
         </li>
     </ol>
+
+    <router-link v-if='route.name === "tables"' :to='{ name: "listing.orders" }'>
+        Liste &#8594;
+    </router-link>
 </nav>
 </template>
 
@@ -43,6 +53,9 @@ const isTables = computed(() => {
     return route.name === 'tables';
 });
 
+const isOrderListing = computed(() => {
+    return route.name === 'listing.orders';
+});
 
 const isOrder = computed(() => {
     return route.name?.toString().startsWith('order') || false;
