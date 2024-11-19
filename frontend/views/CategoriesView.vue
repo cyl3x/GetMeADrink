@@ -1,12 +1,8 @@
 <template>
-<page-loader-view v-if='categories === undefined'>
-    Lade Produkte...
-</page-loader-view>
-
-<div v-else class='card-grid-container'>
+<div class='card-grid-container'>
     <div class='card-grid'>
         <button
-            v-for='category in categories'
+            v-for='category in Object.values(categoriesStore.categories ?? {})'
             :key='category.id'
             class='card-grid-item card-grid-item__content btn btn-light shadow-sm'
             @click='selectCategory(category)'
@@ -18,21 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { ProductService } from '@/services';
-import { order } from '@/state';
-import PageLoaderView from '../components/PageLoaderComponent.vue';
+import { useRouter } from 'vue-router';
+import { categories } from '@/state';
 
-const orderStore = order.useStore();
-const categories = ref<Entity.ProductCategory[]>();
-
-async function fetchCategories() {
-    categories.value = await ProductService.getCategories();
-}
+const categoriesStore = categories.useStore();
+const router = useRouter();
 
 function selectCategory(category: Entity.ProductCategory) {
-    orderStore.selectedCategory = category;
+    router.push({ name: 'order.products', params: { categoryId: category.id } });
 }
-
-fetchCategories();
 </script>

@@ -7,7 +7,6 @@ type ProductAndQuantity = {
 
 export type State = {
     order: Entity.Order | null,
-    selectedCategory: Entity.ProductCategory | null,
     pendingProducts: Map<number, Map<number, ProductAndQuantity>>,
 };
 
@@ -15,7 +14,6 @@ export const useStore = defineStore('order', {
     state: (): State => {
         return {
             order: null,
-            selectedCategory: null,
             pendingProducts: new Map(),
         };
     },

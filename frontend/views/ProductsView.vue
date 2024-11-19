@@ -11,7 +11,7 @@
         </button>
 
         <button
-            v-for='product in orderStore.selectedCategory?.products'
+            v-for='product in categoriesStore.getCategory($route)?.products'
             :key='product.id'
             class='card-grid-item btn btn-light shadow-sm'
             :class='{ "active": timers.has(product.id) }'
@@ -52,9 +52,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { order } from '@/state';
+import { categories, order } from '@/state';
+import { useRouter } from 'vue-router';
 
+const categoriesStore = categories.useStore();
 const orderStore = order.useStore();
+const router = useRouter();
 const timers = ref<Map<number, number>>(new Map());
 
 function startOrResetTimer(productId: number) {
@@ -79,7 +82,7 @@ async function removeProductFromPending(product: Entity.Product) {
 }
 
 async function deselectCategory() {
-    orderStore.selectedCategory = null;
+    router.push({ name: 'order.categories' });
 }
 </script>
 

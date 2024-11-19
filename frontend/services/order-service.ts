@@ -8,7 +8,6 @@ export function ensureOrder(tableId: number) {
     return Api.post<Entity.Order>(`/order/ensure/${tableId}`);
 }
 
-
 export function addProducts(orderId: number, productsJson:Record<number,number> ) {
     return Api.post<Entity.Order>(`/order/${orderId}/add`, productsJson);
 }
