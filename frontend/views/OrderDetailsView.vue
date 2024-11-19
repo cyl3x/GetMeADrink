@@ -1,6 +1,6 @@
 <template>
 <div
-    class='bg-light shadow d-flex flex-column h-100 flex-shrink-0'
+    class='bg-light shadow d-flex flex-column h-100 flex-shrink-0 z-1'
     style='width: 22rem;'
 >
     <div class='overflow-scroll flex-grow-1 p-3 text-truncate'>
