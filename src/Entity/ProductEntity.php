@@ -167,7 +167,7 @@ class ProductEntity implements \JsonSerializable
             'name' => $this->name,
             'price' => $this->price,
             'vat' => $this->vat,
-            'image' => $this->getImageBase64(),
+            'image' => $this->hasImage() ? '/api/product/' . $this->id . '/image' : null,
             'categories' => $this->categories
                 ->map(static fn (ProductCategoryEntity $category) => $category->getName())
                 ->toArray(),
