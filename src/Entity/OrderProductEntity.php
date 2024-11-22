@@ -19,7 +19,7 @@ class OrderProductEntity implements \JsonSerializable
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: OrderEntity::class, inversedBy: 'order_products')]
+    #[ORM\ManyToOne(targetEntity: OrderEntity::class, inversedBy: 'orderProducts')]
     private OrderEntity $order;
 
     #[ORM\Column(type: Types::STRING)]
