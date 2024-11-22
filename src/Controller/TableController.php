@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\TableRepository;
-use Nette\Utils\Json;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/api', name: 'api.', format: 'json')]
