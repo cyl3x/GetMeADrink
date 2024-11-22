@@ -175,7 +175,7 @@ class ProductEntity implements \JsonSerializable
             'vat' => $this->vat,
             'image' => $this->hasImage() ? '/api/product/' . $this->id . '/image' : null,
             'categories' => $this->categories
-                ->map(static fn (ProductCategoryEntity $category) => $category->getName())
+                ->map(static fn (ProductCategoryEntity $category) => $category->getId())
                 ->toArray(),
             'createdAt' => $this->createdAt->format(\DateTime::RFC3339),
             'updatedAt' => $this->updatedAt?->format(\DateTime::RFC3339),

@@ -9,6 +9,7 @@ class HttpException extends Exception\HttpException
 {
     public const CODE_GENERIC_ERROR = 'GENERIC_ERROR';
     public const CODE_RESOLVE_ERROR = 'RESOLVE';
+    public const CODE_DENORMALIZE_ERROR = 'DENORMALIZE';
 
     /**
      * @param mixed[] $parameters

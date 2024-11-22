@@ -1,6 +1,10 @@
 import type { ApiError } from '@/services/api';
 
 declare global {
+    type DeepPartial<T> = T extends object ? {
+        [P in keyof T]?: DeepPartial<T[P]>;
+    } : T;
+
     namespace Api {
         export type Error = ApiError;
 
@@ -34,7 +38,7 @@ declare global {
             name: string,
             price: number,
             image: string,
-            categories: string[],
+            categories: number[],
             createdAt: string,
             updatedAt: string | null,
         };

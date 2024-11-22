@@ -27,7 +27,7 @@ class TableRepository extends ServiceEntityRepository
         return $table;
     }
 
-    public function delete(TableEntity $table)
+    public function delete(TableEntity $table): void
     {
         $this->getEntityManager()->remove($table);
         $this->getEntityManager()->flush();
