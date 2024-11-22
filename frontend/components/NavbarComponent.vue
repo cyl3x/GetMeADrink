@@ -66,7 +66,7 @@
     <button
         v-if='isAdmin && !is("admin.orders")'
         class='btn btn-primary btn-sm'
-        @click='eventBus.emit("create")'
+        @click='emitCreateEvent'
     >
         Erstellen
     </button>
@@ -77,13 +77,11 @@
 import { categories, order } from '@/state';
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useEventBus } from '@/services/event-bus';
 
 const orderStore = order.useStore();
 const categoriesStore = categories.useStore();
 const router = useRouter();
 const route = useRoute();
-const eventBus = useEventBus();
 
 const isAdmin = computed(() => {
     return route.name?.toString().startsWith('admin') || false;
@@ -95,6 +93,10 @@ const isOrder = computed(() => {
 
 function is(name: string): boolean {
     return route.name === name;
+}
+
+function emitCreateEvent() {
+    window.dispatchEvent(new CustomEvent('admin::create'));
 }
 </script>
 
