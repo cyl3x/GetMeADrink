@@ -6,6 +6,7 @@ use App\Repository\ProductVariantRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ProductVariantRepository::class)]
 #[ORM\Table(name: '`product_variant`')]
@@ -17,6 +18,7 @@ class ProductVariantEntity implements \JsonSerializable
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
+    #[Groups(groups: ['admin-write'])]
     #[ORM\Column(type: Types::STRING)]
     private string $name;
 

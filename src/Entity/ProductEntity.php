@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ORM\Table(name: '`product`')]
@@ -21,15 +22,19 @@ class ProductEntity implements \JsonSerializable
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
+    #[Groups(groups: ['admin-write'])]
     #[ORM\ManyToOne(targetEntity: ProductVariantEntity::class, inversedBy: 'products')]
     private ProductVariantEntity $variant;
 
+    #[Groups(groups: ['admin-write'])]
     #[ORM\Column(type: Types::STRING)]
     private string $name;
 
+    #[Groups(groups: ['admin-write'])]
     #[ORM\Column(type: Types::FLOAT)]
     private float $price;
 
+    #[Groups(groups: ['admin-write'])]
     #[ORM\Column(type: Types::FLOAT)]
     private float $vat;
 
@@ -39,6 +44,7 @@ class ProductEntity implements \JsonSerializable
     /**
      * @var Collection<int, ProductCategoryEntity>
      */
+    #[Groups(groups: ['admin-write'])]
     #[ORM\ManyToMany(targetEntity: ProductCategoryEntity::class, inversedBy: 'products', cascade: ['persist'])]
     private Collection $categories;
 
