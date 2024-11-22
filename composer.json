@@ -87,9 +87,9 @@
         "ecs-fix": "php-cs-fixer fix",
         "phpstan": "phpstan analyze --memory-limit=2G",
         "setup": [
-            "bin/console doctrine:database:drop --force",
-            "bin/console doctrine:database:create",
-            "@setup:update"
+            "bin/console doctrine:schema:drop --force --full-database",
+            "@setup:update",
+            "bin/console demodata:generate"
         ],
         "setup:update": [
             "composer install",
