@@ -7,3 +7,11 @@ export function getTables() {
 export function getTable(id: number) {
     return Api.get<Entity.Table>(`/table/${id}`);
 }
+
+export function createTable() {
+    return Api.post<Entity.Table>('/table');
+}
+
+export function deleteTable(id: number) {
+    return Api.delete(`/table/${id}`);
+}

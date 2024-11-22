@@ -16,4 +16,20 @@ class TableRepository extends ServiceEntityRepository
     ) {
         parent::__construct($registry, TableEntity::class);
     }
+
+    public function create(): TableEntity
+    {
+        $table = new TableEntity();
+
+        $this->getEntityManager()->persist($table);
+        $this->getEntityManager()->flush();
+
+        return $table;
+    }
+
+    public function delete(TableEntity $table)
+    {
+        $this->getEntityManager()->remove($table);
+        $this->getEntityManager()->flush();
+    }
 }

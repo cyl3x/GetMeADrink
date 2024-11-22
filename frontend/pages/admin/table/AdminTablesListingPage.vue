@@ -1,5 +1,5 @@
 <template>
-<div class='w-100'>
+<div class='w-100 overflow-scroll'>
     <table class='table table-striped'>
         <thead>
             <tr>
@@ -27,10 +27,10 @@
                 <td>{{ formatDate(table.createdAt) }}</td>
                 <td>
                     <button
-                        class='btn btn-primary btn-sm'
-                        @click='edit(table.id)'
+                        class='btn btn-primary btn-sm btn-danger'
+                        @click='deleteTable(table.id)'
                     >
-                        Bearbeiten
+                        Löschen
                     </button>
                 </td>
             </tr>
@@ -42,20 +42,20 @@
 <script setup lang='ts'>
 import { TableService } from '@/services';
 import { onMounted, onUnmounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
 
 const tables = ref<Entity.Table[]>([]);
-const router = useRouter();
 
 onMounted(() => { window.addEventListener('admin::create', create); });
 onUnmounted(() => { window.removeEventListener('admin::create', create); });
 
-function create() {
-    router.push({ name: 'admin.table' });
+async function create() {
+    await TableService.createTable();
+    await fetchTables();
 }
 
-function edit(id: number) {
-    router.push({ name: 'admin.table', params: { id } });
+async function deleteTable(id: number) {
+    await TableService.deleteTable(id);
+    await fetchTables();
 }
 
 async function fetchTables() {
