@@ -3,13 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\ProductVariantEntity;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ProductVariantEntity>
+ * @extends AbstractRepository<ProductVariantEntity>
  */
-class ProductVariantRepository extends ServiceEntityRepository
+class ProductVariantRepository extends AbstractRepository
 {
     public function __construct(
         ManagerRegistry $registry,

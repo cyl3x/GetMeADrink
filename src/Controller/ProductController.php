@@ -7,6 +7,7 @@ use App\Repository\ProductCategoryRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -48,5 +49,41 @@ class ProductController extends AbstractController
                 'Content-Type' => \mime_content_type($product->getImage()) ?: null,
             ]
         );
+    }
+
+    #[Route(path: '/product', name: 'product.create', methods: ['POST'])]
+    public function createProduct(Request $request): JsonResponse
+    {
+        $data = \json_decode($request->getContent(), true, 512, \JSON_THROW_ON_ERROR);
+
+        $entity = $this->productRepository->upsert($data);
+
+        return new JsonResponse($entity);
+    }
+
+    #[Route(path: '/product/{productId}', name: 'product.delete', methods: ['DELETE'])]
+    public function deleteProduct(int $productId): JsonResponse
+    {
+        $this->productRepository->delete($productId);
+
+        return new JsonResponse([]);
+    }
+
+    #[Route(path: '/product-category', name: 'product-category.create', methods: ['POST'])]
+    public function createProductCategory(Request $request): JsonResponse
+    {
+        $data = \json_decode($request->getContent(), true, 512, \JSON_THROW_ON_ERROR);
+
+        $entity = $this->productCategoryRepository->upsert($data);
+
+        return new JsonResponse($entity);
+    }
+
+    #[Route(path: '/product-category/{productCategoryId}', name: 'product-category.delete', methods: ['DELETE'])]
+    public function deleteProductCategory(int $productCategoryId): JsonResponse
+    {
+        $this->productCategoryRepository->delete($productCategoryId);
+
+        return new JsonResponse([]);
     }
 }
