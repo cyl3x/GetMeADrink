@@ -114,7 +114,7 @@ const isListing = computed(() => {
 });
 
 const isDetail = computed(() => {
-    return is('admin.table') || is('admin.category') || is('admin.table');
+    return is('admin.table') || is('admin.category');
 });
 
 function is(name: string): boolean {

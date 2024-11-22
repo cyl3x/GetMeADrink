@@ -1,5 +1,5 @@
 <template>
-<div class='w-100'>
+<div class='w-100 overflow-scroll'>
     <table class='table table-striped'>
         <thead>
             <tr>

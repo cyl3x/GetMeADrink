@@ -80,11 +80,6 @@ const routes = [
                 path: 'tables',
                 component: AdminTablesListingPage,
             },
-            {
-                name: 'admin.table',
-                path: 'table/:id?',
-                component: AdminTableDetailPage,
-            },
         ],
     },
 ];
