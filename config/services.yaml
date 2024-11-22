@@ -28,3 +28,7 @@ services:
     # please note that last definitions always *replace* previous ones
     Faker\Generator:
         factory: ['@App\Demodata\FakerFactory', 'create']
+
+    get_set_method_normalizer:
+        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+        tags: [serializer.normalizer]

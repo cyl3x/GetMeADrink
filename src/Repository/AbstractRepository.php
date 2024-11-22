@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
+use App\Exception\DenormalizeException;
+use App\Exception\HttpException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Serializer\Exception\PartialDenormalizationException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 
@@ -34,18 +38,27 @@ abstract class AbstractRepository extends ServiceEntityRepository
      */
     public function upsert(array $item): mixed
     {
-        $id = $item['id'] ?? null;
+        try {
+            $id = $item['id'] ?? null;
 
-        $entity = $id
-            ? $this->getEntityManager()->getReference($this->getClassName(), $id)
-            : new ($this->getClassName());
+            $entity = $id
+                ? $this->getEntityManager()->getReference($this->getClassName(), $id)
+                : new ($this->getClassName());
 
-        $entity = $this->denormalizeInto($entity, $item);
+            $entity = $this->denormalizeInto($entity, $item);
 
-        $this->getEntityManager()->persist($entity);
-        $this->getEntityManager()->flush();
+            $this->getEntityManager()->persist($entity);
+            $this->getEntityManager()->flush();
 
-        return $entity;
+            return $entity;
+        } catch (PartialDenormalizationException $e) {
+            throw new DenormalizeException($this->getClassName(), $e);
+        } catch (\Throwable $e) {
+            throw new HttpException(
+                \sprintf('An error occurred upserting %s: %s', $this->getClassName(), $e->getMessage()),
+                e: $e,
+            );
+        }
     }
 
     /**
@@ -63,6 +76,8 @@ abstract class AbstractRepository extends ServiceEntityRepository
             [
                 AbstractNormalizer::OBJECT_TO_POPULATE => $into,
                 AbstractNormalizer::GROUPS => ['admin-write'],
+                AbstractObjectNormalizer::SKIP_UNINITIALIZED_VALUES => false,
+                DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS => true,
             ],
         );
     }

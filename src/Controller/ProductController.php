@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\ProductEntity;
 use App\Repository\ProductCategoryRepository;
 use App\Repository\ProductRepository;
+use App\Repository\ProductVariantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ class ProductController extends AbstractController
     public function __construct(
         private readonly ProductRepository $productRepository,
         private readonly ProductCategoryRepository $productCategoryRepository,
+        private readonly ProductVariantRepository $productVariantRepository,
     ) {
     }
 
@@ -56,6 +58,14 @@ class ProductController extends AbstractController
     {
         $data = \json_decode($request->getContent(), true, 512, \JSON_THROW_ON_ERROR);
 
+        if (isset($data['price']) && \is_int($data['price'])) {
+            $data['price'] = (float) $data['price'];
+        }
+
+        if (isset($data['vat']) && \is_int($data['vat'])) {
+            $data['vat'] = (float) $data['vat'];
+        }
+
         $entity = $this->productRepository->upsert($data);
 
         return new JsonResponse($entity);
@@ -83,6 +93,24 @@ class ProductController extends AbstractController
     public function deleteProductCategory(int $productCategoryId): JsonResponse
     {
         $this->productCategoryRepository->delete($productCategoryId);
+
+        return new JsonResponse([]);
+    }
+
+    #[Route(path: '/product-variant', name: 'product-variant.create', methods: ['POST'])]
+    public function createProductVariant(Request $request): JsonResponse
+    {
+        $data = \json_decode($request->getContent(), true, 512, \JSON_THROW_ON_ERROR);
+
+        $entity = $this->productVariantRepository->upsert($data);
+
+        return new JsonResponse($entity);
+    }
+
+    #[Route(path: '/product-variant/{productVariantId}', name: 'product-variant.delete', methods: ['DELETE'])]
+    public function deleteProductVariant(int $productVariantId): JsonResponse
+    {
+        $this->productVariantRepository->delete($productVariantId);
 
         return new JsonResponse([]);
     }
