@@ -66,9 +66,17 @@
     <button
         v-if='isListing'
         class='btn btn-primary btn-sm'
-        @click='emitCreateEvent'
+        @click='emitEvent("create")'
     >
         Erstellen
+    </button>
+
+    <button
+        v-if='isDetail'
+        class='btn btn-primary btn-sm'
+        @click='emitEvent("save")'
+    >
+        Speichern
     </button>
 </nav>
 </template>
@@ -95,12 +103,16 @@ const isListing = computed(() => {
     return is('admin.products') || is('admin.categories') || is('admin.tables');
 });
 
+const isDetail = computed(() => {
+    return is('admin.table') || is('admin.category') || is('admin.table');
+});
+
 function is(name: string): boolean {
     return route.name === name;
 }
 
-function emitCreateEvent() {
-    window.dispatchEvent(new CustomEvent('admin::create'));
+function emitEvent(name: string) {
+    window.dispatchEvent(new CustomEvent(`admin::${name}`));
 }
 </script>
 
