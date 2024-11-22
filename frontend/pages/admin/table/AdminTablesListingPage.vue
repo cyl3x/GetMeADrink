@@ -28,7 +28,7 @@
                 <td>
                     <button
                         class='btn btn-primary btn-sm'
-                        @click='router.push({ name: "admin.table", params: { id: table.id } })'
+                        @click='edit(table.id)'
                     >
                         Bearbeiten
                     </button>
@@ -52,6 +52,10 @@ onUnmounted(() => { window.removeEventListener('admin::create', create); });
 
 function create() {
     router.push({ name: 'admin.table' });
+}
+
+function edit(id: number) {
+    router.push({ name: 'admin.table', params: { id } });
 }
 
 async function fetchTables() {

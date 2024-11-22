@@ -13,32 +13,42 @@
         </li>
         <template v-if='isAdmin'>
             <li
-                v-if='is("admin.orders")'
-                class='breadcrumb-item pointer active'
+                v-if='startWith("admin.order")'
+                class='breadcrumb-item pointer'
+                :class='{ active: is("admin.products") }'
                 @click='router.push({ name: "admin.orders" })'
             >
                 Bestellungen
             </li>
             <li
-                v-if='is("admin.products")'
-                class='breadcrumb-item pointer active'
+                v-if='startWith("admin.product")'
+                class='breadcrumb-item pointer'
+                :class='{ active: is("admin.products") }'
                 @click='router.push({ name: "admin.products" })'
             >
                 Produkte
             </li>
             <li
-                v-if='is("admin.categories")'
-                class='breadcrumb-item pointer active'
+                v-if='startWith("admin.categor")'
+                class='breadcrumb-item pointer'
+                :class='{ active: is("admin.categories") }'
                 @click='router.push({ name: "admin.categories" })'
             >
                 Kategorien
             </li>
             <li
-                v-if='is("admin.tables")'
-                class='breadcrumb-item pointer active'
+                v-if='startWith("admin.table")'
+                class='breadcrumb-item pointer'
+                :class='{ active: is("admin.tables") }'
                 @click='router.push({ name: "admin.tables" })'
             >
                 Tische
+            </li>
+            <li
+                v-if='is("admin.table") || is("admin.category") || is("admin.product")'
+                class='breadcrumb-item pointer active'
+            >
+                {{ route.params?.id }}
             </li>
         </template>
         <template v-else-if='isOrder'>
@@ -109,6 +119,10 @@ const isDetail = computed(() => {
 
 function is(name: string): boolean {
     return route.name === name;
+}
+
+function startWith(name: string): boolean {
+    return route.name?.toString().startsWith(name) ?? false;
 }
 
 function emitEvent(name: string) {
