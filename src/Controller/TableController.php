@@ -22,4 +22,12 @@ class TableController extends AbstractController
 
         return new JsonResponse($tables);
     }
+
+    #[Route(path: '/table/{id}', name: 'table', methods: ['GET'])]
+    public function getTable(int $id): JsonResponse
+    {
+        $table = $this->tableRepository->find($id);
+
+        return new JsonResponse($table);
+    }
 }

@@ -9,6 +9,7 @@ import AdminOrdersListingPage from '@/pages/admin/order/AdminOrdersListingPage.v
 import AdminProductsListingPage from '@/pages/admin/product/AdminProductsListingPage.vue';
 import AdminCategoriesListingPage from '@/pages/admin/category/AdminCategoriesListingPage.vue';
 import AdminTablesListingPage from '@/pages/admin/table/AdminTablesListingPage.vue';
+import AdminTableDetailPage from '@/pages/admin/table/AdminTableDetailPage.vue';
 
 const routes = [
     {
@@ -73,6 +74,11 @@ const routes = [
                 name: 'admin.tables',
                 path: 'tables',
                 component: AdminTablesListingPage,
+            },
+            {
+                name: 'admin.table',
+                path: 'table/:id?',
+                component: AdminTableDetailPage,
             },
         ],
     },

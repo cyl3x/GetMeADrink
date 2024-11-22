@@ -64,7 +64,7 @@
     </router-link>
 
     <button
-        v-if='isAdmin && !is("admin.orders")'
+        v-if='isListing'
         class='btn btn-primary btn-sm'
         @click='emitCreateEvent'
     >
@@ -89,6 +89,10 @@ const isAdmin = computed(() => {
 
 const isOrder = computed(() => {
     return route.name?.toString().startsWith('order') || false;
+});
+
+const isListing = computed(() => {
+    return is('admin.products') || is('admin.categories') || is('admin.tables');
 });
 
 function is(name: string): boolean {
