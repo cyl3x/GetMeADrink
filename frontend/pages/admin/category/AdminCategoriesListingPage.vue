@@ -6,11 +6,12 @@
 </template>
 
 <script setup lang='ts'>
-import { useEventBus } from '@/services/event-bus';
+import { onMounted, onUnmounted } from 'vue';
 
-const eventBus = useEventBus();
+onMounted(() => { window.addEventListener('admin::create', create); });
+onUnmounted(() => { window.removeEventListener('admin::create', create); });
 
-eventBus.on('create', () => {
-    // create new category
-});
+function create() {
+    console.log('create new category');
+}
 </script>
