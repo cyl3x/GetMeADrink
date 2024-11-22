@@ -6,9 +6,9 @@ import CategoriesView from '@/views/CategoriesView.vue';
 import ProductsView from '@/views/ProductsView.vue';
 import AdminPage from '@/pages/admin/AdminPage.vue';
 import AdminOrdersListingPage from '@/pages/admin/order/AdminOrdersListingPage.vue';
-import AdminProductsListingPage from '@/pages/admin/order/AdminProductsListingPage.vue';
-import AdminCategoriesListingPage from '@/pages/admin/order/AdminCategoriesListingPage.vue';
-import AdminTablesListingPage from '@/pages/admin/order/AdminTablesListingPage.vue';
+import AdminProductsListingPage from '@/pages/admin/product/AdminProductsListingPage.vue';
+import AdminCategoriesListingPage from '@/pages/admin/category/AdminCategoriesListingPage.vue';
+import AdminTablesListingPage from '@/pages/admin/table/AdminTablesListingPage.vue';
 
 const routes = [
     {

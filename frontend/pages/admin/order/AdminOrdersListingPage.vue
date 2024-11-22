@@ -1,51 +1,53 @@
 <template>
-<table class='table table-striped'>
-    <thead>
-        <tr>
-            <th scope='col'>
-                #
-            </th>
-            <th scope='col'>
-                Tisch
-            </th>
-            <th scope='col'>
-                Status
-            </th>
-            <th scope='col'>
-                Preis
-            </th>
-            <th scope='col'>
-                Produkte
-            </th>
-            <th scope='col'>
-                Erstellt am
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr
-            v-for='order in orders'
-            :key='order.id'
-        >
-            <th scope='row'>{{ order.id }}</th>
-            <td>{{ order.table }}</td>
-            <td>
-                <span
-                    class='badge rounded-pill'
-                    :class='statusClass(order.status)'
-                >
-                    {{ statusText(order.status) }}
-                </span>
-            </td>
-            <td>{{ order.totalPrice.toFixed(2) }} €</td>
-            <td>{{ order.orderProducts.length }}</td>
-            <td>{{ formatDate(order.createdAt) }}</td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <!-- Pagination -->
-    </tfoot>
-</table>
+<div class='w-100'>
+    <table class='table table-striped'>
+        <thead>
+            <tr>
+                <th scope='col'>
+                    #
+                </th>
+                <th scope='col'>
+                    Tisch
+                </th>
+                <th scope='col'>
+                    Status
+                </th>
+                <th scope='col'>
+                    Preis
+                </th>
+                <th scope='col'>
+                    Produkte
+                </th>
+                <th scope='col'>
+                    Erstellt am
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                v-for='order in orders'
+                :key='order.id'
+            >
+                <th scope='row'>{{ order.id }}</th>
+                <td>{{ order.table }}</td>
+                <td>
+                    <span
+                        class='badge rounded-pill'
+                        :class='statusClass(order.status)'
+                    >
+                        {{ statusText(order.status) }}
+                    </span>
+                </td>
+                <td>{{ order.totalPrice.toFixed(2) }} €</td>
+                <td>{{ order.orderProducts.length }}</td>
+                <td>{{ formatDate(order.createdAt) }}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <!-- Pagination -->
+        </tfoot>
+    </table>
+</div>
 </template>
 
 <script setup lang='ts'>
