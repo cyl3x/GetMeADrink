@@ -2,7 +2,7 @@
 <nav class='nav bg-light shadow flex-column h-100 flex-shrink-0 gap-3 p-3 z-1' style='width: 16rem;'>
     <router-link
         class='nav-link rounded link-dark'
-        :class='{ "bg-secondary-subtle": is("admin.orders") }'
+        :class='{ "bg-secondary-subtle": startWith("admin.order") }'
         :to='{ name: "admin.orders" }'
     >
         Bestellungen
@@ -10,7 +10,7 @@
 
     <router-link
         class='nav-link rounded link-dark'
-        :class='{ "bg-secondary-subtle": is("admin.products") }'
+        :class='{ "bg-secondary-subtle": startWith("admin.product") }'
         :to='{ name: "admin.products" }'
     >
         Produkte
@@ -18,7 +18,7 @@
 
     <router-link
         class='nav-link rounded link-dark'
-        :class='{ "bg-secondary-subtle": is("admin.categories") }'
+        :class='{ "bg-secondary-subtle": startWith("admin.categor") }'
         :to='{ name: "admin.categories" }'
     >
         Kategorien
@@ -26,7 +26,7 @@
 
     <router-link
         class='nav-link rounded link-dark'
-        :class='{ "bg-secondary-subtle": is("admin.tables") }'
+        :class='{ "bg-secondary-subtle": startWith("admin.table") }'
         :to='{ name: "admin.tables" }'
     >
         Tische
@@ -37,10 +37,9 @@
 <script setup lang='ts'>
 import { useRoute } from 'vue-router';
 
-
 const route = useRoute();
 
-function is(name: string): boolean {
-    return route.name === name;
+function startWith(name: string): boolean {
+    return route.name?.toString().startsWith(name) ?? false;
 }
 </script>

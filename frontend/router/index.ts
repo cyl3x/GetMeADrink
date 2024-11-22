@@ -47,27 +47,32 @@ const routes = [
                 path: 'orders',
                 component: AdminOrdersListingPage,
             },
-            // {
-            //     name: 'admin.order.edit',
-            //     path: 'order/:id/edit',
-            //     component: ,
-            // },
-            // {
-            //     name: 'admin.order.create',
-            //     path: 'order/create',
-            //     component: ,
-            // },
+            {
+                name: 'admin.order',
+                path: 'order/:id',
+                component: null,
+            },
 
             {
                 name: 'admin.products',
                 path: 'products',
                 component: AdminProductsListingPage,
             },
+            {
+                name: 'admin.product',
+                path: 'product/:id?',
+                component: null,
+            },
 
             {
                 name: 'admin.categories',
                 path: 'categories',
                 component: AdminCategoriesListingPage,
+            },
+            {
+                name: 'admin.category',
+                path: 'category/:id?',
+                component: null,
             },
 
             {
