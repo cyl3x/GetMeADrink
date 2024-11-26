@@ -10,6 +10,7 @@ import AdminProductsListingPage from '@/pages/admin/product/AdminProductsListing
 import AdminCategoriesListingPage from '@/pages/admin/category/AdminCategoriesListingPage.vue';
 import AdminTablesListingPage from '@/pages/admin/table/AdminTablesListingPage.vue';
 import AdminTableDetailPage from '@/pages/admin/table/AdminTableDetailPage.vue';
+import AdminProductDetailPage from '@/pages/admin/product/AdminProductDetailPage.vue';
 
 const routes = [
     {
@@ -61,7 +62,7 @@ const routes = [
             {
                 name: 'admin.product',
                 path: 'product/:id?',
-                component: null,
+                component: AdminProductDetailPage,
             },
 
             {

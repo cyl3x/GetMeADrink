@@ -37,8 +37,8 @@ declare global {
             variant: ProductVariant,
             name: string,
             price: number,
-            image: string,
-            categories: number[],
+            image: string | null,
+            categories: string[],
             createdAt: string,
             updatedAt: string | null,
         };

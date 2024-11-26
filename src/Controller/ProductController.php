@@ -22,6 +22,12 @@ class ProductController extends AbstractController
     ) {
     }
 
+    #[Route(path: '/product/{productId}', name: 'product', methods: ['GET'])]
+    public function getProduct(ProductEntity $product): JsonResponse
+    {
+        return new JsonResponse($product);
+    }
+
     #[Route(path: '/products', name: 'products', methods: ['GET'])]
     public function getProducts(): JsonResponse
     {
@@ -36,6 +42,14 @@ class ProductController extends AbstractController
         $productCategories = $this->productCategoryRepository->findAll();
 
         return new JsonResponse($productCategories);
+    }
+
+    #[Route(path: '/product-variants', name: 'product-variants', methods: ['GET'])]
+    public function getProductVariants(): JsonResponse
+    {
+        $productVariants = $this->productVariantRepository->findAll();
+
+        return new JsonResponse($productVariants);
     }
 
     #[Route(path: '/product/{productId}/image', name: 'frontend')]
