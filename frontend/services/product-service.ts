@@ -8,6 +8,14 @@ export function getCategories() {
     return Api.get<Entity.ProductCategory[]>('/product-categories');
 }
 
+export function getProduct(id: number){
+    return Api.get<Entity.Product>(`/product/${id}`)
+}
+
+export function getVariants(){
+    return Api.get<Entity.ProductVariant[]>('/product-variants')
+}
+
 export function upsertProduct(product: DeepPartial<Entity.Product>) {
     return Api.post<Entity.Product>('/product', product);
 }
