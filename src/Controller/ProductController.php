@@ -67,7 +67,7 @@ class ProductController extends AbstractController
         );
     }
 
-    #[Route(path: '/product', name: 'product.create', methods: ['POST'])]
+    #[Route(path: '/product', name: 'product.upsert', methods: ['POST'])]
     public function createProduct(Request $request): JsonResponse
     {
         $data = \json_decode($request->getContent(), true, 512, \JSON_THROW_ON_ERROR);
@@ -93,8 +93,8 @@ class ProductController extends AbstractController
         return new JsonResponse([]);
     }
 
-    #[Route(path: '/product-category', name: 'product-category.create', methods: ['POST'])]
-    public function createProductCategory(Request $request): JsonResponse
+    #[Route(path: '/product-category', name: 'product-category.upsert', methods: ['POST'])]
+    public function upsertProductCategory(Request $request): JsonResponse
     {
         $data = \json_decode($request->getContent(), true, 512, \JSON_THROW_ON_ERROR);
 
@@ -111,8 +111,8 @@ class ProductController extends AbstractController
         return new JsonResponse([]);
     }
 
-    #[Route(path: '/product-variant', name: 'product-variant.create', methods: ['POST'])]
-    public function createProductVariant(Request $request): JsonResponse
+    #[Route(path: '/product-variant', name: 'product-variant.upsert', methods: ['POST'])]
+    public function upsertProductVariant(Request $request): JsonResponse
     {
         $data = \json_decode($request->getContent(), true, 512, \JSON_THROW_ON_ERROR);
 
