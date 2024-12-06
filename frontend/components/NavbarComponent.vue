@@ -96,7 +96,7 @@
 
 <script setup lang='ts'>
 import { categories, order } from '@/state';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const orderStore = order.useStore();
@@ -131,6 +131,34 @@ function startWith(name: string): boolean {
 function emitEvent(name: string) {
     window.dispatchEvent(new CustomEvent(`admin::${name}`));
 }
+
+watch(() => route.name, () => {
+    document.title = 'GetMeADrink';
+
+    if (is('tables')) {
+        document.title += ' | Tische';
+    } else if (isOrder.value) {
+        document.title += ` | Tisch ${orderStore.order?.table}`;
+
+        if (is('order.products'))
+            document.title += ` | ${categoriesStore.getCategory(route)?.name}`;
+    } else if (isAdmin.value) {
+        document.title += ' Admin';
+
+        if (is('admin.orders'))
+            document.title += ' | Bestellungen';
+        else if (is('admin.products'))
+            document.title += ' | Produkte';
+        else if (is('admin.categories'))
+            document.title += ' | Kategorien';
+        else if (is('admin.tables'))
+            document.title += ' | Tische';
+        else if (is('admin.product'))
+            document.title += route.params?.id ? ` | Produkt ${route.params?.id}` : ' | Neues Produkt';
+        else if (is('admin.category'))
+            document.title += route.params?.id ? ` | Kategorie ${route.params?.id}` : ' | Neue Kategorie';
+    }
+});
 </script>
 
 <style>
