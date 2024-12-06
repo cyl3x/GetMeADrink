@@ -10,6 +10,9 @@
                     Name
                 </th>
                 <th scope='col'>
+                    Erstellt am
+                </th>
+                <th class='text-end' scope='col'>
                     Actions
                 </th>
             </tr>
@@ -23,16 +26,17 @@
                     {{ category.id }}
                 </th>
                 <td>
-                    <span>
-                        {{ category.name }}
-                    </span>
+                    {{ category.name }}
                 </td>
-                <td class='gap-2 d-flex'>
+                <td>
+                    {{ formatDate(category.createdAt) }}
+                </td>
+                <td class='text-end'>
                     <button
-                        class='btn btn-primary btn-sm'
+                        class='btn btn-primary btn-sm me-2'
                         @click='editCategory(category.id)'
                     >
-                        Edit
+                        Bearbeiten
                     </button>
                     <button
                         class='btn btn-danger btn-sm'
@@ -74,6 +78,10 @@ function editCategory(id: number) {
 async function deleteCategory(id: number) {
     await ProductService.deleteCategory(id);
     await fetchCategoies();
+}
+
+function formatDate(date: string) {
+    return new Date(date).toLocaleString('de-DE');
 }
 
 fetchCategoies();
