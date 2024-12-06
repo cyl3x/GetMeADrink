@@ -121,11 +121,11 @@ const isOrder = computed(() => {
 });
 
 const isListing = computed(() => {
-    return is('admin.products') || is('admin.categories') || is('admin.tables');
+    return is('admin.products') || is('admin.categories') || is('admin.tables') || is('admin.variants');
 });
 
 const isDetail = computed(() => {
-    return is('admin.table') || is('admin.category');
+    return is('admin.table') || is('admin.category') || is('admin.product') || is('admin.variant');
 });
 
 function is(name: string): boolean {
