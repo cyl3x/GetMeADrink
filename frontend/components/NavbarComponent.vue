@@ -9,6 +9,9 @@
             <template v-if='!is("tables")'>
                 &#8592;
             </template>
+
+            <img class='icon' src='/public/favicon/icon.svg'>
+
             GetMeADrink
         </li>
         <template v-if='isAdmin'>
@@ -133,5 +136,11 @@ function emitEvent(name: string) {
 <style>
 .pointer {
     cursor: pointer;
+}
+
+.icon {
+    width: 32px;
+    height: auto;
+    filter: invert(1) brightness(40%);
 }
 </style>
