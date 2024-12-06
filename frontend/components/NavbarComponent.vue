@@ -147,4 +147,8 @@ function emitEvent(name: string) {
 .logo.active img {
     filter: invert(1) brightness(40%);
 }
+
+.logo.text-danger img {
+    filter: invert(29%) sepia(36%) saturate(4216%) hue-rotate(334deg) brightness(90%) contrast(91%);
+}
 </style>
