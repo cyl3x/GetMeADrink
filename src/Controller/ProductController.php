@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\ProductCategoryEntity;
 use App\Entity\ProductEntity;
+use App\Entity\ProductVariantEntity;
 use App\Repository\ProductCategoryRepository;
 use App\Repository\ProductRepository;
 use App\Repository\ProductVariantRepository;
@@ -44,12 +46,24 @@ class ProductController extends AbstractController
         return new JsonResponse($productCategories);
     }
 
+    #[Route(path: '/product-category/{productCategoryId}', name: 'product-category', methods: ['GET'])]
+    public function getProductCategory(ProductCategoryEntity $category): JsonResponse
+    {
+        return new JsonResponse($category);
+    }
+
     #[Route(path: '/product-variants', name: 'product-variants', methods: ['GET'])]
     public function getProductVariants(): JsonResponse
     {
         $productVariants = $this->productVariantRepository->findAll();
 
         return new JsonResponse($productVariants);
+    }
+
+    #[Route(path: '/product-variant/{productVariantId}', name: 'product-variant', methods: ['GET'])]
+    public function getProductVariant(ProductVariantEntity $variant): JsonResponse
+    {
+        return new JsonResponse($variant);
     }
 
     #[Route(path: '/product/{productId}/image', name: 'frontend')]
