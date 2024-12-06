@@ -2,7 +2,7 @@
 <nav class='bg-light shadow-sm p-2 z-2 d-flex justify-content-between align-items-center'>
     <ol class='breadcrumb m-0 fs-5'>
         <li
-            class='breadcrumb-item pointer'
+            class='breadcrumb-item pointer d-flex align-items-center gap-1 logo'
             :class='{ "text-danger": isAdmin, active: is("tables") }'
             @click='router.push({ name: "tables" })'
         >
@@ -10,7 +10,7 @@
                 &#8592;
             </template>
 
-            <img class='icon' src='/public/favicon/icon.svg'>
+            <img src='/public/favicon/icon.svg'>
 
             GetMeADrink
         </li>
@@ -138,9 +138,13 @@ function emitEvent(name: string) {
     cursor: pointer;
 }
 
-.icon {
-    width: 32px;
+.logo img {
+    width: 28px;
     height: auto;
+    filter: invert(1) brightness(20%);
+}
+
+.logo.active img {
     filter: invert(1) brightness(40%);
 }
 </style>
