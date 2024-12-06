@@ -9,6 +9,10 @@ html, body, #app {
     flex-direction: column;
 }
 
+.w-min {
+    width: min-content;
+}
+
 .card-grid-container {
     display: flex;
     justify-items: center;

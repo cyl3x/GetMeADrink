@@ -12,7 +12,7 @@
                 <th scope='col'>
                     Erstellt am
                 </th>
-                <th scope='col'>
+                <th class='text-end' scope='col'>
                     Aktionen
                 </th>
             </tr>
@@ -25,7 +25,7 @@
                 <th scope='row'>{{ table.id }}</th>
                 <td>{{ table.id }}</td>
                 <td>{{ formatDate(table.createdAt) }}</td>
-                <td>
+                <td class='text-end'>
                     <button
                         class='btn btn-primary btn-sm btn-danger'
                         @click='deleteTable(table.id)'

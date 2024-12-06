@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Contract\EntityDateTrait;
 use App\Repository\ProductVariantRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -13,6 +14,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\HasLifecycleCallbacks]
 class ProductVariantEntity implements \JsonSerializable
 {
+    use EntityDateTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue()]
     #[ORM\Column(type: Types::INTEGER)]
