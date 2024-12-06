@@ -40,6 +40,14 @@
                 Kategorien
             </li>
             <li
+                v-if='startWith("admin.variant")'
+                class='breadcrumb-item pointer'
+                :class='{ active: is("admin.variants") }'
+                @click='router.push({ name: "admin.variants" })'
+            >
+                Varianten
+            </li>
+            <li
                 v-if='startWith("admin.table")'
                 class='breadcrumb-item pointer'
                 :class='{ active: is("admin.tables") }'
@@ -153,10 +161,14 @@ watch(() => route.name, () => {
             document.title += ' | Kategorien';
         else if (is('admin.tables'))
             document.title += ' | Tische';
+        else if (is('admin.variants'))
+            document.title += ' | Varianten';
         else if (is('admin.product'))
             document.title += route.params?.id ? ` | Produkt ${route.params?.id}` : ' | Neues Produkt';
         else if (is('admin.category'))
             document.title += route.params?.id ? ` | Kategorie ${route.params?.id}` : ' | Neue Kategorie';
+        else if (is('admin.variant'))
+            document.title += route.params?.id ? ` | Variante ${route.params?.id}` : ' | Neue Variante';
     }
 });
 </script>
