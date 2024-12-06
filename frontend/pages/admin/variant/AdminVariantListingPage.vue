@@ -6,7 +6,7 @@
                 <th scope='col'>
                     #
                 </th>
-                <th scope='col'>
+                <th scope='col w-full'>
                     Name
                 </th>
                 <th scope='col'>
@@ -16,27 +16,27 @@
         </thead>
         <tbody>
             <tr
-                v-for='category in categories'
-                :key='category.id'
+                v-for='variant in variants'
+                :key='variant.id'
             >
                 <th scope='row'>
-                    {{ category.id }}
+                    {{ variant.id }}
                 </th>
                 <td>
                     <span>
-                        {{ category.name }}
+                        {{ variant.name }}
                     </span>
                 </td>
                 <td class='gap-2 d-flex'>
                     <button
                         class='btn btn-primary btn-sm'
-                        @click='editCategory(category.id)'
+                        @click='editVariant(variant.id)'
                     >
                         Edit
                     </button>
                     <button
                         class='btn btn-danger btn-sm'
-                        @click='deleteCategory(category.id)'
+                        @click='deleteVariant(variant.id)'
                     >
                         Löschen
                     </button>
@@ -56,23 +56,23 @@ import { useRouter } from 'vue-router';
 onMounted(() => { window.addEventListener('admin::create', create); });
 onUnmounted(() => { window.removeEventListener('admin::create', create); });
 
-const categories = ref<Entity.ProductCategory[]>([]);
+const variants = ref<Entity.ProductVariant[]>([]);
 const router = useRouter();
 
 async function fetchCategoies() {
-    categories.value = await ProductService.getCategories();
+    variants.value = await ProductService.getVariants();
 }
 
 function create() {
-    router.push({ name: 'admin.category' });
+    router.push({ name: 'admin.variant' });
 }
 
-function editCategory(id: number) {
-    router.push({ name: 'admin.category', params: { id } });
+function editVariant(id: number) {
+    router.push({ name: 'admin.variant', params: { id } });
 }
 
-async function deleteCategory(id: number) {
-    await ProductService.deleteCategory(id);
+async function deleteVariant(id: number) {
+    await ProductService.deleteVariant(id);
     await fetchCategoies();
 }
 

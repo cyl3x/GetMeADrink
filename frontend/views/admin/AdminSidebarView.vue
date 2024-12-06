@@ -24,6 +24,15 @@
         Kategorien
     </router-link>
 
+
+    <router-link
+        class='nav-link rounded link-dark'
+        :class='{ "bg-secondary-subtle": startWith("admin.variant") }'
+        :to='{ name: "admin.variants" }'
+    >
+        Varianten
+    </router-link>
+
     <router-link
         class='nav-link rounded link-dark'
         :class='{ "bg-secondary-subtle": startWith("admin.table") }'

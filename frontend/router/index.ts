@@ -9,8 +9,10 @@ import AdminOrdersListingPage from '@/pages/admin/order/AdminOrdersListingPage.v
 import AdminProductsListingPage from '@/pages/admin/product/AdminProductsListingPage.vue';
 import AdminCategoriesListingPage from '@/pages/admin/category/AdminCategoriesListingPage.vue';
 import AdminTablesListingPage from '@/pages/admin/table/AdminTablesListingPage.vue';
-import AdminTableDetailPage from '@/pages/admin/table/AdminTableDetailPage.vue';
 import AdminProductDetailPage from '@/pages/admin/product/AdminProductDetailPage.vue';
+import AdminCategoryDetailPage from '@/pages/admin/category/AdminCategoryDetailPage.vue';
+import AdminVariantListingPage from '@/pages/admin/variant/AdminVariantListingPage.vue';
+import AdminVariantDetailPage from '@/pages/admin/variant/AdminVariantDetailPage.vue';
 
 const routes = [
     {
@@ -73,7 +75,18 @@ const routes = [
             {
                 name: 'admin.category',
                 path: 'category/:id?',
-                component: null,
+                component: AdminCategoryDetailPage,
+            },
+
+            {
+                name: 'admin.variants',
+                path: 'variants',
+                component: AdminVariantListingPage,
+            },
+            {
+                name: 'admin.variant',
+                path: 'variant/:id?',
+                component: AdminVariantDetailPage,
             },
 
             {
