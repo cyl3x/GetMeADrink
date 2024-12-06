@@ -6,7 +6,9 @@ use App\Entity\ProductCategoryEntity;
 use App\Entity\ProductEntity;
 use App\Entity\ProductVariantEntity;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class EntityReferenceDenormalizer implements DenormalizerInterface
 {
@@ -18,12 +20,18 @@ class EntityReferenceDenormalizer implements DenormalizerInterface
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
+        #[Autowire(service: 'serializer.normalizer.object')]
+        private readonly ObjectNormalizer $objectNormalizer,
     ) {
     }
 
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        return $this->entityManager->getReference($type, $data['id'] ?? $data);
+        $entity = $this->entityManager->getReference($type, $data['id'] ?? $data);
+
+        $entity = $this->objectNormalizer->denormalize($data, $type, $format, $context, $entity);
+
+        return $entity;
     }
 
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
