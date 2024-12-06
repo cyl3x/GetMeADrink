@@ -99,7 +99,11 @@ const loadingState = ref({
     complete: false,
     cancel: false,
 });
-const loading = computed(() => loadingState.value.addProducts || loadingState.value.complete || loadingState.value.cancel);
+const loading = computed(() =>
+    loadingState.value.addProducts
+    || loadingState.value.complete
+    || loadingState.value.cancel,
+);
 
 const products = computed(() => {
     if (!orderStore.order)
