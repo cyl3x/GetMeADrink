@@ -87,6 +87,8 @@ class ProductCategoryEntity implements \JsonSerializable
             'products' => $this->products
                 ->map(static fn (ProductEntity $product) => $product->jsonSerialize())
                 ->toArray(),
+            'createdAt' => $this->createdAt->format(\DateTime::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTime::RFC3339),
         ];
     }
 }

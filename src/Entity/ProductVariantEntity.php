@@ -72,6 +72,8 @@ class ProductVariantEntity implements \JsonSerializable
             'id' => $this->id,
             'name' => $this->name,
             'products' => [],
+            'createdAt' => $this->createdAt->format(\DateTime::RFC3339),
+            'updatedAt' => $this->updatedAt?->format(\DateTime::RFC3339),
         ];
     }
 }
