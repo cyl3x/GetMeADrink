@@ -71,6 +71,7 @@ class ProductVariantEntity implements \JsonSerializable
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'products' => [],
         ];
     }
 }

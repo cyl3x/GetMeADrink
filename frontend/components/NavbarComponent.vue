@@ -10,7 +10,7 @@
                 &#8592;
             </template>
 
-            <img src='/public/favicon/icon.svg'>
+            <img src='/favicon/icon.svg'>
 
             GetMeADrink
         </li>
