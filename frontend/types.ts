@@ -46,6 +46,7 @@ declare global {
         export type ProductVariant = {
             id: number,
             name: string,
+            products: Product[],
             createdAt: string,
             updatedAt: string | null,
         };

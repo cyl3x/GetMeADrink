@@ -1,5 +1,5 @@
 <template>
-<page-loader-component v-if='variant === undefined' />
+<page-loader-component v-if='variant === undefined || products === undefined' />
 <div v-else class='w-100 m-3'>
     <label for='id'>ID</label>
     <input
@@ -8,6 +8,9 @@
         :value='variant.id ?? "<not saved>"'
         class='form-control'
     >
+
+    <br/>
+
     <label for='name'>Name</label>
     <input
         id='name'

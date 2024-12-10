@@ -8,6 +8,9 @@
         :value='category.id ?? "<not saved>"'
         class='form-control'
     >
+
+    <br/>
+
     <label for='name'>Name</label>
     <input
         id='name'

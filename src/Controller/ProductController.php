@@ -63,7 +63,10 @@ class ProductController extends AbstractController
     #[Route(path: '/product-variant/{productVariantId}', name: 'product-variant', methods: ['GET'])]
     public function getProductVariant(ProductVariantEntity $variant): JsonResponse
     {
-        return new JsonResponse($variant);
+        return new JsonResponse([
+            ...$variant->jsonSerialize(),
+            'products' => $variant->getProducts()->toArray(),
+        ]);
     }
 
     #[Route(path: '/product/{productId}/image', name: 'frontend')]
