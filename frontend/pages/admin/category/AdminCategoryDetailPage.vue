@@ -9,7 +9,7 @@
         class='form-control'
     >
 
-    <br/>
+    <br>
 
     <label for='name'>Name</label>
     <input
