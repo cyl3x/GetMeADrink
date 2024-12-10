@@ -3,8 +3,8 @@
 <div v-else class='w-100 m-3'>
     <label for='productId'>ID</label>
     <input
-        disabled
         id='productId'
+        disabled
         :value='product.id'
         class='form-control'
         @input='product.id = Number($event)'
@@ -78,7 +78,7 @@ async function fetchProduct() {
 //     </select>
 
 async function fetchVariants(){
-    variants.value = await ProductService.getVariants()
+    variants.value = await ProductService.getVariants();
 }
 
 fetchProduct();

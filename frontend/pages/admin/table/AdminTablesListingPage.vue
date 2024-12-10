@@ -22,7 +22,9 @@
                 v-for='table in tables'
                 :key='table.id'
             >
-                <th scope='row'>{{ table.id }}</th>
+                <th scope='row'>
+                    {{ table.id }}
+                </th>
                 <td>{{ table.id }}</td>
                 <td>{{ formatDate(table.createdAt) }}</td>
                 <td class='text-end'>
