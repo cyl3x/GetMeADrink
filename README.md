@@ -124,7 +124,7 @@ Contributions are welcome! Please follow these steps to help out:
 
 ## **License**
 
-GetMeADrink is licensed under a proprietary license. For more information, see the [LICENSE](./LICENSE) file.
+GetMeADrink is licensed under the MIT license. For more information, see the [LICENSE](./LICENSE) file.
 
 ---
 
